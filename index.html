@@ -324,6 +324,51 @@ input:focus{border-color:var(--gold);}
   .form-row{grid-template-columns:1fr;}
 }
 
+/* ── Articles ────────────────────────────────── */
+.article-settings-bar{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;gap:10px;}
+.article-settings-btn{padding:7px 14px;border-radius:20px;border:1px dashed rgba(201,168,76,.3);background:none;color:var(--muted);font-size:11px;cursor:pointer;transition:all .2s;font-family:var(--font-body);white-space:nowrap;}
+.article-settings-btn:hover{border-color:var(--gold);color:var(--gold);}
+.article-settings-btn.configured{border-style:solid;border-color:rgba(64,200,120,.4);color:var(--win);}
+.article-tag{display:inline-block;font-size:10px;padding:2px 8px;border-radius:10px;margin-right:4px;margin-bottom:2px;letter-spacing:.5px;}
+.tag-report{background:rgba(201,168,76,.12);color:var(--gold);border:1px solid rgba(201,168,76,.25);}
+.tag-deck{background:rgba(64,200,120,.1);color:var(--win);border:1px solid rgba(64,200,120,.2);}
+.tag-meta{background:rgba(176,96,232,.1);color:var(--amethyst);border:1px solid rgba(176,96,232,.2);}
+.tag-other{background:rgba(144,168,200,.1);color:var(--steel);border:1px solid rgba(144,168,200,.2);}
+.article-card{background:var(--surface);border:1px solid rgba(201,168,76,.12);border-radius:14px;padding:16px;margin-bottom:10px;cursor:pointer;transition:all .2s;}
+.article-card:hover{border-color:rgba(201,168,76,.4);transform:translateY(-1px);box-shadow:0 4px 20px rgba(0,0,0,.3);}
+.article-card-title{font-size:16px;font-weight:600;color:var(--text);margin-bottom:6px;line-height:1.4;}
+.article-card-meta{font-size:11px;color:var(--muted);display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:8px;}
+.article-card-excerpt{font-size:13px;color:var(--muted);line-height:1.6;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;}
+.article-card-footer{display:flex;justify-content:space-between;align-items:center;margin-top:10px;}
+.article-like-btn{display:flex;align-items:center;gap:5px;padding:5px 12px;border-radius:20px;border:1px solid rgba(201,168,76,.2);background:none;color:var(--muted);font-size:13px;cursor:pointer;transition:all .2s;}
+.article-like-btn:hover{border-color:rgba(232,64,90,.4);color:#ff6680;}
+.article-like-btn.liked{border-color:rgba(232,64,90,.5);background:rgba(232,64,90,.08);color:#ff6680;}
+.article-like-count{font-family:var(--font-display);font-size:13px;}
+.article-modal-overlay{position:fixed;inset:0;z-index:2500;background:rgba(0,0,0,.85);display:flex;align-items:flex-start;justify-content:center;overflow-y:auto;opacity:0;pointer-events:none;transition:opacity .25s;padding:20px 0 40px;}
+.article-modal-overlay.open{opacity:1;pointer-events:all;}
+.article-modal-box{background:var(--surface);border:1px solid rgba(201,168,76,.2);border-radius:16px;width:100%;max-width:680px;margin:auto;transform:translateY(20px);transition:transform .25s;}
+.article-modal-overlay.open .article-modal-box{transform:translateY(0);}
+.article-modal-header{display:flex;justify-content:space-between;align-items:flex-start;padding:20px 20px 0;gap:12px;}
+.article-modal-close{background:none;border:none;color:var(--muted);font-size:22px;cursor:pointer;flex-shrink:0;line-height:1;}
+.article-modal-body{padding:16px 20px 24px;}
+.article-modal-title{font-size:20px;font-weight:700;color:var(--text);line-height:1.4;margin-bottom:10px;}
+.article-body{font-size:14px;line-height:1.9;color:var(--text);white-space:pre-wrap;word-break:break-word;}
+.article-body h2{font-family:var(--font-display);color:var(--gold);font-size:17px;border-bottom:1px solid rgba(201,168,76,.2);padding-bottom:6px;margin:20px 0 8px;letter-spacing:1px;}
+.article-body strong{color:var(--gold-light);}
+.article-body em{color:var(--muted);font-style:italic;}
+.article-modal-footer{display:flex;justify-content:space-between;align-items:center;padding:14px 20px;border-top:1px solid rgba(201,168,76,.1);}
+.settings-modal-overlay{position:fixed;inset:0;z-index:3000;background:rgba(0,0,0,.8);display:flex;align-items:flex-end;justify-content:center;opacity:0;pointer-events:none;transition:opacity .25s;}
+.settings-modal-overlay.open{opacity:1;pointer-events:all;}
+.settings-modal-box{background:var(--surface);border:1px solid rgba(201,168,76,.2);border-radius:20px 20px 0 0;width:100%;max-width:640px;max-height:80vh;overflow-y:auto;transform:translateY(40px);transition:transform .25s;padding-bottom:env(safe-area-inset-bottom);}
+.settings-modal-overlay.open .settings-modal-box{transform:translateY(0);}
+.settings-modal-header{display:flex;justify-content:space-between;align-items:center;padding:18px 20px 12px;border-bottom:1px solid rgba(201,168,76,.1);}
+.settings-input-note{font-size:11px;color:var(--muted);line-height:1.7;margin-bottom:12px;}
+.settings-save-btn{width:100%;padding:13px;border-radius:10px;background:rgba(201,168,76,.15);border:1px solid var(--gold);color:var(--gold);font-family:var(--font-display);font-size:13px;letter-spacing:1px;cursor:pointer;transition:all .2s;}
+.settings-save-btn:hover{background:rgba(201,168,76,.3);}
+.article-loading{text-align:center;padding:40px 20px;color:var(--muted);}
+.article-loading-spin{display:inline-block;width:32px;height:32px;border:3px solid rgba(201,168,76,.2);border-top-color:var(--gold);border-radius:50%;animation:spin .8s linear infinite;margin-bottom:12px;}
+@keyframes spin{to{transform:rotate(360deg);}}
+
 /* ── Counter & Timer panel ─────────────────────── */
 .counter-panel{background:var(--surface);border:1px solid rgba(201,168,76,.15);border-radius:18px;overflow:hidden;}
 
@@ -437,6 +482,27 @@ input:focus{border-color:var(--gold);}
 .win-overlay-btn.primary{background:linear-gradient(135deg,rgba(64,200,120,.3),rgba(64,200,120,.1));border:1px solid var(--win);color:var(--win);}
 .win-overlay-btn.secondary{background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.3);color:var(--gold);}
 .win-overlay-btn.tertiary{background:none;border:1px solid rgba(255,255,255,.1);color:var(--muted);}
+
+/* ── Players ─────────────────────────────────── */
+.player-card{background:var(--surface);border:1px solid rgba(201,168,76,.15);border-radius:14px;padding:16px;margin-bottom:10px;display:flex;align-items:flex-start;gap:14px;transition:all .2s;}
+.player-card:hover{border-color:rgba(201,168,76,.35);transform:translateY(-1px);}
+.player-avatar{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,rgba(201,168,76,.3),rgba(64,80,232,.2));display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;border:1px solid rgba(201,168,76,.2);}
+.player-name{font-size:15px;font-weight:600;color:var(--text);margin-bottom:3px;}
+.player-handle{font-size:12px;color:var(--sapphire);margin-bottom:5px;}
+.player-bio{font-size:12px;color:var(--muted);line-height:1.5;margin-bottom:7px;}
+.player-colors{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:8px;}
+.player-region{font-size:11px;color:var(--muted);background:rgba(255,255,255,.05);border-radius:4px;padding:2px 7px;}
+.player-follow-btn{margin-left:auto;flex-shrink:0;padding:8px 16px;border-radius:20px;background:rgba(29,161,242,.12);border:1px solid rgba(29,161,242,.4);color:rgba(29,161,242,1);font-size:12px;cursor:pointer;transition:all .2s;white-space:nowrap;font-family:var(--font-body);}
+.player-follow-btn:hover{background:rgba(29,161,242,.25);}
+.player-search{width:100%;background:var(--surface2);border:1px solid rgba(201,168,76,.2);border-radius:10px;padding:10px 14px;color:var(--text);font-family:var(--font-body);font-size:14px;outline:none;margin-bottom:12px;transition:border-color .2s;}
+.player-search:focus{border-color:var(--gold);}
+.player-filter-bar{display:flex;gap:6px;margin-bottom:14px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none;}
+.player-filter-bar::-webkit-scrollbar{display:none;}
+.player-modal-overlay{position:fixed;inset:0;z-index:3000;background:rgba(0,0,0,.8);display:flex;align-items:flex-end;justify-content:center;opacity:0;pointer-events:none;transition:opacity .25s;}
+.player-modal-overlay.open{opacity:1;pointer-events:all;}
+.player-modal-box{background:var(--surface);border:1px solid rgba(201,168,76,.2);border-radius:20px 20px 0 0;width:100%;max-width:640px;max-height:85vh;overflow-y:auto;transform:translateY(40px);transition:transform .25s;padding-bottom:env(safe-area-inset-bottom);}
+.player-modal-overlay.open .player-modal-box{transform:translateY(0);}
+.player-modal-header{display:flex;justify-content:space-between;align-items:center;padding:18px 20px 12px;border-bottom:1px solid rgba(201,168,76,.1);}
 </style>
 </head>
 <body>
@@ -468,6 +534,8 @@ input:focus{border-color:var(--gold);}
     <button class="tab" onclick="switchTab('analytics')">統計</button>
     <button class="tab" onclick="switchTab('events')">大会</button>
     <button class="tab" onclick="switchTab('tweet')">𝕏投稿</button>
+    <button class="tab" onclick="switchTab('articles')">記事</button>
+    <button class="tab" onclick="switchTab('players')">交流</button>
   </div>
 
   <!-- ══ Counter Panel ══ -->
@@ -637,9 +705,47 @@ input:focus{border-color:var(--gold);}
         </div>
       </div>
 
+      <div class="form-full">
+        <label>マリガン枚数</label>
+        <div class="score-row">
+          <div class="score-box">
+            <div class="score-label">自分</div>
+            <div class="score-counter">
+              <button class="score-counter-btn" onclick="adjustVal('my-mulligan',-1,0,7)">−</button>
+              <input class="score-counter-input" type="number" id="my-mulligan" value="0" min="0" max="7">
+              <button class="score-counter-btn" onclick="adjustVal('my-mulligan',1,0,7)">＋</button>
+            </div>
+          </div>
+          <div class="score-box">
+            <div class="score-label">相手</div>
+            <div class="score-counter">
+              <button class="score-counter-btn" onclick="adjustVal('opp-mulligan',-1,0,7)">−</button>
+              <input class="score-counter-input" type="number" id="opp-mulligan" value="0" min="0" max="7">
+              <button class="score-counter-btn" onclick="adjustVal('opp-mulligan',1,0,7)">＋</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div class="form-row">
         <div><label>ゲーム時間（分）</label><input type="number" id="game-time" placeholder="例：30" min="1" max="120"></div>
         <div><label>メモ</label><input type="text" id="game-note" placeholder="一言メモ"></div>
+      </div>
+
+      <div class="form-full">
+        <label>デッキコード（任意）
+          <a href="https://www.takaratomy.co.jp/products/disneylorcana/deckbuilder/" target="_blank" rel="noopener"
+             style="margin-left:8px;font-size:10px;color:var(--sapphire);text-decoration:none;background:rgba(64,128,232,.1);border:1px solid rgba(64,128,232,.25);border-radius:4px;padding:2px 7px;">
+            🔗 公式デッキ編成で作成
+          </a>
+        </label>
+        <div style="display:flex;gap:8px;align-items:center;">
+          <input type="text" id="my-deck-code" placeholder="公式デッキ編成で作成したデッキのURLを貼り付け" style="flex:1;">
+          <button id="deck-code-link-btn" onclick="openDeckCode('my-deck-code')"
+            style="padding:8px 12px;border-radius:8px;background:rgba(64,128,232,.12);border:1px solid rgba(64,128,232,.3);color:var(--sapphire);font-size:12px;cursor:pointer;white-space:nowrap;flex-shrink:0;">
+            開く
+          </button>
+        </div>
       </div>
 
       <button class="btn-submit" onclick="saveMatch()">✦ 記録する ✦</button>
@@ -828,14 +934,213 @@ input:focus{border-color:var(--gold);}
           </div></div>
         </div>
       </div>
+      <div class="form-full"><label>マリガン枚数</label>
+        <div class="score-row">
+          <div class="score-box"><div class="score-label">自分</div><div class="score-counter">
+            <button class="score-counter-btn" onclick="adjustVal('edit-my-mulligan',-1,0,7)">−</button>
+            <input class="score-counter-input" type="number" id="edit-my-mulligan" value="0" min="0" max="7">
+            <button class="score-counter-btn" onclick="adjustVal('edit-my-mulligan',1,0,7)">＋</button>
+          </div></div>
+          <div class="score-box"><div class="score-label">相手</div><div class="score-counter">
+            <button class="score-counter-btn" onclick="adjustVal('edit-opp-mulligan',-1,0,7)">−</button>
+            <input class="score-counter-input" type="number" id="edit-opp-mulligan" value="0" min="0" max="7">
+            <button class="score-counter-btn" onclick="adjustVal('edit-opp-mulligan',1,0,7)">＋</button>
+          </div></div>
+        </div>
+      </div>
       <div class="form-row">
         <div><label>ゲーム時間（分）</label><input type="number" id="edit-game-time" placeholder="例：30" min="1" max="120"></div>
         <div><label>メモ</label><input type="text" id="edit-game-note" placeholder="一言メモ"></div>
+      </div>
+      <div class="form-full">
+        <label>デッキコード（任意）
+          <a href="https://www.takaratomy.co.jp/products/disneylorcana/deckbuilder/" target="_blank" rel="noopener"
+             style="margin-left:8px;font-size:10px;color:var(--sapphire);text-decoration:none;background:rgba(64,128,232,.1);border:1px solid rgba(64,128,232,.25);border-radius:4px;padding:2px 7px;">
+            🔗 公式デッキ編成
+          </a>
+        </label>
+        <div style="display:flex;gap:8px;align-items:center;">
+          <input type="text" id="edit-my-deck-code" placeholder="公式デッキ編成のデッキURL" style="flex:1;">
+          <button onclick="openDeckCode('edit-my-deck-code')"
+            style="padding:8px 12px;border-radius:8px;background:rgba(64,128,232,.12);border:1px solid rgba(64,128,232,.3);color:var(--sapphire);font-size:12px;cursor:pointer;white-space:nowrap;flex-shrink:0;">
+            開く
+          </button>
+        </div>
       </div>
       <button class="btn-submit" onclick="saveEdit()">✦ 訂正を保存 ✦</button>
     </div>
   </div>
 </div>
+
+  <!-- ══ Articles Panel ══ -->
+  <div class="panel" id="panel-articles">
+    <div class="article-settings-bar">
+      <div style="font-family:var(--font-display);font-size:11px;letter-spacing:3px;color:var(--gold);opacity:.8;text-transform:uppercase;">✦ 記事</div>
+      <button class="article-settings-btn" id="gh-settings-btn" onclick="openSettingsModal()">⚙ GitHub設定</button>
+    </div>
+    <div id="article-list-wrap">
+      <div class="article-loading">
+        <div style="color:var(--muted);font-size:14px;">⚙ GitHub設定ボタンからリポジトリを設定してください</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Settings Modal -->
+  <div class="settings-modal-overlay" id="settings-modal" onclick="if(event.target===this)closeSettingsModal()">
+    <div class="settings-modal-box">
+      <div class="settings-modal-header">
+        <span style="font-family:var(--font-display);font-size:15px;color:var(--gold);letter-spacing:1px;">⚙ GitHub 設定</span>
+        <button style="background:none;border:none;color:var(--muted);font-size:20px;cursor:pointer;" onclick="closeSettingsModal()">✕</button>
+      </div>
+      <div style="padding:18px 20px 20px;">
+        <div class="settings-input-note">
+          ✦ GitHubのリポジトリ名を入力してください（例：username/lorcana-tracker）<br>
+          ✦ 記事を<strong style="color:var(--gold-light);">投稿・編集</strong>するにはPersonal Access Token（PAT）が必要です<br>
+          ✦ <strong style="color:var(--gold-light);">読むだけ</strong>ならPATは不要です（パブリックリポジトリのみ）
+        </div>
+        <div class="form-full">
+          <label>リポジトリ名</label>
+          <input type="text" id="gh-repo-input" placeholder="vast25/lorcana-tracker3">
+        </div>
+        <div class="form-full">
+          <label>Personal Access Token（管理者のみ・任意）</label>
+          <input type="password" id="gh-pat-input" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx">
+        </div>
+        <div class="settings-input-note" style="margin-top:4px;">
+          PATの発行：GitHub → Settings → Developer settings → Personal access tokens → Fine-grained tokens<br>
+          必要な権限：Issues (Read and Write), Reactions (Read and Write)
+        </div>
+        <button class="settings-save-btn" onclick="saveGhSettings()">✦ 保存して記事を読み込む</button>
+        <button onclick="clearGhSettings()" style="width:100%;padding:10px;margin-top:8px;border-radius:10px;background:none;border:1px solid rgba(232,64,90,.25);color:var(--loss);font-size:12px;cursor:pointer;">設定をクリア</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Article Detail Modal -->
+  <div class="article-modal-overlay" id="article-modal" onclick="if(event.target===this)closeArticleModal()">
+    <div class="article-modal-box">
+      <div class="article-modal-header">
+        <div style="flex:1;">
+          <div id="article-modal-tags" style="margin-bottom:8px;"></div>
+          <div class="article-modal-title" id="article-modal-title"></div>
+          <div style="font-size:11px;color:var(--muted);" id="article-modal-meta"></div>
+        </div>
+        <button class="article-modal-close" onclick="closeArticleModal()">✕</button>
+      </div>
+      <div class="article-modal-body">
+        <div class="article-body" id="article-modal-body"></div>
+      </div>
+      <div class="article-modal-footer">
+        <button class="article-like-btn" id="article-modal-like-btn" onclick="toggleLikeModal()">
+          <span id="article-modal-like-icon">♡</span>
+          <span class="article-like-count" id="article-modal-like-count">0</span>
+        </button>
+        <div id="article-modal-edit-btn" style="display:none;">
+          <button onclick="openWriteModal(currentArticle)" style="padding:7px 16px;border-radius:20px;background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.3);color:var(--gold);font-size:12px;cursor:pointer;">✏ 編集</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Write/Edit Article Modal -->
+  <div class="settings-modal-overlay" id="write-modal" onclick="if(event.target===this)closeWriteModal()" style="z-index:3500;">
+    <div class="settings-modal-box" style="max-height:90vh;">
+      <div class="settings-modal-header">
+        <span style="font-family:var(--font-display);font-size:15px;color:var(--gold);letter-spacing:1px;" id="write-modal-title">✦ 記事を書く</span>
+        <button style="background:none;border:none;color:var(--muted);font-size:20px;cursor:pointer;" onclick="closeWriteModal()">✕</button>
+      </div>
+      <div style="padding:16px 20px 20px;">
+        <div class="form-full"><label>タイトル</label><input type="text" id="write-title" placeholder="例：〇〇SCS 参加レポート"></div>
+        <div class="form-full">
+          <label>カテゴリ</label>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;">
+            <button class="article-tag tag-report" style="cursor:pointer;font-size:12px;padding:5px 12px;" onclick="toggleWriteTag('大会レポート')" id="wtag-大会レポート">🏆 大会レポート</button>
+            <button class="article-tag tag-deck" style="cursor:pointer;font-size:12px;padding:5px 12px;" onclick="toggleWriteTag('デッキ解説')" id="wtag-デッキ解説">🎴 デッキ解説</button>
+            <button class="article-tag tag-meta" style="cursor:pointer;font-size:12px;padding:5px 12px;" onclick="toggleWriteTag('環境考察')" id="wtag-環境考察">🔮 環境考察</button>
+            <button class="article-tag tag-other" style="cursor:pointer;font-size:12px;padding:5px 12px;" onclick="toggleWriteTag('その他')" id="wtag-その他">📝 その他</button>
+          </div>
+        </div>
+        <div class="form-full">
+          <label>本文（## で見出し、**太字**、*斜体* が使えます）</label>
+          <textarea id="write-body" rows="12" style="width:100%;background:var(--surface2);border:1px solid rgba(201,168,76,.2);border-radius:8px;padding:10px 14px;color:var(--text);font-family:var(--font-body);font-size:14px;outline:none;resize:vertical;line-height:1.7;" placeholder="記事の内容を書いてください..."></textarea>
+        </div>
+        <input type="hidden" id="write-issue-number">
+        <button class="settings-save-btn" onclick="submitArticle()" id="write-submit-btn">✦ 投稿する</button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ══ Players Panel ══ -->
+  <div class="panel" id="panel-players">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
+      <div style="font-family:var(--font-display);font-size:11px;letter-spacing:3px;color:var(--gold);opacity:.8;text-transform:uppercase;">✦ 交流 / X交換</div>
+      <button class="article-settings-btn" id="player-register-btn" onclick="openPlayerModal(null)" style="border-style:solid;border-color:rgba(29,161,242,.4);color:rgba(29,161,242,1);">＋ 自分を登録</button>
+    </div>
+
+    <!-- Search & filter -->
+    <input class="player-search" id="player-search" type="text" placeholder="名前・ハンドル・地域で検索..." oninput="filterPlayers()">
+    <div class="player-filter-bar" id="player-color-filter">
+      <div class="filter-chip active" onclick="setPlayerColorFilter('')">すべて</div>
+      <div class="filter-chip" onclick="setPlayerColorFilter('Amber')">🔶 Amber</div>
+      <div class="filter-chip" onclick="setPlayerColorFilter('Ruby')">🔴 Ruby</div>
+      <div class="filter-chip" onclick="setPlayerColorFilter('Sapphire')">🔵 Sapphire</div>
+      <div class="filter-chip" onclick="setPlayerColorFilter('Emerald')">💚 Emerald</div>
+      <div class="filter-chip" onclick="setPlayerColorFilter('Amethyst')">🟣 Amethyst</div>
+      <div class="filter-chip" onclick="setPlayerColorFilter('Steel')">⚙️ Steel</div>
+    </div>
+
+    <div id="player-list-wrap">
+      <div class="article-loading"><div class="article-loading-spin"></div><div>読み込み中...</div></div>
+    </div>
+  </div>
+
+  <!-- Player Register/Edit Modal -->
+  <div class="player-modal-overlay" id="player-modal" onclick="if(event.target===this)closePlayerModal()">
+    <div class="player-modal-box">
+      <div class="player-modal-header">
+        <span style="font-family:var(--font-display);font-size:15px;color:var(--gold);letter-spacing:1px;" id="player-modal-title">✦ プロフィール登録</span>
+        <button style="background:none;border:none;color:var(--muted);font-size:22px;cursor:pointer;" onclick="closePlayerModal()">✕</button>
+      </div>
+      <div style="padding:16px 20px 24px;">
+        <div class="form-full">
+          <label>表示名</label>
+          <input type="text" id="player-name-input" placeholder="例：たろう">
+        </div>
+        <div class="form-full">
+          <label>X（Twitter）ハンドル（@なしで入力）</label>
+          <input type="text" id="player-xhandle-input" placeholder="例：taro_lorcana">
+        </div>
+        <div class="form-full">
+          <label>地域</label>
+          <input type="text" id="player-region-input" placeholder="例：東京・関東・北海道">
+        </div>
+        <div class="form-full">
+          <label>主に使うインク（複数選択可）</label>
+          <div class="color-grid" id="player-colors-grid">
+            <div class="color-btn color-amber" data-color="Amber" onclick="togglePlayerColor('Amber')">🔶<span>Amber</span></div>
+            <div class="color-btn color-ruby" data-color="Ruby" onclick="togglePlayerColor('Ruby')">🔴<span>Ruby</span></div>
+            <div class="color-btn color-sapphire" data-color="Sapphire" onclick="togglePlayerColor('Sapphire')">🔵<span>Sapphire</span></div>
+            <div class="color-btn color-emerald" data-color="Emerald" onclick="togglePlayerColor('Emerald')">💚<span>Emerald</span></div>
+            <div class="color-btn color-amethyst" data-color="Amethyst" onclick="togglePlayerColor('Amethyst')">🟣<span>Amethyst</span></div>
+            <div class="color-btn color-steel" data-color="Steel" onclick="togglePlayerColor('Steel')">⚙️<span>Steel</span></div>
+          </div>
+        </div>
+        <div class="form-full">
+          <label>一言メッセージ</label>
+          <input type="text" id="player-bio-input" placeholder="例：フレマ歓迎！関東で活動中です">
+        </div>
+        <input type="hidden" id="player-issue-number">
+        <div style="font-size:11px;color:var(--muted);margin-bottom:12px;line-height:1.7;">
+          ✦ 登録するにはGitHubのPATが必要です（記事タブの⚙設定から）<br>
+          ✦ 登録後、コミュニティ全員に公開されます
+        </div>
+        <button class="btn-submit" onclick="submitPlayer()" id="player-submit-btn">✦ 登録する ✦</button>
+        <button id="player-delete-btn" onclick="deletePlayer()" style="display:none;width:100%;padding:10px;margin-top:8px;border-radius:10px;background:none;border:1px solid rgba(232,64,90,.25);color:var(--loss);font-size:12px;cursor:pointer;">登録を削除する</button>
+      </div>
+    </div>
+  </div>
+
 <!-- Win Overlay -->
 <div class="win-overlay" id="win-overlay">
   <div class="win-overlay-title" id="win-overlay-title">🏆 WIN</div>
@@ -953,16 +1258,40 @@ function updateStats() {
 }
 
 // ── Tab switching ──────────────────────────────
+// ── Wake Lock（スリープ防止）──────────────────
+let wakeLock = null;
+async function requestWakeLock() {
+  if (!('wakeLock' in navigator)) return;
+  try {
+    wakeLock = await navigator.wakeLock.request('screen');
+  } catch(e) {}
+}
+function releaseWakeLock() {
+  if (wakeLock) { wakeLock.release(); wakeLock = null; }
+}
+// 画面復帰時に再取得（バックグラウンド→復帰で解除されるため）
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'visible') {
+    const activePanel = document.querySelector('.panel.active');
+    if (activePanel?.id === 'panel-counter') requestWakeLock();
+  } else {
+    releaseWakeLock();
+  }
+});
+
 function switchTab(tab) {
   document.querySelectorAll('.tab').forEach((t,i) =>
-    t.classList.toggle('active', ['record','counter','history','analytics','events','tweet'][i]===tab));
+    t.classList.toggle('active', ['record','counter','history','analytics','events','tweet','articles','players'][i]===tab));
   document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
   document.getElementById('panel-'+tab).classList.add('active');
+  if (tab==='counter') requestWakeLock(); else releaseWakeLock();
   if (tab==='record')    renderRecordTournPicker();
   if (tab==='history')   renderHistory();
   if (tab==='analytics') { document.getElementById('turn-stats').innerHTML=''; renderAnalytics(); }
   if (tab==='events')    renderEventsTab();
   if (tab==='tweet')     renderTweetPanel();
+  if (tab==='articles')  initArticlesTab();
+  if (tab==='players')   initPlayersTab();
 }
 
 // ── Handle management ──────────────────────────
@@ -1029,6 +1358,17 @@ function adjustScore(side,delta) {
   const el = document.getElementById(side+'-score');
   el.value = Math.max(0,Math.min(20,parseInt(el.value||0)+delta));
 }
+function adjustVal(id,delta,min,max) {
+  const el = document.getElementById(id);
+  el.value = Math.max(min,Math.min(max,parseInt(el.value||0)+delta));
+}
+function openDeckCode(inputId) {
+  const val = document.getElementById(inputId)?.value.trim();
+  if (!val) return;
+  // URLをそのまま開く
+  const url = val.startsWith('http') ? val : 'https://www.takaratomy.co.jp/products/disneylorcana/deckbuilder/?deck=' + encodeURIComponent(val);
+  window.open(url, '_blank', 'noopener');
+}
 
 // ── Record form tournament picker ──────────────
 function renderRecordTournPicker() {
@@ -1078,8 +1418,11 @@ function saveMatch() {
     turn:         selectedTurn,
     myScore:      document.getElementById('my-score').value,
     oppScore:     document.getElementById('opp-score').value,
+    myMulligan:   document.getElementById('my-mulligan').value,
+    oppMulligan:  document.getElementById('opp-mulligan').value,
     gameTime:     document.getElementById('game-time').value,
     note:         document.getElementById('game-note').value,
+    deckCode:     document.getElementById('my-deck-code').value.trim(),
   };
   matches.unshift(match);
   save('matches',matches);
@@ -1094,9 +1437,11 @@ function resetForm() {
   const keepEvent    = selectedTournId ? selectedEvent : null;
 
   myColors=[]; oppColors=[]; selectedResult=null; selectedTurn=null; selectedEvent=null; selectedTournId=null;
-  ['opp-handle','opp-deck','game-time','game-note'].forEach(id=>document.getElementById(id).value='');
+  ['opp-handle','opp-deck','game-time','game-note','my-deck-code'].forEach(id=>document.getElementById(id).value='');
   document.getElementById('my-score').value='0';
   document.getElementById('opp-score').value='0';
+  document.getElementById('my-mulligan').value='0';
+  document.getElementById('opp-mulligan').value='0';
   document.querySelectorAll('.color-btn').forEach(b=>{b.classList.remove('selected');b.classList.remove('disabled-color');});
   ['btn-win','btn-loss','btn-draw','btn-first','btn-second','btn-scs','btn-non','btn-gp','btn-chal','btn-shop','btn-sst','btn-adj']
     .forEach(id=>document.getElementById(id).classList.remove('selected'));
@@ -1172,7 +1517,9 @@ function renderHistory() {
           ${eventBadge(m.eventType)}
           ${m.turn?`<span style="font-size:12px;padding:2px 8px;border-radius:4px;background:${m.turn==='first'?'rgba(201,168,76,.1)':'rgba(144,168,200,.1)'};color:${m.turn==='first'?'var(--gold)':'var(--steel)'};">${m.turn==='first'?'☀ 先行':'☾ 後攻'}</span>`:''}
           ${m.myScore!==undefined&&m.oppScore!==undefined?`<span style="font-size:12px;color:var(--muted);">🏅 ${m.myScore}-${m.oppScore}</span>`:''}
+          ${(m.myMulligan>0||m.oppMulligan>0)?`<span style="font-size:12px;color:var(--muted);">🔄 ${m.myMulligan||0}-${m.oppMulligan||0}</span>`:''}
           ${m.note?`<span style="font-size:12px;color:var(--muted);font-style:italic;">${m.note}</span>`:''}
+          ${m.deckCode?`<a href="${m.deckCode.startsWith('http')?m.deckCode:'https://www.takaratomy.co.jp/products/disneylorcana/deckbuilder/?deck='+encodeURIComponent(m.deckCode)}" target="_blank" rel="noopener" style="font-size:11px;color:var(--sapphire);text-decoration:none;background:rgba(64,128,232,.08);border:1px solid rgba(64,128,232,.2);border-radius:4px;padding:2px 7px;">🔗 デッキ</a>`:''}
         </div>
       </div>
       <div style="text-align:right;flex-shrink:0;">
@@ -1557,8 +1904,11 @@ function openEditModal(id) {
   document.getElementById('edit-opp-deck').value  = m.oppDeck||'';
   document.getElementById('edit-my-score').value  = m.myScore||0;
   document.getElementById('edit-opp-score').value = m.oppScore||0;
+  document.getElementById('edit-my-mulligan').value  = m.myMulligan||0;
+  document.getElementById('edit-opp-mulligan').value = m.oppMulligan||0;
   document.getElementById('edit-game-time').value = m.gameTime||'';
   document.getElementById('edit-game-note').value = m.note||'';
+  document.getElementById('edit-my-deck-code').value = m.deckCode||'';
   editMyColors  = [...(m.myColors||[])];
   editOppColors = [...(m.oppColors||[])];
   editResult    = m.result||null;
@@ -1656,8 +2006,11 @@ function saveEdit() {
     turn:         editTurn,
     myScore:      document.getElementById('edit-my-score').value,
     oppScore:     document.getElementById('edit-opp-score').value,
+    myMulligan:   document.getElementById('edit-my-mulligan').value,
+    oppMulligan:  document.getElementById('edit-opp-mulligan').value,
     gameTime:     document.getElementById('edit-game-time').value,
     note:         document.getElementById('edit-game-note').value,
+    deckCode:     document.getElementById('edit-my-deck-code').value.trim(),
   };
   save('matches', matches);
   updateStats(); renderHistory();
@@ -1816,12 +2169,515 @@ function setupLoreButtons() {
   });
 }
 
+
+// ── Articles (GitHub Issues) ───────────────────
+let ghRepo = localStorage.getItem('lorcana-gh-repo') || 'vast25/lorcana-tracker3';
+let ghPat  = localStorage.getItem('lorcana-gh-pat')  || '';
+let currentArticle = null;
+let writeTags = [];
+let articlesLoaded = false;
+
+function ghHeaders() {
+  const h = {'Accept':'application/vnd.github+json','X-GitHub-Api-Version':'2022-11-28'};
+  if (ghPat) h['Authorization'] = 'Bearer ' + ghPat;
+  return h;
+}
+function ghApi(path, opts={}) {
+  return fetch('https://api.github.com/repos/' + ghRepo + path,
+    {headers: ghHeaders(), ...opts});
+}
+
+// ── Settings ────────────────────────────────────
+function openSettingsModal() {
+  document.getElementById('gh-repo-input').value = ghRepo;
+  document.getElementById('gh-pat-input').value  = ghPat;
+  document.getElementById('settings-modal').classList.add('open');
+}
+function closeSettingsModal() {
+  document.getElementById('settings-modal').classList.remove('open');
+}
+function saveGhSettings() {
+  ghRepo = document.getElementById('gh-repo-input').value.trim();
+  ghPat  = document.getElementById('gh-pat-input').value.trim();
+  localStorage.setItem('lorcana-gh-repo', ghRepo);
+  localStorage.setItem('lorcana-gh-pat',  ghPat);
+  closeSettingsModal();
+  articlesLoaded = false;
+  updateSettingsBtn();
+  loadArticles();
+}
+function clearGhSettings() {
+  ghRepo=''; ghPat='';
+  localStorage.removeItem('lorcana-gh-repo');
+  localStorage.removeItem('lorcana-gh-pat');
+  updateSettingsBtn();
+  closeSettingsModal();
+  document.getElementById('article-list-wrap').innerHTML =
+    '<div class="article-loading"><div style="color:var(--muted);font-size:14px;">⚙ GitHub設定ボタンからリポジトリを設定してください</div></div>';
+}
+function updateSettingsBtn() {
+  const btn = document.getElementById('gh-settings-btn');
+  if (!btn) return;
+  if (ghRepo) {
+    btn.className = 'article-settings-btn configured';
+    btn.textContent = '✓ ' + ghRepo.split('/')[1];
+  } else {
+    btn.className = 'article-settings-btn';
+    btn.textContent = '⚙ GitHub設定';
+  }
+}
+
+// ── Load articles ───────────────────────────────
+function initArticlesTab() {
+  updateSettingsBtn();
+  if (!ghRepo) return;
+  if (!articlesLoaded) loadArticles();
+  // 管理者なら「書く」ボタンを表示
+  renderWriteBtn();
+}
+
+function renderWriteBtn() {
+  const wrap = document.getElementById('article-list-wrap');
+  if (!ghPat) { document.getElementById('write-fab')?.remove(); return; }
+  if (document.getElementById('write-fab')) return;
+  const fab = document.createElement('button');
+  fab.id = 'write-fab';
+  fab.onclick = () => openWriteModal(null);
+  fab.style.cssText = 'position:fixed;bottom:calc(80px + env(safe-area-inset-bottom));right:20px;z-index:999;width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,rgba(201,168,76,.4),rgba(201,168,76,.15));border:1px solid var(--gold);color:var(--gold);font-size:24px;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.4);';
+  fab.textContent = '✍';
+  document.body.appendChild(fab);
+}
+
+async function loadArticles() {
+  if (!ghRepo) return;
+  const wrap = document.getElementById('article-list-wrap');
+  wrap.innerHTML = '<div class="article-loading"><div class="article-loading-spin"></div><div>記事を読み込み中...</div></div>';
+  try {
+    const res = await ghApi('/issues?state=open&labels=article&per_page=30&sort=created&direction=desc');
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const issues = await res.json();
+    articlesLoaded = true;
+    if (!issues.length) {
+      wrap.innerHTML = '<div class="empty-state"><div class="empty-icon">📝</div><div class="empty-text">まだ記事がありません</div></div>';
+      return;
+    }
+    wrap.innerHTML = issues.map(issue => renderArticleCard(issue)).join('');
+  } catch(e) {
+    wrap.innerHTML = `<div class="article-loading"><div style="color:var(--loss);margin-bottom:8px;">⚠ 読み込みエラー</div><div style="font-size:12px;color:var(--muted);">${e.message}<br>リポジトリ名とPATを確認してください</div></div>`;
+  }
+}
+
+function articleTags(issue) {
+  return (issue.labels || [])
+    .filter(l => l.name !== 'article')
+    .map(l => {
+      const cls = l.name==='大会レポート'?'tag-report':l.name==='デッキ解説'?'tag-deck':l.name==='環境考察'?'tag-meta':'tag-other';
+      return `<span class="article-tag ${cls}">${l.name}</span>`;
+    }).join('');
+}
+
+function renderArticleCard(issue) {
+  const excerpt = (issue.body||'').replace(/##.*\n/g,'').replace(/[*#]/g,'').trim().slice(0,100);
+  const date = new Date(issue.created_at).toLocaleDateString('ja-JP');
+  const liked = isLiked(issue.number);
+  const reactions = issue.reactions?.['heart'] || 0;
+  return `<div class="article-card" onclick="openArticle(${issue.number})">
+    <div style="margin-bottom:6px;">${articleTags(issue)}</div>
+    <div class="article-card-title">${issue.title}</div>
+    <div class="article-card-meta">
+      <span>📅 ${date}</span>
+    </div>
+    ${excerpt ? `<div class="article-card-excerpt">${excerpt}…</div>` : ''}
+    <div class="article-card-footer">
+      <div></div>
+      <button class="article-like-btn ${liked?'liked':''}"
+        onclick="event.stopPropagation();toggleLike(${issue.number},this)"
+        data-issue="${issue.number}">
+        <span>${liked?'♥':'♡'}</span>
+        <span class="article-like-count">${reactions}</span>
+      </button>
+    </div>
+  </div>`;
+}
+
+// ── Like (localStorage で自分のいいね状態を管理) ──
+function likedKey(n) { return 'lorcana-liked-' + n; }
+function isLiked(n) { return !!localStorage.getItem(likedKey(n)); }
+
+async function toggleLike(issueNum, btn) {
+  if (!ghRepo) return;
+  const liked = isLiked(issueNum);
+  // 楽観的UI更新
+  const countEl = btn.querySelector('.article-like-count');
+  const iconEl  = btn.querySelector('span');
+  const cur = parseInt(countEl.textContent) || 0;
+  if (liked) {
+    localStorage.removeItem(likedKey(issueNum));
+    btn.classList.remove('liked'); iconEl.textContent='♡'; countEl.textContent=Math.max(0,cur-1);
+  } else {
+    localStorage.setItem(likedKey(issueNum),'1');
+    btn.classList.add('liked'); iconEl.textContent='♥'; countEl.textContent=cur+1;
+  }
+  // API更新（PATある場合のみ実際に反映、ない場合はローカルだけ）
+  if (ghPat) {
+    try {
+      if (!liked) {
+        await ghApi('/issues/'+issueNum+'/reactions', {
+          method:'POST', body:JSON.stringify({content:'heart'}),
+          headers:{...ghHeaders(),'Content-Type':'application/json'}
+        });
+      }
+    } catch(e){}
+  }
+}
+
+async function toggleLikeModal() {
+  if (!currentArticle) return;
+  const btn = document.getElementById('article-modal-like-btn');
+  await toggleLike(currentArticle.number, btn);
+  // モーダル内のボタン同期
+  const liked2 = isLiked(currentArticle.number);
+  document.getElementById('article-modal-like-icon').textContent = liked2?'♥':'♡';
+}
+
+// ── Article detail ──────────────────────────────
+async function openArticle(issueNum) {
+  const overlay = document.getElementById('article-modal');
+  document.getElementById('article-modal-title').textContent = '';
+  document.getElementById('article-modal-body').textContent = '';
+  document.getElementById('article-modal-tags').innerHTML = '';
+  document.getElementById('article-modal-meta').textContent = '';
+  overlay.classList.add('open');
+  overlay.scrollTop = 0;
+
+  try {
+    const res = await ghApi('/issues/' + issueNum);
+    const issue = await res.json();
+    currentArticle = issue;
+    document.getElementById('article-modal-tags').innerHTML = articleTags(issue);
+    document.getElementById('article-modal-title').textContent = issue.title;
+    document.getElementById('article-modal-meta').textContent =
+      '📅 ' + new Date(issue.created_at).toLocaleDateString('ja-JP');
+    // 簡易Markdown→HTML変換
+    document.getElementById('article-modal-body').innerHTML = simpleMarkdown(issue.body||'');
+    // いいね
+    const liked = isLiked(issueNum);
+    const reactions = issue.reactions?.['heart'] || 0;
+    document.getElementById('article-modal-like-btn').className = 'article-like-btn' + (liked?' liked':'');
+    document.getElementById('article-modal-like-icon').textContent = liked?'♥':'♡';
+    document.getElementById('article-modal-like-count').textContent = reactions;
+    // 管理者なら編集ボタン
+    document.getElementById('article-modal-edit-btn').style.display = ghPat ? '' : 'none';
+  } catch(e) {
+    document.getElementById('article-modal-body').textContent = '読み込みエラー: ' + e.message;
+  }
+}
+
+function closeArticleModal() {
+  document.getElementById('article-modal').classList.remove('open');
+  currentArticle = null;
+}
+
+// 簡易Markdown変換
+function simpleMarkdown(text) {
+  let t = text
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/^## (.+)$/gm, '<h2>$1</h2>')
+    .replace(/^### (.+)$/gm, '<h3 style="color:var(--gold-light);margin:16px 0 6px;">$1</h3>');
+  // bold and italic
+  t = t.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+  t = t.replace(/\*([^*]+)\*/g, '<em>$1</em>');
+  // newlines
+  t = t.split('\n').join('<br>');
+  return t;
+}
+
+// ── Write / Edit article ────────────────────────
+function openWriteModal(issue) {
+  writeTags = [];
+  document.getElementById('write-title').value = issue ? issue.title : '';
+  document.getElementById('write-body').value  = issue ? (issue.body||'') : '';
+  document.getElementById('write-issue-number').value = issue ? issue.number : '';
+  document.getElementById('write-modal-title').textContent = issue ? '✏ 記事を編集' : '✦ 記事を書く';
+  document.getElementById('write-submit-btn').textContent  = issue ? '✦ 更新する' : '✦ 投稿する';
+  // タグ状態リセット
+  ['大会レポート','デッキ解説','環境考察','その他'].forEach(t => {
+    const btn = document.getElementById('wtag-'+t);
+    if (btn) btn.style.opacity = '0.45';
+  });
+  if (issue) {
+    (issue.labels||[]).filter(l=>l.name!=='article').forEach(l => {
+      writeTags.push(l.name);
+      const btn = document.getElementById('wtag-'+l.name);
+      if (btn) btn.style.opacity = '1';
+    });
+  }
+  document.getElementById('write-modal').classList.add('open');
+}
+function closeWriteModal() {
+  document.getElementById('write-modal').classList.remove('open');
+}
+function toggleWriteTag(tag) {
+  const btn = document.getElementById('wtag-'+tag);
+  const i = writeTags.indexOf(tag);
+  if (i>=0) { writeTags.splice(i,1); if(btn) btn.style.opacity='0.45'; }
+  else       { writeTags.push(tag);  if(btn) btn.style.opacity='1'; }
+}
+
+async function submitArticle() {
+  if (!ghPat||!ghRepo) { alert('PATとリポジトリを設定してください'); return; }
+  const title = document.getElementById('write-title').value.trim();
+  const body  = document.getElementById('write-body').value.trim();
+  const issueNum = document.getElementById('write-issue-number').value;
+  if (!title) { alert('タイトルを入力してください'); return; }
+  const submitBtn = document.getElementById('write-submit-btn');
+  submitBtn.textContent = '送信中...'; submitBtn.disabled = true;
+  const labels = ['article', ...writeTags];
+  try {
+    let res;
+    if (issueNum) {
+      // 編集
+      res = await ghApi('/issues/'+issueNum, {
+        method:'PATCH', body:JSON.stringify({title,body,labels}),
+        headers:{...ghHeaders(),'Content-Type':'application/json'}
+      });
+    } else {
+      // 新規
+      res = await ghApi('/issues', {
+        method:'POST', body:JSON.stringify({title,body,labels}),
+        headers:{...ghHeaders(),'Content-Type':'application/json'}
+      });
+    }
+    if (!res.ok) throw new Error('HTTP '+res.status);
+    closeWriteModal();
+    articlesLoaded = false;
+    loadArticles();
+    if (issueNum) closeArticleModal();
+  } catch(e) {
+    alert('投稿エラー: ' + e.message);
+  } finally {
+    submitBtn.textContent = issueNum ? '✦ 更新する' : '✦ 投稿する';
+    submitBtn.disabled = false;
+  }
+}
+
+
+// ── Players (X Account Exchange) ──────────────
+let allPlayers = [];
+let playerColorFilter = '';
+let playerColors = [];
+let playersLoaded = false;
+
+function initPlayersTab() {
+  if (!playersLoaded && ghRepo) loadPlayers();
+  else if (!ghRepo) {
+    document.getElementById('player-list-wrap').innerHTML =
+      '<div class="article-loading"><div style="color:var(--muted);font-size:14px;">⚙ 記事タブの設定からGitHubリポジトリを設定してください</div></div>';
+  }
+}
+
+async function loadPlayers() {
+  const wrap = document.getElementById('player-list-wrap');
+  wrap.innerHTML = '<div class="article-loading"><div class="article-loading-spin"></div><div>読み込み中...</div></div>';
+  try {
+    const res = await ghApi('/issues?state=open&labels=player&per_page=100&sort=created&direction=desc');
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    allPlayers = await res.json();
+    playersLoaded = true;
+    renderPlayers();
+  } catch(e) {
+    wrap.innerHTML = `<div class="article-loading"><div style="color:var(--loss);">⚠ 読み込みエラー: ${e.message}</div></div>`;
+  }
+}
+
+function parsePlayerBody(body) {
+  // Format: name\nxhandle\nregion\ncolors(comma)\nbio
+  const lines = (body||'').split('\n');
+  return {
+    name:    lines[0]?.replace(/^名前:\s*/,'') || '',
+    handle:  lines[1]?.replace(/^X:\s*/,'')    || '',
+    region:  lines[2]?.replace(/^地域:\s*/,'') || '',
+    colors:  (lines[3]?.replace(/^インク:\s*/,'') || '').split(',').map(s=>s.trim()).filter(Boolean),
+    bio:     lines[4]?.replace(/^一言:\s*/,'') || '',
+  };
+}
+
+function renderPlayers() {
+  const wrap = document.getElementById('player-list-wrap');
+  const q = (document.getElementById('player-search')?.value||'').toLowerCase();
+  let list = allPlayers;
+
+  // Color filter
+  if (playerColorFilter) {
+    list = list.filter(p => {
+      const d = parsePlayerBody(p.body);
+      return d.colors.includes(playerColorFilter);
+    });
+  }
+  // Text search
+  if (q) {
+    list = list.filter(p => {
+      const d = parsePlayerBody(p.body);
+      return d.name.toLowerCase().includes(q) ||
+             d.handle.toLowerCase().includes(q) ||
+             d.region.toLowerCase().includes(q) ||
+             d.bio.toLowerCase().includes(q);
+    });
+  }
+
+  if (!list.length) {
+    wrap.innerHTML = '<div class="empty-state"><div class="empty-icon">👥</div><div class="empty-text">プレイヤーが見つかりません</div></div>';
+    return;
+  }
+
+  wrap.innerHTML = list.map(issue => {
+    const d = parsePlayerBody(issue.body);
+    const colorDots = d.colors.map(c => `<span style="font-size:14px;">${COLORS[c]?.emoji||''}</span>`).join('');
+    const myIssueNum = localStorage.getItem('lorcana-my-player-issue');
+    const isMe = String(issue.number) === String(myIssueNum);
+    return `<div class="player-card">
+      <div class="player-avatar">${d.colors[0]?COLORS[d.colors[0]]?.emoji||'🎴':'🎴'}</div>
+      <div style="flex:1;min-width:0;">
+        <div class="player-name">${d.name||'名前なし'} ${isMe?'<span style="font-size:10px;color:var(--win);background:rgba(64,200,120,.1);border-radius:4px;padding:1px 6px;">自分</span>':''}</div>
+        ${d.handle?`<div class="player-handle">@${d.handle}</div>`:''}
+        ${d.region?`<div style="margin-bottom:5px;"><span class="player-region">📍 ${d.region}</span></div>`:''}
+        <div class="player-colors">${colorDots}</div>
+        ${d.bio?`<div class="player-bio">${d.bio}</div>`:''}
+      </div>
+      <div style="display:flex;flex-direction:column;gap:6px;align-items:flex-end;flex-shrink:0;">
+        ${d.handle?`<button class="player-follow-btn" onclick="followPlayer('${d.handle}')">フォロー</button>`:''}
+        ${isMe?`<button onclick="openPlayerModal(${issue.number})" style="padding:5px 10px;border-radius:10px;background:none;border:1px solid rgba(201,168,76,.25);color:var(--gold);font-size:11px;cursor:pointer;">編集</button>`:''}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function followPlayer(handle) {
+  window.open('https://twitter.com/intent/follow?screen_name=' + encodeURIComponent(handle), '_blank');
+}
+
+function setPlayerColorFilter(color) {
+  playerColorFilter = color;
+  document.querySelectorAll('#player-color-filter .filter-chip').forEach((c,i) => {
+    const colors = ['','Amber','Ruby','Sapphire','Emerald','Amethyst','Steel'];
+    c.classList.toggle('active', colors[i] === color);
+  });
+  renderPlayers();
+}
+
+function filterPlayers() { renderPlayers(); }
+
+// ── Register/Edit ──────────────────────────────
+function openPlayerModal(issueNum) {
+  playerColors = [];
+  document.getElementById('player-colors-grid').querySelectorAll('.color-btn').forEach(b => {
+    b.classList.remove('selected','disabled-color');
+  });
+  document.getElementById('player-issue-number').value = issueNum || '';
+  document.getElementById('player-modal-title').textContent = issueNum ? '✏ プロフィール編集' : '✦ プロフィール登録';
+  document.getElementById('player-submit-btn').textContent = issueNum ? '✦ 更新する ✦' : '✦ 登録する ✦';
+  document.getElementById('player-delete-btn').style.display = issueNum ? '' : 'none';
+
+  if (issueNum) {
+    const issue = allPlayers.find(p => p.number === issueNum);
+    if (issue) {
+      const d = parsePlayerBody(issue.body);
+      document.getElementById('player-name-input').value   = d.name;
+      document.getElementById('player-xhandle-input').value = d.handle;
+      document.getElementById('player-region-input').value  = d.region;
+      document.getElementById('player-bio-input').value     = d.bio;
+      playerColors = [...d.colors];
+      document.getElementById('player-colors-grid').querySelectorAll('.color-btn').forEach(b => {
+        b.classList.toggle('selected', playerColors.includes(b.dataset.color));
+        b.classList.toggle('disabled-color', false);
+      });
+    }
+  } else {
+    document.getElementById('player-name-input').value   = '';
+    document.getElementById('player-xhandle-input').value = '';
+    document.getElementById('player-region-input').value  = '';
+    document.getElementById('player-bio-input').value     = '';
+  }
+  document.getElementById('player-modal').classList.add('open');
+}
+function closePlayerModal() {
+  document.getElementById('player-modal').classList.remove('open');
+}
+
+function togglePlayerColor(color) {
+  const i = playerColors.indexOf(color);
+  if (i >= 0) { playerColors.splice(i,1); }
+  else         { playerColors.push(color); }
+  document.getElementById('player-colors-grid').querySelectorAll('.color-btn').forEach(b => {
+    b.classList.toggle('selected', playerColors.includes(b.dataset.color));
+  });
+}
+
+async function submitPlayer() {
+  if (!ghPat||!ghRepo) { alert('記事タブの⚙設定でPATを設定してください'); return; }
+  const name   = document.getElementById('player-name-input').value.trim();
+  const handle = document.getElementById('player-xhandle-input').value.trim().replace(/^@/,'');
+  const region = document.getElementById('player-region-input').value.trim();
+  const bio    = document.getElementById('player-bio-input').value.trim();
+  const issueNum = document.getElementById('player-issue-number').value;
+  if (!name) { alert('表示名を入力してください'); return; }
+
+  const body = `名前: ${name}\nX: ${handle}\n地域: ${region}\nインク: ${playerColors.join(',')}\n一言: ${bio}`;
+  const title = `[Player] ${name}${handle?' (@'+handle+')':''}`;
+
+  const btn = document.getElementById('player-submit-btn');
+  btn.textContent='送信中...'; btn.disabled=true;
+  try {
+    let res;
+    if (issueNum) {
+      res = await ghApi('/issues/'+issueNum, {
+        method:'PATCH', body:JSON.stringify({title, body}),
+        headers:{...ghHeaders(),'Content-Type':'application/json'}
+      });
+    } else {
+      res = await ghApi('/issues', {
+        method:'POST', body:JSON.stringify({title, body, labels:['player']}),
+        headers:{...ghHeaders(),'Content-Type':'application/json'}
+      });
+      if (res.ok) {
+        const created = await res.clone().json();
+        localStorage.setItem('lorcana-my-player-issue', String(created.number));
+      }
+    }
+    if (!res.ok) throw new Error('HTTP '+res.status);
+    closePlayerModal();
+    playersLoaded = false;
+    loadPlayers();
+  } catch(e) {
+    alert('エラー: '+e.message);
+  } finally {
+    btn.textContent = issueNum ? '✦ 更新する ✦' : '✦ 登録する ✦';
+    btn.disabled = false;
+  }
+}
+
+async function deletePlayer() {
+  const issueNum = document.getElementById('player-issue-number').value;
+  if (!issueNum||!confirm('登録を削除しますか？')) return;
+  try {
+    await ghApi('/issues/'+issueNum, {
+      method:'PATCH', body:JSON.stringify({state:'closed'}),
+      headers:{...ghHeaders(),'Content-Type':'application/json'}
+    });
+    localStorage.removeItem('lorcana-my-player-issue');
+    closePlayerModal();
+    playersLoaded = false;
+    loadPlayers();
+  } catch(e) { alert('エラー: '+e.message); }
+}
+
 // ── Init ───────────────────────────────────────
 updateStats();
 renderHandleList('');
 renderRecordTournPicker();
 updateFilterBanner();
 setupLoreButtons();
+updateSettingsBtn();
 
 if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(()=>{});
 </script>
