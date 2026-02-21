@@ -374,28 +374,33 @@ input:focus{border-color:var(--gold);}
 
 /* Timer bar */
 .timer-bar{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:14px 18px;
+  display:flex;flex-direction:column;align-items:center;
+  padding:16px 18px 14px;
   background:var(--surface2);
   border-bottom:1px solid rgba(201,168,76,.1);
   gap:12px;
 }
 .timer-display{
-  font-family:var(--font-display);font-size:32px;color:var(--gold);
-  letter-spacing:4px;min-width:96px;text-align:center;
+  font-family:var(--font-display);
+  font-size:clamp(44px,14vw,72px);
+  color:var(--gold);
+  letter-spacing:6px;
+  text-align:center;
+  line-height:1;
 }
 .timer-display.running{color:var(--win);}
 .timer-display.paused{color:var(--gold);opacity:.7;}
+.timer-btns-row{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;}
 .timer-btn{
-  padding:8px 18px;border-radius:20px;border:1px solid rgba(201,168,76,.3);
+  padding:9px 20px;border-radius:20px;border:1px solid rgba(201,168,76,.3);
   background:rgba(201,168,76,.1);color:var(--gold);font-family:var(--font-body);
-  font-size:13px;cursor:pointer;transition:all .2s;white-space:nowrap;
+  font-size:14px;cursor:pointer;transition:all .2s;white-space:nowrap;
 }
 .timer-btn:hover{background:rgba(201,168,76,.25);}
 .timer-btn.start{border-color:var(--win);background:rgba(64,200,120,.12);color:var(--win);}
 .timer-btn.stop{border-color:var(--loss);background:rgba(232,64,90,.1);color:var(--loss);}
 .timer-btn.pause{border-color:var(--gold);background:rgba(201,168,76,.12);}
-.timer-btn.reset{border-color:var(--muted);background:none;color:var(--muted);font-size:12px;}
+.timer-btn.reset{border-color:var(--muted);background:none;color:var(--muted);font-size:13px;}
 
 /* Lore counters */
 .lore-area{display:grid;grid-template-columns:1fr 1fr;gap:0;}
@@ -544,13 +549,13 @@ input:focus{border-color:var(--gold);}
 
       <!-- Timer bar -->
       <div class="timer-bar">
-        <div style="display:flex;gap:8px;">
+        <div class="timer-display" id="timer-display">00:00</div>
+        <div class="timer-btns-row">
           <button class="timer-btn start" id="timer-start-btn" onclick="timerStart()">▶ 開始</button>
           <button class="timer-btn pause" id="timer-pause-btn" onclick="timerPause()" style="display:none;">⏸ 一時停止</button>
           <button class="timer-btn stop"  id="timer-stop-btn"  onclick="timerStop()"  style="display:none;">⏹ 終了</button>
-          <button class="timer-btn reset" id="timer-reset-btn" onclick="timerReset()">↺</button>
+          <button class="timer-btn reset" id="timer-reset-btn" onclick="timerReset()">↺ リセット</button>
         </div>
-        <div class="timer-display" id="timer-display">00:00</div>
       </div>
 
       <!-- Lore counters -->
@@ -740,10 +745,10 @@ input:focus{border-color:var(--gold);}
           </a>
         </label>
         <div style="display:flex;gap:8px;align-items:center;">
-          <input type="text" id="my-deck-code" placeholder="公式デッキ編成で作成したデッキのURLを貼り付け" style="flex:1;">
-          <button id="deck-code-link-btn" onclick="openDeckCode('my-deck-code')"
+          <input type="text" id="my-deck-code" placeholder="例：12345678901234567（17桁のコード）" style="flex:1;">
+          <button onclick="openDeckCode('my-deck-code')"
             style="padding:8px 12px;border-radius:8px;background:rgba(64,128,232,.12);border:1px solid rgba(64,128,232,.3);color:var(--sapphire);font-size:12px;cursor:pointer;white-space:nowrap;flex-shrink:0;">
-            開く
+            📋 コピーして開く
           </button>
         </div>
       </div>
@@ -960,10 +965,10 @@ input:focus{border-color:var(--gold);}
           </a>
         </label>
         <div style="display:flex;gap:8px;align-items:center;">
-          <input type="text" id="edit-my-deck-code" placeholder="公式デッキ編成のデッキURL" style="flex:1;">
+          <input type="text" id="edit-my-deck-code" placeholder="例：12345678901234567（17桁のコード）" style="flex:1;">
           <button onclick="openDeckCode('edit-my-deck-code')"
             style="padding:8px 12px;border-radius:8px;background:rgba(64,128,232,.12);border:1px solid rgba(64,128,232,.3);color:var(--sapphire);font-size:12px;cursor:pointer;white-space:nowrap;flex-shrink:0;">
-            開く
+            📋 コピーして開く
           </button>
         </div>
       </div>
@@ -1364,10 +1369,46 @@ function adjustVal(id,delta,min,max) {
 }
 function openDeckCode(inputId) {
   const val = document.getElementById(inputId)?.value.trim();
-  if (!val) return;
-  // URLをそのまま開く
-  const url = val.startsWith('http') ? val : 'https://www.takaratomy.co.jp/products/disneylorcana/deckbuilder/?deck=' + encodeURIComponent(val);
-  window.open(url, '_blank', 'noopener');
+  if (!val) { alert('デッキコードを入力してください'); return; }
+  // クリップボードにコピーしてから公式ページを開く
+  const officialUrl = 'https://www.takaratomy.co.jp/products/disneylorcana/deckbuilder/';
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(val).then(() => {
+      showDeckCodeToast(val);
+      window.open(officialUrl, '_blank', 'noopener');
+    }).catch(() => {
+      // フォールバック
+      showDeckCodeToast(val);
+      window.open(officialUrl, '_blank', 'noopener');
+    });
+  } else {
+    showDeckCodeToast(val);
+    window.open(officialUrl, '_blank', 'noopener');
+  }
+}
+function deckBtn(el) {
+  openDeckCodeDirect(el.dataset.code);
+}
+function openDeckCodeDirect(code) {
+  if (!code) return;
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(code).catch(()=>{});
+  }
+  showDeckCodeToast(code);
+  window.open('https://www.takaratomy.co.jp/products/disneylorcana/deckbuilder/', '_blank', 'noopener');
+}
+function showDeckCodeToast(code) {
+  // 既存トーストを削除
+  document.getElementById('deck-code-toast')?.remove();
+  const t = document.createElement('div');
+  t.id = 'deck-code-toast';
+  t.innerHTML = `<div style="font-size:11px;color:var(--muted);margin-bottom:4px;">コードをコピーしました</div>
+    <div style="font-family:var(--font-display);font-size:18px;color:var(--gold);letter-spacing:2px;">${code}</div>
+    <div style="font-size:11px;color:var(--muted);margin-top:6px;">公式ページの入力欄に貼り付けてください</div>`;
+  t.style.cssText = 'position:fixed;bottom:calc(90px + env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);background:var(--surface);border:1px solid rgba(201,168,76,.4);border-radius:14px;padding:14px 20px;text-align:center;z-index:9999;box-shadow:0 8px 32px rgba(0,0,0,.5);min-width:260px;animation:fadeInUp .3s ease;';
+  document.body.appendChild(t);
+  setTimeout(() => t.style.opacity='0', 3500);
+  setTimeout(() => t.remove(), 4000);
 }
 
 // ── Record form tournament picker ──────────────
@@ -1519,7 +1560,7 @@ function renderHistory() {
           ${m.myScore!==undefined&&m.oppScore!==undefined?`<span style="font-size:12px;color:var(--muted);">🏅 ${m.myScore}-${m.oppScore}</span>`:''}
           ${(m.myMulligan>0||m.oppMulligan>0)?`<span style="font-size:12px;color:var(--muted);">🔄 ${m.myMulligan||0}-${m.oppMulligan||0}</span>`:''}
           ${m.note?`<span style="font-size:12px;color:var(--muted);font-style:italic;">${m.note}</span>`:''}
-          ${m.deckCode?`<a href="${m.deckCode.startsWith('http')?m.deckCode:'https://www.takaratomy.co.jp/products/disneylorcana/deckbuilder/?deck='+encodeURIComponent(m.deckCode)}" target="_blank" rel="noopener" style="font-size:11px;color:var(--sapphire);text-decoration:none;background:rgba(64,128,232,.08);border:1px solid rgba(64,128,232,.2);border-radius:4px;padding:2px 7px;">🔗 デッキ</a>`:''}
+          ${m.deckCode?'<button onclick="event.stopPropagation();deckBtn(this)" data-code="'+m.deckCode+'" style="font-size:11px;color:var(--sapphire);background:rgba(64,128,232,.08);border:1px solid rgba(64,128,232,.2);border-radius:4px;padding:2px 7px;cursor:pointer;">📋 デッキを見る</button>':''}
         </div>
       </div>
       <div style="text-align:right;flex-shrink:0;">
