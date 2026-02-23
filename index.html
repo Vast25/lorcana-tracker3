@@ -508,6 +508,23 @@ input:focus{border-color:var(--gold);}
 .player-modal-box{background:var(--surface);border:1px solid rgba(201,168,76,.2);border-radius:20px 20px 0 0;width:100%;max-width:640px;max-height:85vh;overflow-y:auto;transform:translateY(40px);transition:transform .25s;padding-bottom:env(safe-area-inset-bottom);}
 .player-modal-overlay.open .player-modal-box{transform:translateY(0);}
 .player-modal-header{display:flex;justify-content:space-between;align-items:center;padding:18px 20px 12px;border-bottom:1px solid rgba(201,168,76,.1);}
+
+/* Pagination */
+.pagination{display:flex;justify-content:center;align-items:center;gap:8px;margin:14px 0 4px;flex-wrap:wrap;}
+.page-btn{padding:7px 14px;border-radius:20px;border:1px solid rgba(201,168,76,.2);background:none;color:var(--muted);font-family:var(--font-display);font-size:12px;cursor:pointer;transition:all .2s;}
+.page-btn:hover{border-color:var(--gold);color:var(--gold);}
+.page-btn.active{border-color:var(--gold);background:rgba(201,168,76,.15);color:var(--gold);}
+.page-btn:disabled{opacity:.3;cursor:default;}
+.page-info{font-size:11px;color:var(--muted);letter-spacing:1px;}
+/* Season edit modal */
+.season-edit-modal-overlay{position:fixed;inset:0;z-index:3000;background:rgba(0,0,0,.8);display:flex;align-items:flex-end;justify-content:center;opacity:0;pointer-events:none;transition:opacity .25s;}
+.season-edit-modal-overlay.open{opacity:1;pointer-events:all;}
+.season-edit-modal-box{background:var(--surface);border:1px solid rgba(201,168,76,.2);border-radius:20px 20px 0 0;width:100%;max-width:640px;padding:0 0 env(safe-area-inset-bottom);transform:translateY(40px);transition:transform .25s;}
+.season-edit-modal-overlay.open .season-edit-modal-box{transform:translateY(0);}
+/* Analytics tabs */
+.analytics-toggle{display:flex;gap:0;border:1px solid rgba(201,168,76,.2);border-radius:10px;overflow:hidden;margin-bottom:14px;}
+.analytics-toggle-btn{flex:1;padding:9px 0;background:none;border:none;color:var(--muted);font-family:var(--font-body);font-size:13px;cursor:pointer;transition:all .2s;}
+.analytics-toggle-btn.active{background:rgba(201,168,76,.15);color:var(--gold);}
 </style>
 </head>
 <body>
@@ -775,10 +792,15 @@ input:focus{border-color:var(--gold);}
     <div class="history-list" id="history-list">
       <div class="empty-state"><div class="empty-icon">⚱</div><div class="empty-text">まだ対戦記録がありません</div></div>
     </div>
+    <div class="pagination" id="history-pagination"></div>
   </div>
 
   <!-- ══ Analytics Panel ══ -->
   <div class="panel" id="panel-analytics">
+    <div class="analytics-toggle">
+      <button class="analytics-toggle-btn active" id="analytics-tab-tourn" onclick="switchAnalyticsTab('tourn')">🏆 大会</button>
+      <button class="analytics-toggle-btn" id="analytics-tab-adj" onclick="switchAnalyticsTab('adj')">🔧 調整</button>
+    </div>
     <div class="analytics-grid">
       <div class="analytics-card"><div class="analytics-title">自分のデッキ（2色） 勝率</div><div id="my-color-stats"></div></div>
       <div class="analytics-card"><div class="analytics-title">対戦相手のデッキ（2色） 遭遇 / 勝率</div><div id="opp-color-stats"></div></div>
@@ -1146,6 +1168,23 @@ input:focus{border-color:var(--gold);}
     </div>
   </div>
 
+
+  <!-- Season Edit Modal -->
+  <div class="season-edit-modal-overlay" id="season-edit-modal" onclick="if(event.target===this)closeSeasonEdit()">
+    <div class="season-edit-modal-box">
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:18px 20px 12px;border-bottom:1px solid rgba(201,168,76,.1);">
+        <span style="font-family:var(--font-display);font-size:15px;color:var(--gold);letter-spacing:1px;">✏ シーズンを編集</span>
+        <button style="background:none;border:none;color:var(--muted);font-size:22px;cursor:pointer;" onclick="closeSeasonEdit()">✕</button>
+      </div>
+      <div style="padding:16px 20px 20px;">
+        <input type="hidden" id="season-edit-id">
+        <div class="form-full"><label>シーズン名</label><input type="text" id="season-edit-name" placeholder="例：第5章シーズン"></div>
+        <div class="form-full"><label>開始日</label><input type="date" id="season-edit-start"></div>
+        <button class="btn-submit" onclick="saveSeasonEdit()">✦ 保存する ✦</button>
+      </div>
+    </div>
+  </div>
+
 <!-- Win Overlay -->
 <div class="win-overlay" id="win-overlay">
   <div class="win-overlay-title" id="win-overlay-title">🏆 WIN</div>
@@ -1196,12 +1235,19 @@ let tournTypeSelected=null; // type picked in add-tournament form
 
 // Local history filter
 let currentFilter = 'all';
+let historyPage = 0;
+const HISTORY_PAGE_SIZE = 20;
+let analyticsMode = 'tourn'; // 'tourn' | 'adj'
 
 // ── Persistence ────────────────────────────────
 function save(key, data) { localStorage.setItem('lorcana-' + key, JSON.stringify(data)); }
 
 // ── Global filter helpers ──────────────────────
 function getBaseMatches() {
+  // analyticsMode='tourn'なら調整を除外、'adj'なら調整のみ
+  return getRawBaseMatches();
+}
+function getRawBaseMatches() {
   if (globalFilter.type === 'all') return matches;
   if (globalFilter.type === 'tournament') return matches.filter(m => m.tournamentId === globalFilter.id);
   if (globalFilter.type === 'season') {
@@ -1219,6 +1265,11 @@ function getBaseMatches() {
   return matches;
 }
 
+// 調整を除いた公式戦のみ
+function getTournMatches(base) { return base.filter(m=>m.eventType!=='adj'); }
+// 調整のみ
+function getAdjMatches(base) { return base.filter(m=>m.eventType==='adj'); }
+
 function setGlobalFilter(type, id) {
   globalFilter = {type, id: id||null};
   updateFilterBanner();
@@ -1232,7 +1283,7 @@ function setGlobalFilter(type, id) {
   }
 }
 
-function clearGlobalFilter() { setGlobalFilter('all'); renderEventsTab(); }
+function clearGlobalFilter() { historyPage=0; setGlobalFilter('all'); renderEventsTab(); }
 
 function updateFilterBanner() {
   const banner = document.getElementById('active-filter-banner');
@@ -1250,7 +1301,7 @@ function updateFilterBanner() {
 
 // ── Stats bar ──────────────────────────────────
 function updateStats() {
-  const base = getBaseMatches();
+  const base = getTournMatches(getBaseMatches());
   const w = base.filter(m => m.result==='win').length;
   const l = base.filter(m => m.result==='loss').length;
   const d = base.filter(m => m.result==='draw').length;
@@ -1347,6 +1398,20 @@ function toggleColor(side,color) {
 function selectEvent(ev) {
   selectedEvent = selectedEvent===ev ? null : ev;
   ['scs','non','gp','chal','shop','sst','adj'].forEach(e => document.getElementById('btn-'+e).classList.toggle('selected',e===selectedEvent));
+  // 調整選択時: 前回の相手情報を引継ぎ
+  if (selectedEvent==='adj' && lastAdjOppHandle) {
+    const hEl=document.getElementById('opp-handle');
+    const dEl=document.getElementById('opp-deck');
+    if (!hEl.value) hEl.value = lastAdjOppHandle;
+    if (!dEl.value) dEl.value = lastAdjOppDeck;
+    if (!oppColors.length && lastAdjOppColors.length) {
+      oppColors = [...lastAdjOppColors];
+      document.querySelectorAll('#opp-colors .color-btn').forEach(b=>{
+        b.classList.toggle('selected', oppColors.includes(b.dataset.color));
+        b.classList.toggle('disabled-color', oppColors.length>=2 && !oppColors.includes(b.dataset.color));
+      });
+    }
+  }
 }
 function selectTurn(t) {
   selectedTurn = selectedTurn===t ? null : t;
@@ -1467,6 +1532,12 @@ function saveMatch() {
   };
   matches.unshift(match);
   save('matches',matches);
+  // 調整情報を保存
+  if (match.eventType==='adj') {
+    lastAdjOppHandle = match.oppHandle||'';
+    lastAdjOppDeck   = match.oppDeck||'';
+    lastAdjOppColors = [...(match.oppColors||[])];
+  }
   updateStats();
   resetForm();
 }
@@ -1520,6 +1591,7 @@ function deleteMatch(id) {
 // ── History ────────────────────────────────────
 function setFilter(f) {
   currentFilter=f;
+  historyPage=0;
   document.querySelectorAll('.filter-chip').forEach((c,i)=>
     c.classList.toggle('active',['all','win','loss','draw','scs','non','gp','chal','shop','sst','adj'][i]===f));
   renderHistory();
@@ -1540,12 +1612,17 @@ function eventBadge(ev) {
 }
 function renderHistory() {
   const list = document.getElementById('history-list');
+  const paginationEl = document.getElementById('history-pagination');
   const filtered = getFilteredMatches();
   if (!filtered.length) {
     list.innerHTML='<div class="empty-state"><div class="empty-icon">⚱</div><div class="empty-text">記録がありません</div></div>';
+    if (paginationEl) paginationEl.innerHTML='';
     return;
   }
-  list.innerHTML = filtered.map(m => {
+  const totalPages = Math.ceil(filtered.length / HISTORY_PAGE_SIZE);
+  if (historyPage >= totalPages) historyPage = totalPages - 1;
+  const paged = filtered.slice(historyPage * HISTORY_PAGE_SIZE, (historyPage+1) * HISTORY_PAGE_SIZE);
+  list.innerHTML = paged.map(m => {
     const tourn = m.tournamentId ? tournaments.find(t=>t.id===m.tournamentId) : null;
     return `<div class="match-card ${m.result}">
       <div class="match-result">${m.result==='win'?'WIN':m.result==='loss'?'LOSS':'DRAW'}</div>
@@ -1573,11 +1650,41 @@ function renderHistory() {
       </div>
     </div>`;
   }).join('');
+
+  // Pagination
+  if (paginationEl) {
+    if (totalPages <= 1) { paginationEl.innerHTML=''; }
+    else {
+      let p = '';
+      p += `<button class="page-btn" onclick="goHistoryPage(${historyPage-1})" ${historyPage===0?'disabled':''}>◀</button>`;
+      const start = Math.max(0, historyPage-2);
+      const end   = Math.min(totalPages-1, historyPage+2);
+      if (start>0) p+=`<button class="page-btn" onclick="goHistoryPage(0)">1</button>${start>1?'<span class="page-info">…</span>':''}`;
+      for (let i=start;i<=end;i++) p+=`<button class="page-btn${i===historyPage?' active':''}" onclick="goHistoryPage(${i})">${i+1}</button>`;
+      if (end<totalPages-1) p+=`${end<totalPages-2?'<span class="page-info">…</span>':''}<button class="page-btn" onclick="goHistoryPage(${totalPages-1})">${totalPages}</button>`;
+      p += `<button class="page-btn" onclick="goHistoryPage(${historyPage+1})" ${historyPage===totalPages-1?'disabled':''}>▶</button>`;
+      p += `<span class="page-info">${historyPage+1} / ${totalPages}ページ (${filtered.length}件)</span>`;
+      paginationEl.innerHTML = p;
+    }
+  }
+}
+function goHistoryPage(page) {
+  historyPage = page;
+  renderHistory();
+  document.getElementById('history-list')?.scrollIntoView({behavior:'smooth',block:'start'});
 }
 
 // ── Analytics ──────────────────────────────────
+function switchAnalyticsTab(mode) {
+  analyticsMode = mode;
+  document.getElementById('analytics-tab-tourn').classList.toggle('active', mode==='tourn');
+  document.getElementById('analytics-tab-adj').classList.toggle('active', mode==='adj');
+  document.getElementById('turn-stats').innerHTML='';
+  renderAnalytics();
+}
 function renderAnalytics() {
-  const base = getBaseMatches();
+  const rawBase = getBaseMatches();
+  const base = analyticsMode==='adj' ? getAdjMatches(rawBase) : getTournMatches(rawBase);
 
   // Color stats
   renderColorStats('my','my-color-stats',base);
@@ -1804,6 +1911,7 @@ function renderEventsTab() {
           <div class="season-card-meta">${dr} · ${sm.length}戦</div>
         </div>
         <div class="season-card-wr">${wr}</div>
+        <button class="tourn-card-del" style="background:rgba(201,168,76,.08);border-color:rgba(201,168,76,.25);color:var(--gold);margin-right:4px;" onclick="event.stopPropagation();openSeasonEdit('${s.id}')">✏</button>
         <button class="tourn-card-del" onclick="event.stopPropagation();deleteSeason('${s.id}')">✕</button>
       </div>`;
     }).join('');
@@ -2712,6 +2820,37 @@ async function deletePlayer() {
   } catch(e) { alert('エラー: '+e.message); }
 }
 
+
+// ── Season edit ────────────────────────────────
+function openSeasonEdit(id) {
+  const s = seasons.find(s=>s.id===id);
+  if (!s) return;
+  document.getElementById('season-edit-id').value = s.id;
+  document.getElementById('season-edit-name').value = s.name;
+  document.getElementById('season-edit-start').value = s.start||'';
+  document.getElementById('season-edit-modal').classList.add('open');
+}
+function closeSeasonEdit() {
+  document.getElementById('season-edit-modal').classList.remove('open');
+}
+function saveSeasonEdit() {
+  const id   = document.getElementById('season-edit-id').value;
+  const name = document.getElementById('season-edit-name').value.trim();
+  const start= document.getElementById('season-edit-start').value;
+  if (!name) { alert('シーズン名を入力してください'); return; }
+  const s = seasons.find(s=>s.id===id);
+  if (!s) return;
+  s.name = name; s.start = start;
+  save('seasons', seasons);
+  closeSeasonEdit();
+  renderEventsTab();
+  updateFilterBanner();
+}
+
+// ── Adj carry-over ─────────────────────────────
+let lastAdjOppHandle = '';
+let lastAdjOppDeck   = '';
+let lastAdjOppColors = [];
 // ── Init ───────────────────────────────────────
 updateStats();
 renderHandleList('');
