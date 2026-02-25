@@ -1186,7 +1186,7 @@ input:focus{border-color:var(--gold);}
       <div class="dash-section">
         <div class="dash-section-title">直近10戦 Win / Loss 推移</div>
         <div class="dash-chart-wrap">
-          <canvas id="dash-chart" height="55" style="width:100%;display:block;"></canvas>
+          <canvas id="dash-chart" height="28" style="width:100%;display:block;"></canvas>
         </div>
         <div class="dash-chart-legend">
           <div class="dash-chart-legend-item"><div class="dash-chart-legend-dot" style="background:var(--win);"></div>Win</div>
@@ -1238,15 +1238,24 @@ input:focus{border-color:var(--gold);}
 
       <div class="form-full">
         <label>大会種別</label>
-        <div class="event-grid" style="grid-template-columns:repeat(4,1fr);">
-          <button class="event-btn scs" id="btn-scs" onclick="selectEvent('scs')"><span class="event-icon">🏆</span>SCS</button>
-          <button class="event-btn non" id="btn-non" onclick="selectEvent('non')"><span class="event-icon">🎴</span>非公認</button>
-          <button class="event-btn gp"  id="btn-gp"  onclick="selectEvent('gp')"><span class="event-icon">🌟</span>GP</button>
-          <button class="event-btn chal" id="btn-chal" onclick="selectEvent('chal')"><span class="event-icon">⚔️</span>チャレンジ</button>
-          <button class="event-btn shop" id="btn-shop" onclick="selectEvent('shop')"><span class="event-icon">🏪</span>ショップ</button>
-          <button class="event-btn sst"  id="btn-sst"  onclick="selectEvent('sst')"><span class="event-icon">🎖</span>店頭ST</button>
-          <button class="event-btn adj"  id="btn-adj"  onclick="selectEvent('adj')"><span class="event-icon">🔧</span>調整</button>
+        <!-- 非表示レガシーボタン（JS互換維持） -->
+        <div style="display:none;">
+          <button id="btn-scs"></button><button id="btn-non"></button>
+          <button id="btn-gp"></button><button id="btn-chal"></button>
+          <button id="btn-shop"></button><button id="btn-sst"></button>
+          <button id="btn-adj"></button>
         </div>
+        <select id="event-type-select" onchange="selectEvent(this.value||null)"
+          style="width:100%;background:var(--surface2);border:1px solid rgba(201,168,76,.2);border-radius:10px;padding:12px 14px;color:var(--text);font-size:15px;outline:none;appearance:none;-webkit-appearance:none;cursor:pointer;">
+          <option value="">── 選択してください ──</option>
+          <option value="scs">🏆 SCS</option>
+          <option value="gp">🌟 GP</option>
+          <option value="chal">⚔️ チャレンジ</option>
+          <option value="shop">🏪 ショップ大会</option>
+          <option value="sst">🎖 店頭ST</option>
+          <option value="non">🎴 非公認</option>
+          <option value="adj">🔧 調整</option>
+        </select>
       </div>
 
       <div class="form-full">
@@ -2374,8 +2383,9 @@ document.addEventListener('visibilitychange', () => {
 function switchTab(tab) {
   const sel = document.getElementById('nav-select');
   if (sel && sel.value !== tab) {
-    const mainTabs = ['dashboard','record','counter','history','analytics','events','tweet','articles','players','slot','guide','pxdt'];
-    sel.value = mainTabs.includes(tab) ? tab : 'pxdt';
+    const mainTabs = ['dashboard','record','counter','history','analytics','events','tweet','articles','players','slot','guide'];
+    if (mainTabs.includes(tab)) sel.value = tab;
+    // pxdt系タブはドロップダウン非対象（隠しコマンド）
   }
   document.querySelectorAll('.tab').forEach((t,i) =>
     t.classList.toggle('active', ['dashboard','record','counter','history','analytics','events','tweet','articles','players','slot','guide','pxdt'][i]===tab));
@@ -2445,8 +2455,14 @@ function toggleColor(side,color) {
   });
 }
 function selectEvent(ev) {
-  selectedEvent = selectedEvent===ev ? null : ev;
-  ['scs','non','gp','chal','shop','sst','adj'].forEach(e => document.getElementById('btn-'+e).classList.toggle('selected',e===selectedEvent));
+  selectedEvent = (selectedEvent === ev || ev === null || ev === '') ? null : ev;
+  // レガシーボタン同期（非表示だが念のため）
+  ['scs','non','gp','chal','shop','sst','adj'].forEach(e => {
+    document.getElementById('btn-'+e)?.classList.toggle('selected', e===selectedEvent);
+  });
+  // プルダウン同期
+  const sel = document.getElementById('event-type-select');
+  if (sel) sel.value = selectedEvent || '';
   // 調整選択時: ロアカウンター＆タイマー自動リセット
   if (selectedEvent==='adj' && pxdtCfg.adjReset) {
     loreReset();
@@ -2631,8 +2647,11 @@ function resetForm(keepAdj=false) {
   document.getElementById('opp-mulligan').value='0';
   document.querySelectorAll('.color-btn').forEach(b=>{b.classList.remove('selected');b.classList.remove('disabled-color');});
   ['btn-win','btn-loss','btn-draw','btn-first','btn-second','btn-scs','btn-non','btn-gp','btn-chal','btn-shop','btn-sst','btn-adj']
-    .forEach(id=>document.getElementById(id).classList.remove('selected'));
+    .forEach(id=>document.getElementById(id)?.classList.remove('selected'));
   if (keepAdj) document.getElementById('btn-adj')?.classList.add('selected');
+  // プルダウンリセット
+  const evSel = document.getElementById('event-type-select');
+  if (evSel) evSel.value = keepAdj ? 'adj' : '';
 
   // 大会選択中なら復元
   if (keepTournId) {
