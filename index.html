@@ -1233,7 +1233,10 @@ input:focus{border-color:var(--gold);}
 
       <div class="form-full">
         <label>参加大会（登録済みから選択・任意）</label>
-        <div id="record-tourn-picker"></div>
+        <select id="record-tourn-picker" onchange="pickRecordTourn(this.value)"
+          style="width:100%;background:var(--surface2);border:1px solid rgba(201,168,76,.2);border-radius:10px;padding:12px 14px;color:var(--text);font-size:15px;outline:none;appearance:none;-webkit-appearance:none;cursor:pointer;">
+          <option value="">── 選択しない ──</option>
+        </select>
       </div>
 
       <div class="form-full">
@@ -2560,28 +2563,25 @@ function showDeckCodeToast(code) {
 function renderRecordTournPicker() {
   const el = document.getElementById('record-tourn-picker');
   if (!el) return;
-  if (!tournaments.length) {
-    el.innerHTML = '<div style="color:var(--muted);font-size:12px;font-style:italic;padding:4px 0;">「大会」タブで大会を登録するとここから選択できます</div>';
-    return;
-  }
-  el.innerHTML = tournaments.map(t => {
-    const sel = selectedTournId===t.id;
-    const icon = EVENT_INFO[t.type]?.icon||'';
-    return `<div class="tourn-pick-item${sel?' selected':''}" onclick="pickRecordTourn('${t.id}')">
-      <span>${icon}</span>
-      <span style="flex:1;">${t.name}</span>
-      ${t.date?`<span style="font-size:11px;color:var(--muted);">${t.date}</span>`:''}
-      <span class="tourn-pick-check">✓</span>
-    </div>`;
-  }).join('');
+  // select要素として再構築
+  el.innerHTML = '<option value="">── 選択しない ──</option>' +
+    tournaments.map(t => {
+      const icon = EVENT_INFO[t.type]?.icon || '';
+      const date = t.date ? ` (${t.date})` : '';
+      return `<option value="${t.id}"${selectedTournId===t.id?' selected':''}>${icon} ${t.name}${date}</option>`;
+    }).join('');
 }
 function pickRecordTourn(id) {
-  selectedTournId = selectedTournId===id ? null : id;
+  selectedTournId = id || null;
   if (selectedTournId) {
-    const t = tournaments.find(t=>t.id===id);
-    if (t?.type) { selectedEvent=t.type; ['scs','non','gp','chal','shop','sst','adj'].forEach(e=>document.getElementById('btn-'+e).classList.toggle('selected',e===t.type)); }
+    const t = tournaments.find(t=>t.id==id);
+    if (t?.type) {
+      selectedEvent = t.type;
+      ['scs','non','gp','chal','shop','sst','adj'].forEach(e => document.getElementById('btn-'+e)?.classList.toggle('selected', e===t.type));
+      const evSel = document.getElementById('event-type-select');
+      if (evSel) evSel.value = t.type;
+    }
   }
-  renderRecordTournPicker();
 }
 
 // ── Save / reset match ─────────────────────────
@@ -2640,6 +2640,8 @@ function resetForm(keepAdj=false) {
   myColors=[]; oppColors=[]; selectedResult=null; selectedTurn=null;
   selectedEvent = keepAdj ? 'adj' : null;
   selectedTournId=null;
+  const tp = document.getElementById('record-tourn-picker');
+  if (tp && tp.tagName==='SELECT') tp.value = '';
   ['opp-handle','opp-deck','game-time','game-note','my-deck-code'].forEach(id=>document.getElementById(id).value='');
   document.getElementById('my-score').value='0';
   document.getElementById('opp-score').value='0';
