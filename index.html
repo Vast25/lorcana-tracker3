@@ -971,36 +971,8 @@ input:focus{border-color:var(--gold);}
         </div>
       </div>
 
-      <!-- Lore counters — vertical -->
+      <!-- Lore counters — vertical (相手が上・自分が下) -->
       <div class="lore-area">
-
-        <!-- ── 自分 ── -->
-        <div class="lore-side" id="lore-my-side">
-          <!-- ラベル + プログレスバー -->
-          <div class="lore-side-top">
-            <div class="lore-side-label">自分</div>
-            <div class="lore-progress">
-              <div class="lore-progress-fill" id="lore-my-bar" style="width:0%"></div>
-            </div>
-          </div>
-          <!-- WIN バッジ -->
-          <div class="lore-win-badge" id="lore-my-badge">🏆 WINNER</div>
-          <!-- 大数字 -->
-          <div class="lore-number" id="lore-my-num">0</div>
-          <!-- ＋ / − ボタン -->
-          <div class="lore-controls">
-            <button class="lore-btn" onclick="loreAdj('my',-1)"
-              oncontextmenu="return false;"
-              ontouchstart="loreLongPressStart('my',-1,this)" ontouchend="loreLongPressEnd()" ontouchcancel="loreLongPressEnd()">
-              −
-            </button>
-            <button class="lore-btn plus" onclick="loreAdj('my',1)"
-              oncontextmenu="return false;"
-              ontouchstart="loreLongPressStart('my',1,this)" ontouchend="loreLongPressEnd()" ontouchcancel="loreLongPressEnd()">
-              ＋
-            </button>
-          </div>
-        </div>
 
         <!-- ── 相手 ── -->
         <div class="lore-side" id="lore-opp-side">
@@ -1021,6 +993,30 @@ input:focus{border-color:var(--gold);}
             <button class="lore-btn plus" onclick="loreAdj('opp',1)"
               oncontextmenu="return false;"
               ontouchstart="loreLongPressStart('opp',1,this)" ontouchend="loreLongPressEnd()" ontouchcancel="loreLongPressEnd()">
+              ＋
+            </button>
+          </div>
+        </div>
+
+        <!-- ── 自分 ── -->
+        <div class="lore-side" id="lore-my-side">
+          <div class="lore-side-top">
+            <div class="lore-side-label">自分</div>
+            <div class="lore-progress">
+              <div class="lore-progress-fill" id="lore-my-bar" style="width:0%"></div>
+            </div>
+          </div>
+          <div class="lore-win-badge" id="lore-my-badge">🏆 WINNER</div>
+          <div class="lore-number" id="lore-my-num">0</div>
+          <div class="lore-controls">
+            <button class="lore-btn" onclick="loreAdj('my',-1)"
+              oncontextmenu="return false;"
+              ontouchstart="loreLongPressStart('my',-1,this)" ontouchend="loreLongPressEnd()" ontouchcancel="loreLongPressEnd()">
+              −
+            </button>
+            <button class="lore-btn plus" onclick="loreAdj('my',1)"
+              oncontextmenu="return false;"
+              ontouchstart="loreLongPressStart('my',1,this)" ontouchend="loreLongPressEnd()" ontouchcancel="loreLongPressEnd()">
               ＋
             </button>
           </div>
@@ -4144,7 +4140,7 @@ function renderDashboard() {
 // ── PXDT MODE ──────────────────────────────────
 const PXDT_PW = '1206';
 let pxdtInput = '';
-let pxdtUnlocked = localStorage.getItem('lorcana-pxdt') === '1';
+let pxdtUnlocked = false; // 起動時は常にロック状態
 
 // 設定値 (デフォルト)
 let pxdtCfg = {
@@ -4938,7 +4934,8 @@ updateFilterBanner();
 setupLoreButtons();
 updateSettingsBtn();
 pxdtLoadCfg();
-if(pxdtUnlocked){document.body.classList.add('pxdt-mode');document.getElementById('app-logo').textContent='⚡ PXDT MODE ⚡';document.getElementById('pxdt-lock-section').style.display='none';pxdtRenderPanel();}
+// PXDT: 起動時は常にロック（localStorage無視）
+localStorage.removeItem('lorcana-pxdt');
 
 
 // ── Splash & Init routing ───────────────────────
