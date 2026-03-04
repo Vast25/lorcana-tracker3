@@ -1571,6 +1571,355 @@ input:focus{border-color:var(--gold);}
   font-size:13px;color:var(--text);box-shadow:0 4px 20px rgba(0,0,0,.5);
 }
 
+/* ══════════════════════════════════════════════
+   プロフィールカード（神 UI）
+══════════════════════════════════════════════ */
+#prof-section { margin-bottom: 16px; }
+
+/* ── 未設定ボタン ── */
+.prof-create-btn {
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  width: 100%; padding: 16px 20px;
+  background: linear-gradient(135deg,rgba(201,168,76,.07),rgba(140,80,255,.05));
+  border: 1px dashed rgba(201,168,76,.45); border-radius: 16px;
+  color: var(--gold); font-family: var(--font-display);
+  font-size: 13px; letter-spacing: 1.5px; cursor: pointer; transition: all .2s;
+}
+.prof-create-btn:active { background: rgba(201,168,76,.14); }
+
+/* ── 閲覧バナー ── */
+.prof-view-banner {
+  background: rgba(64,80,232,.12); border: 1px solid rgba(64,80,232,.3);
+  border-radius: 12px; padding: 10px 14px; margin-bottom: 10px;
+  font-size: 12px; color: #8090f8; display: none;
+}
+.prof-view-banner.visible { display: flex; align-items: center; gap: 8px; }
+
+/* ── カード本体（横長 1080/566 比率） ── */
+.prof-card-wrap { position: relative; }
+.prof-card {
+  width: 100%;
+  aspect-ratio: 1080 / 566;
+  background: linear-gradient(135deg,#0e0e1e 0%,#141428 50%,#0a0a1a 100%);
+  border: 1px solid rgba(201,168,76,.4); border-radius: 18px;
+  padding: 5% 6%; position: relative; overflow: hidden;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  box-sizing: border-box;
+}
+/* 背景装飾 */
+.prof-card::before {
+  content: '✦'; position: absolute; right: 5%; top: 8%;
+  font-size: clamp(28px,5vw,60px); color: rgba(201,168,76,.08);
+  pointer-events: none; line-height: 1;
+}
+.prof-card::after {
+  content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 35%;
+  background: linear-gradient(0deg,rgba(201,168,76,.04),transparent);
+  pointer-events: none; border-radius: 0 0 18px 18px;
+}
+/* カードヘッダー */
+.prof-card-header {
+  display: flex; justify-content: space-between; align-items: flex-start;
+}
+.prof-card-label {
+  font-family: var(--font-display); font-size: clamp(7px,1.2vw,12px);
+  letter-spacing: .2em; color: rgba(201,168,76,.55); margin-bottom: 4%;
+}
+/* ハンドル・ニックネーム */
+.prof-card-nickname {
+  font-family: var(--font-display); font-size: clamp(16px,3.8vw,42px);
+  color: #f0e0a0; letter-spacing: .03em; line-height: 1.1;
+  text-shadow: 0 0 30px rgba(201,168,76,.35);
+}
+.prof-card-handle {
+  font-size: clamp(10px,1.8vw,18px); color: rgba(201,168,76,.65);
+  letter-spacing: .05em; margin-top: 2%; font-weight: 600;
+}
+.prof-card-region {
+  font-size: clamp(8px,1.3vw,13px); color: rgba(255,255,255,.4);
+  letter-spacing: .08em; margin-top: 1%;
+}
+/* 色アイコン列 */
+.prof-card-colors {
+  display: flex; gap: clamp(4px,1vw,10px); margin-left: auto; flex-shrink: 0;
+}
+.prof-card-color-dot {
+  width: clamp(18px,3.2vw,34px); height: clamp(18px,3.2vw,34px);
+  border-radius: 50%; border: 2px solid rgba(255,255,255,.25);
+  display: flex; align-items: center; justify-content: center;
+  font-size: clamp(10px,1.8vw,18px);
+}
+/* フッター行（勝率・実績） */
+.prof-card-footer {
+  border-top: 1px solid rgba(201,168,76,.15);
+  padding-top: 3%; margin-top: 2%;
+  display: flex; gap: 4%; align-items: flex-end; flex-wrap: wrap;
+}
+.prof-card-stat {
+  display: flex; flex-direction: column;
+}
+.prof-card-stat-val {
+  font-family: var(--font-display); font-size: clamp(14px,3vw,32px);
+  color: var(--gold); line-height: 1;
+}
+.prof-card-stat-label {
+  font-size: clamp(6px,1vw,10px); color: rgba(255,255,255,.4);
+  letter-spacing: .1em; margin-top: 2px; text-transform: uppercase;
+}
+/* 実績フッター */
+.prof-card-ach {
+  flex: 1; min-width: 0;
+}
+.prof-card-ach-count {
+  font-family: var(--font-display); font-size: clamp(7px,1.1vw,11px);
+  color: rgba(201,168,76,.6); letter-spacing: .1em; margin-bottom: 3px;
+}
+.prof-card-ach-list {
+  display: flex; flex-wrap: wrap; gap: 3px;
+}
+.prof-card-ach-item {
+  font-size: clamp(7px,1.2vw,12px); padding: 2px 7px;
+  border-radius: 6px; border: 1px solid;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px;
+}
+.prof-card-ach-item.legendary {
+  color: #d8a8ff; border-color: rgba(180,130,255,.35); background: rgba(140,80,255,.1);
+}
+.prof-card-ach-item.epic {
+  color: #fdb07a; border-color: rgba(251,146,60,.35); background: rgba(251,146,60,.08);
+}
+.prof-card-ach-item.rare {
+  color: #93c5fd; border-color: rgba(96,165,250,.3); background: rgba(96,165,250,.07);
+}
+.prof-card-ach-item.common {
+  color: rgba(201,168,76,.8); border-color: rgba(201,168,76,.2); background: rgba(201,168,76,.05);
+}
+/* 一言 */
+.prof-card-bio {
+  font-size: clamp(8px,1.4vw,14px); color: rgba(255,255,255,.5);
+  line-height: 1.5; font-style: italic; margin-top: 2%;
+}
+/* BRanding */
+.prof-card-brand {
+  position: absolute; bottom: 4%; right: 6%;
+  font-family: var(--font-display); font-size: clamp(6px,.9vw,9px);
+  color: rgba(201,168,76,.25); letter-spacing: .2em;
+}
+
+/* ── ボタン群 ── */
+.prof-btns {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-top: 10px;
+}
+.prof-btn {
+  padding: 10px 10px; border-radius: 10px; border: 1px solid rgba(201,168,76,.25);
+  background: rgba(201,168,76,.06); color: var(--text); font-size: 11px;
+  letter-spacing: .5px; cursor: pointer; transition: all .15s;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.prof-btn:active { background: rgba(201,168,76,.14); }
+.prof-btn.prof-btn-wide { grid-column: span 2; }
+.prof-btn.prof-btn-gold {
+  background: rgba(201,168,76,.15); border-color: rgba(201,168,76,.5); color: var(--gold);
+}
+.prof-btn.prof-btn-img {
+  background: rgba(64,200,120,.08); border-color: rgba(64,200,120,.3); color: #40c878;
+}
+
+/* URLバー */
+.prof-url-bar {
+  margin-top: 8px; background: var(--surface2); border: 1px solid rgba(201,168,76,.2);
+  border-radius: 10px; padding: 8px 12px; font-size: 11px; color: var(--muted);
+  word-break: break-all; display: none;
+}
+.prof-url-bar.visible { display: block; }
+
+/* ── モーダル ── */
+.prof-modal-overlay {
+  display: none; position: fixed; inset: 0; z-index: 900;
+  background: rgba(0,0,0,.75); align-items: flex-end; justify-content: center;
+}
+.prof-modal-overlay.open { display: flex; }
+.prof-modal {
+  background: var(--surface); border: 1px solid rgba(201,168,76,.3);
+  border-radius: 20px 20px 0 0; padding: 24px 20px 40px;
+  width: 100%; max-width: 520px; max-height: 90vh; overflow-y: auto;
+}
+.prof-modal-title {
+  font-family: var(--font-display); font-size: 16px; color: var(--gold);
+  letter-spacing: 2px; margin-bottom: 20px; text-align: center;
+}
+.prof-field { margin-bottom: 14px; }
+.prof-field label { display: block; font-size: 11px; color: var(--muted); letter-spacing: 1px; margin-bottom: 5px; }
+.prof-field input, .prof-field textarea {
+  width: 100%; background: var(--surface2); border: 1px solid rgba(201,168,76,.2);
+  border-radius: 10px; padding: 10px 14px; color: var(--text); font-size: 14px;
+  outline: none; box-sizing: border-box;
+}
+.prof-field textarea { height: 72px; resize: none; font-family: var(--font-body); }
+.prof-color-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
+.prof-color-sel {
+  width: 44px; height: 44px; border-radius: 50%; border: 2px solid transparent;
+  font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center;
+  transition: border-color .15s, transform .1s; background: var(--surface2);
+}
+.prof-color-sel.active { border-color: var(--gold); transform: scale(1.12); }
+.prof-wr-row { display: flex; align-items: center; gap: 12px; margin-top: 6px; }
+.prof-toggle-wrap { position: relative; width: 44px; height: 24px; flex-shrink: 0; cursor: pointer; }
+.prof-toggle-wrap input { opacity: 0; width: 0; height: 0; position: absolute; }
+.prof-toggle-track {
+  position: absolute; inset: 0; background: var(--surface3);
+  border-radius: 12px; transition: background .2s;
+}
+.prof-toggle-wrap input:checked + .prof-toggle-track { background: var(--gold); }
+.prof-toggle-thumb {
+  position: absolute; left: 2px; top: 2px; width: 20px; height: 20px;
+  background: #fff; border-radius: 50%; transition: transform .2s;
+}
+.prof-toggle-wrap input:checked ~ .prof-toggle-thumb { transform: translateX(20px); }
+.prof-wr-val { font-size: 13px; color: var(--muted); }
+.prof-save-btn {
+  width: 100%; padding: 14px; border-radius: 12px; border: 1px solid rgba(201,168,76,.4);
+  background: rgba(201,168,76,.15); color: var(--gold); font-family: var(--font-display);
+  font-size: 14px; letter-spacing: 2px; cursor: pointer; margin-top: 8px;
+}
+.prof-save-btn:active { opacity: .8; }
+.prof-cancel-btn {
+  width: 100%; padding: 10px; border: none; background: none;
+  color: var(--muted); font-size: 13px; cursor: pointer; margin-top: 6px;
+}
+/* prof-ach legacy (keep for inline card) */
+.prof-ach-section{margin-top:10px;border-top:1px solid rgba(255,255,255,.07);padding-top:10px;}
+.prof-ach-title{font-size:10px;letter-spacing:2px;color:var(--muted);margin-bottom:6px;}
+.prof-ach-list{display:flex;flex-direction:column;gap:3px;}
+.prof-ach-item{font-size:12px;color:var(--gold);}
+.prof-ach-item.legendary{color:#c084fc;}
+
+/* ═══════════════════════════════════════════════
+   ACHIEVEMENT SYSTEM
+═══════════════════════════════════════════════ */
+/* Achievement panel */
+.ach-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
+.ach-count{font-size:12px;color:var(--muted);letter-spacing:1px;}
+.ach-filter-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px;}
+.ach-filter-btn{padding:4px 12px;border:1px solid rgba(255,255,255,.12);border-radius:12px;
+  background:none;color:var(--muted);font-size:11px;cursor:pointer;letter-spacing:.5px;transition:all .2s;}
+.ach-filter-btn.active{border-color:var(--gold);color:var(--gold);background:rgba(201,168,76,.08);}
+.ach-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+@media(max-width:400px){.ach-grid{grid-template-columns:1fr;}}
+.ach-card{border-radius:12px;padding:12px 14px;border:1px solid rgba(255,255,255,.07);
+  background:rgba(255,255,255,.03);transition:all .2s;position:relative;overflow:hidden;}
+.ach-card.unlocked{border-color:rgba(201,168,76,.3);background:rgba(201,168,76,.04);}
+.ach-card.legendary{border-color:rgba(180,130,255,.35);background:rgba(140,80,255,.05);}
+.ach-card.legendary.unlocked{border-color:rgba(180,130,255,.6);background:rgba(140,80,255,.1);}
+.ach-card.locked{opacity:.5;}
+.ach-icon{font-size:26px;margin-bottom:6px;line-height:1;}
+.ach-name{font-size:13px;font-weight:700;color:var(--fg);letter-spacing:.3px;}
+.ach-card.legendary .ach-name{color:#c084fc;}
+.ach-card.unlocked .ach-name{color:var(--gold);}
+.ach-card.legendary.unlocked .ach-name{color:#e879f9;}
+.ach-desc{font-size:11px;color:var(--muted);margin-top:3px;line-height:1.4;}
+.ach-date{font-size:10px;color:var(--gold);margin-top:5px;opacity:.8;}
+.ach-badge{position:absolute;top:8px;right:8px;font-size:9px;letter-spacing:1px;
+  padding:2px 6px;border-radius:6px;}
+.ach-badge-legendary{background:rgba(140,80,255,.2);color:#c084fc;border:1px solid rgba(140,80,255,.3);}
+.ach-badge-common{display:none;}
+.ach-locked-icon{font-size:14px;position:absolute;bottom:10px;right:12px;opacity:.3;}
+.ach-progress-bar{height:3px;background:rgba(255,255,255,.08);border-radius:2px;margin-top:6px;}
+.ach-progress-fill{height:100%;border-radius:2px;background:linear-gradient(90deg,var(--gold),#e8d07a);transition:width .5s;}
+
+/* Unlock popup */
+.ach-popup-overlay{position:fixed;inset:0;z-index:9999;pointer-events:none;display:flex;
+  flex-direction:column;align-items:center;justify-content:flex-start;padding-top:80px;gap:10px;}
+.ach-popup{pointer-events:auto;background:linear-gradient(135deg,#1a1a2e,#16213e);
+  border:1px solid rgba(201,168,76,.5);border-radius:16px;padding:20px 24px;
+  min-width:260px;max-width:320px;text-align:center;box-shadow:0 8px 32px rgba(0,0,0,.6);
+  animation:achPopIn .4s cubic-bezier(.34,1.56,.64,1) forwards;position:relative;}
+.ach-popup.legendary{border-color:rgba(180,130,255,.7);
+  box-shadow:0 8px 40px rgba(140,80,255,.3);}
+@keyframes achPopIn{
+  0%{opacity:0;transform:translateY(-20px) scale(.85);}
+  100%{opacity:1;transform:translateY(0) scale(1);}
+}
+.ach-popup-tag{font-size:10px;letter-spacing:2px;color:var(--gold);margin-bottom:6px;}
+.ach-popup.legendary .ach-popup-tag{color:#c084fc;}
+.ach-popup-icon{font-size:40px;margin:6px 0;}
+.ach-popup-title{font-size:18px;font-weight:700;color:var(--gold);letter-spacing:.5px;}
+.ach-popup.legendary .ach-popup-title{color:#e879f9;}
+.ach-popup-sub{font-size:13px;color:var(--muted);margin-top:4px;}
+.ach-popup-share{margin-top:12px;display:flex;gap:8px;justify-content:center;}
+.ach-popup-share-btn{font-size:12px;padding:6px 14px;border-radius:10px;border:1px solid rgba(201,168,76,.4);
+  background:rgba(201,168,76,.1);color:var(--gold);cursor:pointer;}
+.ach-popup-close{position:absolute;top:10px;right:12px;font-size:16px;cursor:pointer;
+  color:var(--muted);background:none;border:none;padding:2px 6px;}
+
+/* Profile card achievements section */
+.prof-ach-section{margin-top:10px;border-top:1px solid rgba(255,255,255,.07);padding-top:10px;}
+.prof-ach-title{font-size:10px;letter-spacing:2px;color:var(--muted);margin-bottom:6px;}
+.prof-ach-list{display:flex;flex-direction:column;gap:3px;}
+.prof-ach-item{font-size:12px;color:var(--gold);}
+.prof-ach-item.legendary{color:#c084fc;}
+
+/* ═══ Achievement Stats Section ═══════════════════════════════ */
+.ach-stats-overview{background:rgba(201,168,76,.04);border:1px solid rgba(201,168,76,.15);
+  border-radius:14px;padding:16px;margin-bottom:14px;}
+.ach-stats-headline{display:flex;align-items:baseline;gap:8px;margin-bottom:10px;}
+.ach-stats-num{font-family:var(--font-display);font-size:32px;color:var(--gold);letter-spacing:1px;}
+.ach-stats-total{font-size:13px;color:var(--muted);}
+.ach-progress-track{height:8px;background:rgba(255,255,255,.07);border-radius:4px;overflow:hidden;margin-bottom:6px;}
+.ach-progress-thumb{height:100%;border-radius:4px;
+  background:linear-gradient(90deg,#c9a84c,#e8d07a);transition:width .6s ease;}
+.ach-progress-pct{font-size:11px;color:var(--muted);letter-spacing:1px;text-align:right;}
+/* Rarity tabs */
+.ach-rarity-tabs{display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap;}
+.ach-rarity-tab{padding:5px 14px;border-radius:20px;border:1px solid rgba(255,255,255,.1);
+  background:none;font-size:11px;letter-spacing:.5px;cursor:pointer;transition:all .18s;color:var(--muted);}
+.ach-rarity-tab.active{color:#fff;}
+.ach-rarity-tab[data-r="all"].active{border-color:rgba(255,255,255,.4);background:rgba(255,255,255,.08);color:#fff;}
+.ach-rarity-tab[data-r="legendary"].active{border-color:rgba(180,130,255,.7);background:rgba(140,80,255,.15);color:#c084fc;}
+.ach-rarity-tab[data-r="epic"].active{border-color:rgba(251,146,60,.7);background:rgba(251,146,60,.12);color:#fb923c;}
+.ach-rarity-tab[data-r="rare"].active{border-color:rgba(96,165,250,.7);background:rgba(96,165,250,.1);color:#60a5fa;}
+.ach-rarity-tab[data-r="common"].active{border-color:rgba(255,255,255,.3);background:rgba(255,255,255,.06);color:#d1d5db;}
+/* Category accordion */
+.ach-cat-block{border:1px solid rgba(255,255,255,.07);border-radius:12px;overflow:hidden;margin-bottom:8px;}
+.ach-cat-header{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;
+  cursor:pointer;user-select:none;background:rgba(255,255,255,.02);transition:background .15s;}
+.ach-cat-header:hover{background:rgba(255,255,255,.05);}
+.ach-cat-title{font-size:13px;font-weight:600;color:var(--fg);letter-spacing:.3px;}
+.ach-cat-meta{display:flex;align-items:center;gap:10px;}
+.ach-cat-prog{font-size:11px;color:var(--muted);}
+.ach-cat-arrow{color:var(--muted);font-size:14px;transition:transform .2s;}
+.ach-cat-block.open .ach-cat-arrow{transform:rotate(90deg);}
+.ach-cat-body{display:none;padding:10px;}
+.ach-cat-block.open .ach-cat-body{display:block;}
+/* Stats ach card (wider, single col) */
+.ach-scard{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:10px;
+  border:1px solid rgba(255,255,255,.07);background:rgba(255,255,255,.02);
+  margin-bottom:6px;transition:all .15s;}
+.ach-scard:last-child{margin-bottom:0;}
+.ach-scard.unlocked{border-color:rgba(201,168,76,.25);background:rgba(201,168,76,.04);}
+.ach-scard.epic{border-color:rgba(251,146,60,.25);}
+.ach-scard.epic.unlocked{border-color:rgba(251,146,60,.5);background:rgba(251,146,60,.07);}
+.ach-scard.legendary-card{border-color:rgba(180,130,255,.2);}
+.ach-scard.legendary-card.unlocked{border-color:rgba(180,130,255,.55);background:rgba(140,80,255,.08);}
+.ach-scard-icon{font-size:24px;flex-shrink:0;width:32px;text-align:center;}
+.ach-scard-body{flex:1;min-width:0;}
+.ach-scard-name{font-size:13px;font-weight:600;color:var(--fg);}
+.ach-scard.unlocked .ach-scard-name{color:var(--gold);}
+.ach-scard.epic.unlocked .ach-scard-name{color:#fb923c;}
+.ach-scard.legendary-card.unlocked .ach-scard-name{color:#c084fc;}
+.ach-scard-desc{font-size:11px;color:var(--muted);margin-top:2px;}
+.ach-scard-right{flex-shrink:0;text-align:right;}
+.ach-scard-check{font-size:12px;color:var(--win);font-weight:700;}
+.ach-scard-date{font-size:10px;color:var(--muted);margin-top:2px;}
+.ach-scard-lock{font-size:14px;opacity:.25;}
+.ach-scard-rbadge{display:inline-block;font-size:9px;letter-spacing:.8px;padding:1px 5px;
+  border-radius:4px;margin-top:3px;}
+.ach-rbadge-legendary{background:rgba(140,80,255,.15);color:#c084fc;border:1px solid rgba(140,80,255,.25);}
+.ach-rbadge-epic{background:rgba(251,146,60,.12);color:#fb923c;border:1px solid rgba(251,146,60,.2);}
+.ach-rbadge-rare{background:rgba(96,165,250,.1);color:#60a5fa;border:1px solid rgba(96,165,250,.18);}
+.ach-rbadge-common{background:rgba(255,255,255,.06);color:#9ca3af;border:1px solid rgba(255,255,255,.1);}
+
 </style>
 </head>
 <body>
@@ -1752,6 +2101,103 @@ input:focus{border-color:var(--gold);}
   <!-- ══ Dashboard Panel ══ -->
   <div class="panel" id="panel-dashboard">
 
+    <!-- ══ プロフィールカード セクション ══ -->
+    <div id="prof-section">
+      <!-- 閲覧バナー（共有URLで開いたとき） -->
+      <div class="prof-view-banner" id="prof-view-banner">
+        <span>👤 シェアされたプロフィール</span>
+        <button onclick="profSaveViewed()" style="margin-left:auto;padding:4px 12px;background:rgba(64,80,232,.25);border:1px solid rgba(64,80,232,.4);border-radius:8px;color:#8090f8;font-size:11px;cursor:pointer;">自分のカードとして保存</button>
+      </div>
+      <!-- 未設定状態 -->
+      <div id="prof-empty">
+        <button class="prof-create-btn" onclick="openProfModal()">
+          <span>✦</span> プロフィールカードを作る
+        </button>
+      </div>
+      <!-- 設定済み状態 -->
+      <div id="prof-card-wrap" style="display:none;">
+
+        <!-- ═══ 横長カードプレビュー ═══ -->
+        <div class="prof-card" id="prof-card">
+          <!-- ヘッダー行 -->
+          <div class="prof-card-header">
+            <div>
+              <div class="prof-card-label">LORCANA PLAYER</div>
+              <div class="prof-card-nickname" id="pc-nickname"></div>
+              <div class="prof-card-handle" id="pc-handle"></div>
+              <div class="prof-card-region" id="pc-region"></div>
+            </div>
+            <div class="prof-card-colors" id="pc-colors"></div>
+          </div>
+          <!-- 中段：bio -->
+          <div class="prof-card-bio" id="pc-bio"></div>
+          <!-- フッター：勝率 + 実績 -->
+          <div class="prof-card-footer" id="pc-footer"></div>
+          <!-- ブランド -->
+          <div class="prof-card-brand">LORCANA TRACKER ✦</div>
+        </div>
+
+        <!-- ボタン群 -->
+        <div class="prof-btns" style="margin-top:10px;">
+          <button class="prof-btn" onclick="openProfModal()">✏️ 編集</button>
+          <button class="prof-btn prof-btn-img" onclick="profSaveImage()">📷 画像保存</button>
+          <button class="prof-btn prof-btn-gold prof-btn-wide" onclick="profPostToX()" style="background:rgba(0,0,0,.4);border-color:rgba(255,255,255,.25);color:#fff;">𝕏 Xに画像を投稿</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ プロフィール編集モーダル ══ -->
+    <div class="prof-modal-overlay" id="prof-modal-overlay" onclick="if(event.target===this)closeProfModal()">
+      <div class="prof-modal">
+        <div class="prof-modal-title">✦ プロフィールカード</div>
+
+        <div class="prof-field">
+          <label>X ハンドル（必須・例: @ot324086）</label>
+          <input type="text" id="prof-input-handle" placeholder="@username" maxlength="50">
+        </div>
+        <div class="prof-field">
+          <label>ニックネーム（任意）</label>
+          <input type="text" id="prof-input-nickname" placeholder="例: バハムート" maxlength="30">
+        </div>
+        <div class="prof-field">
+          <label>地域（任意・例: Sendai）</label>
+          <input type="text" id="prof-input-region" placeholder="例: Tokyo" maxlength="30">
+        </div>
+        <div class="prof-field">
+          <label>使用カラー（任意・最大2色）</label>
+          <div class="prof-color-row" id="prof-color-row"></div>
+        </div>
+        <div class="prof-field">
+          <label>勝率をカードに表示</label>
+          <div class="prof-wr-row">
+            <label class="prof-toggle-wrap">
+              <input type="checkbox" id="prof-wr-toggle">
+              <div class="prof-toggle-track"></div>
+              <div class="prof-toggle-thumb"></div>
+            </label>
+            <span class="prof-wr-val" id="prof-wr-preview">直近30戦: 計算中...</span>
+          </div>
+        </div>
+        <div class="prof-field">
+          <label>実績をカードに表示（Top3自動選出）</label>
+          <div class="prof-wr-row">
+            <label class="prof-toggle-wrap">
+              <input type="checkbox" id="prof-ach-toggle">
+              <div class="prof-toggle-track"></div>
+              <div class="prof-toggle-thumb"></div>
+            </label>
+            <span class="prof-wr-val" id="prof-ach-preview">—</span>
+          </div>
+        </div>
+        <div class="prof-field">
+          <label>一言コメント（任意・80文字）</label>
+          <textarea id="prof-input-bio" placeholder="例: 調整相手募集中！" maxlength="80"></textarea>
+        </div>
+        <button class="prof-save-btn" onclick="saveProfModal()">✦ 保存</button>
+        <button class="prof-cancel-btn" onclick="closeProfModal()">キャンセル</button>
+      </div>
+    </div>
+
     <!-- 空状態 -->
     <div id="dash-empty" style="display:none;">
       <div style="text-align:center;padding:60px 20px 40px;">
@@ -1855,6 +2301,7 @@ input:focus{border-color:var(--gold);}
         </div>
       </div>
     </div>
+
   </div>
   <!-- ══ Record Panel ══ -->
   <div class="panel" id="panel-record">
@@ -2374,6 +2821,28 @@ input:focus{border-color:var(--gold);}
         </div>
       </div>
 
+    </div>
+
+    <!-- ══ Achievements ══ -->
+    <div class="acc-item" id="acc-achievements" style="margin-top:8px;">
+      <div class="acc-header" onclick="toggleAcc('acc-achievements'); if(document.getElementById('acc-achievements').classList.contains('open')) renderAchStats()">
+        <span>🏆 Achievements</span>
+        <span class="acc-arrow">›</span>
+      </div>
+      <div class="acc-body" id="acc-achievements-body">
+        <!-- ① 概要 -->
+        <div class="ach-stats-overview" id="ach-stats-overview"></div>
+        <!-- ② レア度タブ -->
+        <div class="ach-rarity-tabs">
+          <button class="ach-rarity-tab active" data-r="all"       onclick="achStatTab('all')">All</button>
+          <button class="ach-rarity-tab"        data-r="legendary" onclick="achStatTab('legendary')">⭐ Legendary</button>
+          <button class="ach-rarity-tab"        data-r="epic"      onclick="achStatTab('epic')">🔶 Epic</button>
+          <button class="ach-rarity-tab"        data-r="rare"      onclick="achStatTab('rare')">💠 Rare</button>
+          <button class="ach-rarity-tab"        data-r="common"    onclick="achStatTab('common')">◻ Common</button>
+        </div>
+        <!-- ③ カテゴリアコーディオン -->
+        <div id="ach-stats-cats"></div>
+      </div>
     </div>
 
   </div>
@@ -3340,6 +3809,10 @@ input:focus{border-color:var(--gold);}
   </div>
 </div>
 
+
+  <!-- Achievement unlock popup container -->
+  <div class="ach-popup-overlay" id="ach-popup-overlay"></div>
+
 </div><!-- /container -->
 
 <script>
@@ -3497,10 +3970,10 @@ function switchTab(tab) {
   if (tab==='settings')       renderSettingsPanel();
   if (tab==='record')         { renderRecordTournPicker(); syncMyColorNew(); }
   if (tab==='history')        renderHistory();
-  if (tab==='analytics')      { document.getElementById('turn-stats').innerHTML=''; renderAnalytics(); renderNewStats(); }
+  if (tab==='analytics')      { document.getElementById('turn-stats').innerHTML=''; renderAnalytics(); renderNewStats(); if(document.getElementById('acc-achievements')?.classList.contains('open')) renderAchStats(); }
   if (tab==='events')         renderEventsTab();
   if (tab==='tweet')          renderTweetPanel();
-  if (tab==='dashboard')      { renderDashboard(); renderDashboardNew(); }
+  if (tab==='dashboard')      { renderDashboard(); renderDashboardNew(); renderProfSection(); }
   if (tab==='report')         renderReport();
   if (tab==='matchup')        { muSwitchTab('bar'); }
   if (tab==='settings')       renderSettings();
@@ -3512,6 +3985,7 @@ function switchTab(tab) {
   if (tab==='pxdt-tier')      renderTier();
   if (tab==='pxdt-sheet')     renderSpreadsheet();
   if (tab==='pxdt-tourn')     { tmRenderColorPicker(); tmRenderPlayers(); tmRenderStandings(); }
+
 }
 
 // ── Handle management ──────────────────────────
@@ -8522,6 +8996,1043 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
+
+// ══════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════════════════
+// プロフィールカード（神 UI）
+// ══════════════════════════════════════════════════════════════
+const PROF_KEY     = 'lorcanaTracker.profile.v1';
+const COLOR_LIST   = ['Amber','Ruby','Sapphire','Emerald','Amethyst','Steel'];
+
+// ── localStorage I/O ──────────────────────────────────────────
+function profLoad() {
+  try { const r = localStorage.getItem(PROF_KEY); return r ? JSON.parse(r) : null; }
+  catch(e) { return null; }
+}
+function profSave(p) {
+  p.schemaVersion = 1;
+  localStorage.setItem(PROF_KEY, JSON.stringify(p));
+}
+
+// ── XSS エスケープ ────────────────────────────────────────────
+function esc(s) {
+  if (!s) return '';
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
+
+// ── 勝率計算 ──────────────────────────────────────────────────
+function calcWinRate(n) {
+  if (!matches || !matches.length) return null;
+  const recent = matches.slice(0, n).filter(m => m.result==='win'||m.result==='loss');
+  if (!recent.length) return null;
+  const wins = recent.filter(m => m.result==='win').length;
+  return { wr: Math.round(wins/recent.length*100), games: recent.length, wins };
+}
+
+// ── Top3実績取得 ──────────────────────────────────────────────
+function getTopAchievements(n) {
+  n = n || 3;
+  try {
+    const data  = JSON.parse(localStorage.getItem('lorcanaTracker.achievements.v1') || '{}');
+    const saved = data.achievements || {};
+    const order = { legendary:0, epic:1, rare:2, common:3 };
+    const defs  = typeof ACH_DEFS !== 'undefined' ? ACH_DEFS : [];
+    return defs
+      .filter(d => saved[d.id]?.unlocked)
+      .sort((a,b) => {
+        const ro = (order[a.rarity]??3) - (order[b.rarity]??3);
+        if (ro) return ro;
+        return (saved[b.id]?.date||'').localeCompare(saved[a.id]?.date||'');
+      })
+      .slice(0, n);
+  } catch(e) { return []; }
+}
+
+function getAchievementStats() {
+  try {
+    const data  = JSON.parse(localStorage.getItem('lorcanaTracker.achievements.v1') || '{}');
+    const saved = data.achievements || {};
+    const defs  = typeof ACH_DEFS !== 'undefined' ? ACH_DEFS : [];
+    const total    = defs.length;
+    const unlocked = defs.filter(d => saved[d.id]?.unlocked).length;
+    return { total, unlocked };
+  } catch(e) { return { total: 0, unlocked: 0 }; }
+}
+
+// ── encode / decode (Base64URL) ───────────────────────────────
+function profEncode(p) {
+  const mini = {
+    v: 1,
+    h: p.handle    || '',
+    n: p.nickname  || '',
+    r: p.region    || '',
+    c: p.colors    || [],
+    b: p.bio       || '',
+    w: p.showWR    ? 1 : 0,
+    a: p.showAch   ? 1 : 0,
+  };
+  try {
+    const b64 = btoa(unescape(encodeURIComponent(JSON.stringify(mini))));
+    return b64.replace(/\+/g,'-').replace(/\//g,'_').replace(/=/g,'');
+  } catch(e) { return ''; }
+}
+
+function profDecode(str) {
+  try {
+    let b64 = str.replace(/-/g,'+').replace(/_/g,'/');
+    while (b64.length % 4) b64 += '=';
+    const mini = JSON.parse(decodeURIComponent(escape(atob(b64))));
+    return {
+      handle:   mini.h || '',
+      nickname: mini.n || '',
+      region:   mini.r || '',
+      colors:   mini.c || [],
+      bio:      mini.b || '',
+      showWR:   !!mini.w,
+      showAch:  !!mini.a,
+      schemaVersion: mini.v || 1,
+    };
+  } catch(e) { return null; }
+}
+
+// ── 共有URL ───────────────────────────────────────────────────
+let profViewMode = null;
+
+function profCheckUrl() {
+  const enc = new URLSearchParams(window.location.search).get('profile');
+  if (!enc) return;
+  const p = profDecode(enc);
+  if (!p || !p.handle) return;
+  profViewMode = p;
+  const banner = document.getElementById('prof-view-banner');
+  if (banner) banner.classList.add('visible');
+}
+
+function profSaveViewed() {
+  if (!profViewMode) return;
+  if (!confirm('このプロフィールを自分のカードとして保存しますか？')) return;
+  profSave(profViewMode);
+  profViewMode = null;
+  const banner = document.getElementById('prof-view-banner');
+  if (banner) banner.classList.remove('visible');
+  const url = new URL(window.location.href);
+  url.searchParams.delete('profile');
+  history.replaceState(null, '', url.toString());
+  renderProfSection();
+}
+
+// 画像保存してXに投稿
+function profPostToX() {
+  const p = profViewMode || profLoad();
+  if (!p) { alert('プロフィールを作成してください'); return; }
+
+  // まず画像を保存
+  profSaveImage();
+
+  // 少し遅らせてX投稿画面を開く
+  setTimeout(() => {
+    const name = p.nickname || p.handle || 'Lorcana Player';
+    const colors = (p.colors || []).map(c => {
+      const info = COLORS[c] || {};
+      return info.emoji || c;
+    }).join('');
+    const lines = [
+      `${colors} ${name}`,
+      p.region ? `📍 ${p.region}` : '',
+      p.bio    ? `"${p.bio}"` : '',
+      '#ロルカナ #Lorcana'
+    ].filter(Boolean).join('\n');
+
+    const tweetUrl = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(lines);
+    window.open(tweetUrl, '_blank', 'noopener');
+  }, 400);
+}
+
+// ── カード描画 ────────────────────────────────────────────────
+function renderProfSection() {
+  profCheckUrl();
+  const p       = profViewMode || profLoad();
+  const emptyEl = document.getElementById('prof-empty');
+  const wrapEl  = document.getElementById('prof-card-wrap');
+  if (!emptyEl || !wrapEl) return;
+  if (!p || !p.handle) {
+    emptyEl.style.display = '';
+    wrapEl.style.display  = 'none';
+    return;
+  }
+  emptyEl.style.display = 'none';
+  wrapEl.style.display  = '';
+  renderProfCard(p);
+}
+
+function renderProfCard(p) {
+  // Nickname (大・メイン表示)
+  const nEl = document.getElementById('pc-nickname');
+  if (nEl) nEl.textContent = esc(p.nickname || p.handle || '');
+
+  // Handle (サブ: nicknameがあるときだけ表示)
+  const hEl = document.getElementById('pc-handle');
+  if (hEl) hEl.textContent = (p.nickname && p.handle) ? esc(p.handle) : '';
+
+  // Region
+  const rEl = document.getElementById('pc-region');
+  if (rEl) rEl.textContent = p.region ? '📍 ' + esc(p.region) : '';
+
+  // Colors
+  const cEl = document.getElementById('pc-colors');
+  if (cEl) {
+    cEl.innerHTML = (p.colors || []).map(c => {
+      const info = COLORS[c] || {};
+      return `<div class="prof-card-color-dot" style="background:${esc(info.color||'#555')}">${esc(info.emoji||c)}</div>`;
+    }).join('');
+  }
+
+  // Bio
+  const bEl = document.getElementById('pc-bio');
+  if (bEl) {
+    bEl.textContent = p.bio ? esc(p.bio) : '';
+    bEl.style.display = p.bio ? '' : 'none';
+  }
+
+  // Footer: WR + Achievements
+  const fEl = document.getElementById('pc-footer');
+  if (fEl) {
+    let footerHTML = '';
+
+    if (p.showWR) {
+      const wr = calcWinRate(30);
+      if (wr) {
+        footerHTML += `
+          <div class="prof-card-stat">
+            <div class="prof-card-stat-val">${wr.wr}%</div>
+            <div class="prof-card-stat-label">WIN RATE · ${wr.games} MATCHES</div>
+          </div>`;
+      }
+    }
+
+    if (p.showAch) {
+      const stats = getAchievementStats();
+      const top3  = getTopAchievements(3);
+      footerHTML += `<div class="prof-card-ach">`;
+      if (stats.total) {
+        footerHTML += `<div class="prof-card-ach-count">${stats.unlocked} / ${stats.total} ACHIEVEMENTS</div>`;
+      }
+      if (top3.length) {
+        footerHTML += `<div class="prof-card-ach-list">` +
+          top3.map(d => `<span class="prof-card-ach-item ${esc(d.rarity)}">${esc(d.icon)} ${esc(d.name)}</span>`).join('') +
+          `</div>`;
+      }
+      footerHTML += `</div>`;
+    }
+
+    fEl.innerHTML = footerHTML;
+    fEl.style.display = (p.showWR || p.showAch) ? '' : 'none';
+  }
+}
+
+// ── モーダル ──────────────────────────────────────────────────
+function openProfModal() {
+  // カラーボタン生成
+  const colorRow = document.getElementById('prof-color-row');
+  if (colorRow) {
+    const p   = profLoad();
+    const sel = p?.colors || [];
+    colorRow.innerHTML = COLOR_LIST.map(c => {
+      const info = COLORS[c] || {};
+      const active = sel.includes(c) ? ' active' : '';
+      return `<button class="prof-color-sel${active}" data-color="${c}"
+        onclick="profToggleColor('${c}')" title="${c}">${info.emoji||c}</button>`;
+    }).join('');
+  }
+
+  // 既存値を反映
+  const p = profLoad();
+  if (p) {
+    const set = (id, v) => { const el = document.getElementById(id); if (el) el.value = v || ''; };
+    set('prof-input-handle',   p.handle   || '');
+    set('prof-input-nickname', p.nickname || '');
+    set('prof-input-region',   p.region   || '');
+    set('prof-input-bio',      p.bio      || '');
+    const wt = document.getElementById('prof-wr-toggle');
+    if (wt) wt.checked = !!p.showWR;
+    const at = document.getElementById('prof-ach-toggle');
+    if (at) at.checked = !!p.showAch;
+  }
+
+  _updateProfWRPreview();
+  _updateProfAchPreview();
+
+  const overlay = document.getElementById('prof-modal-overlay');
+  if (overlay) overlay.classList.add('open');
+}
+
+function closeProfModal() {
+  const overlay = document.getElementById('prof-modal-overlay');
+  if (overlay) overlay.classList.remove('open');
+}
+
+function profToggleColor(c) {
+  const btn     = document.querySelector(`#prof-color-row [data-color="${c}"]`);
+  const allBtns = [...document.querySelectorAll('#prof-color-row .prof-color-sel')];
+  const active  = allBtns.filter(b => b.classList.contains('active'));
+  if (btn.classList.contains('active')) {
+    btn.classList.remove('active');
+  } else {
+    if (active.length >= 2) active[0].classList.remove('active');
+    btn.classList.add('active');
+  }
+}
+
+function _updateProfWRPreview() {
+  const el = document.getElementById('prof-wr-preview');
+  if (!el) return;
+  const wr = calcWinRate(30);
+  el.textContent = wr ? `直近${wr.games}戦: ${wr.wr}% (${wr.wins}勝)` : '戦績なし';
+}
+
+function _updateProfAchPreview() {
+  const el = document.getElementById('prof-ach-preview');
+  if (!el) return;
+  const stats = getAchievementStats();
+  const top3  = getTopAchievements(3);
+  el.textContent = stats.total
+    ? `${stats.unlocked}/${stats.total} 解除 · Top: ${top3.map(d=>d.name).join(' / ') || 'なし'}`
+    : '実績なし';
+}
+
+function saveProfModal() {
+  const handle = (document.getElementById('prof-input-handle')||{value:''}).value.trim();
+  if (!handle) { alert('X ハンドルを入力してください'); return; }
+  const nickname = (document.getElementById('prof-input-nickname')||{value:''}).value.trim();
+  const region   = (document.getElementById('prof-input-region')||{value:''}).value.trim();
+  const bio      = (document.getElementById('prof-input-bio')||{value:''}).value.trim();
+  const showWR   = !!(document.getElementById('prof-wr-toggle')||{}).checked;
+  const showAch  = !!(document.getElementById('prof-ach-toggle')||{}).checked;
+  const colors   = [...document.querySelectorAll('#prof-color-row .prof-color-sel.active')]
+                     .map(b => b.dataset.color);
+  profSave({ handle, nickname, region, colors, bio, showWR, showAch });
+  closeProfModal();
+  renderProfSection();
+}
+
+// ── Canvas 画像保存 ───────────────────────────────────────────
+function profSaveImage() {
+  const p = profViewMode || profLoad();
+  if (!p) return;
+
+  const W = 1080, H = 566;
+  const canvas = document.createElement('canvas');
+  canvas.width  = W;
+  canvas.height = H;
+  const ctx = canvas.getContext('2d');
+
+  // ── 背景 ──
+  const bg = ctx.createLinearGradient(0,0,W,H);
+  bg.addColorStop(0,   '#0e0e1e');
+  bg.addColorStop(0.5, '#141428');
+  bg.addColorStop(1,   '#0a0a1a');
+  ctx.fillStyle = bg;
+  _roundRectFill(ctx, 0, 0, W, H, 28);
+
+  // ── 外枠 ──
+  ctx.strokeStyle = 'rgba(201,168,76,.45)';
+  ctx.lineWidth = 2;
+  _roundRectStroke(ctx, 1, 1, W-2, H-2, 27);
+
+  // ── 底面グロー ──
+  const glow = ctx.createLinearGradient(0, H*0.65, 0, H);
+  glow.addColorStop(0, 'transparent');
+  glow.addColorStop(1, 'rgba(201,168,76,.05)');
+  ctx.fillStyle = glow;
+  ctx.fillRect(0, H*0.65, W, H*0.35);
+
+  // ── 装飾 ✦ ──
+  ctx.font = '72px serif';
+  ctx.fillStyle = 'rgba(201,168,76,.07)';
+  ctx.fillText('✦', W-130, 110);
+
+  // ── ラベル: LORCANA PLAYER ──
+  ctx.font = '500 13px "Trebuchet MS", sans-serif';
+  ctx.fillStyle = 'rgba(201,168,76,.5)';
+  ctx.letterSpacing = '4px';
+  ctx.fillText('LORCANA PLAYER', 60, 72);
+  ctx.letterSpacing = '0px';
+
+  // ── ニックネーム（大・メイン） ──
+  ctx.font = 'bold 62px "Palatino Linotype", "Georgia", serif';
+  ctx.fillStyle = '#f0e0a0';
+  ctx.shadowColor = 'rgba(201,168,76,.4)';
+  ctx.shadowBlur  = 24;
+  ctx.fillText(p.nickname || p.handle || '', 60, 160);
+  ctx.shadowBlur = 0;
+
+  // ── ハンドル（サブ） ──
+  if (p.nickname && p.handle) {
+    ctx.font = '600 22px sans-serif';
+    ctx.fillStyle = 'rgba(201,168,76,.65)';
+    ctx.fillText(p.handle, 62, 198);
+  }
+
+  // ── 地域 ──
+  let regionY = (p.nickname && p.handle) ? 228 : (p.nickname || p.handle) ? 198 : 160;
+  if (p.region) {
+    ctx.font = '18px sans-serif';
+    ctx.fillStyle = 'rgba(255,255,255,.4)';
+    ctx.fillText('📍 ' + p.region, 62, regionY);
+  }
+
+  // ── カラードット ──
+  (p.colors || []).forEach((c, i) => {
+    const info = COLORS[c] || {};
+    const x = W - 80 - i * 56;
+    const y = 90;
+    const r = 22;
+    ctx.beginPath();
+    ctx.arc(x, y, r, 0, Math.PI*2);
+    ctx.fillStyle = info.color || '#555';
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(255,255,255,.3)';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+    ctx.font = '20px sans-serif';
+    ctx.fillStyle = '#fff';
+    ctx.textAlign = 'center';
+    ctx.fillText(info.emoji || c[0], x, y+7);
+    ctx.textAlign = 'left';
+  });
+
+  // ── 区切り線 ──
+  const lineY = 290;
+  ctx.strokeStyle = 'rgba(201,168,76,.2)';
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.moveTo(60, lineY);
+  ctx.lineTo(W-60, lineY);
+  ctx.stroke();
+
+  // ── Bio ──
+  if (p.bio) {
+    ctx.font = 'italic 18px sans-serif';
+    ctx.fillStyle = 'rgba(255,255,255,.45)';
+    _wrapText(ctx, p.bio, 60, 330, W-120, 28, 2);
+  }
+
+  // ── 勝率 ──
+  let footerX = 60;
+  const footerY = 440;
+  if (p.showWR) {
+    const wr = calcWinRate(30);
+    if (wr) {
+      ctx.font = 'bold 52px "Palatino Linotype", serif';
+      ctx.fillStyle = '#c9a84c';
+      ctx.shadowColor = 'rgba(201,168,76,.3)';
+      ctx.shadowBlur  = 12;
+      ctx.fillText(wr.wr + '%', footerX, footerY);
+      ctx.shadowBlur = 0;
+      ctx.font = '13px sans-serif';
+      ctx.fillStyle = 'rgba(255,255,255,.4)';
+      ctx.fillText('WIN RATE · ' + wr.games + ' MATCHES', footerX, footerY + 22);
+      footerX += 200;
+    }
+  }
+
+  // ── 実績 ──
+  if (p.showAch) {
+    const stats = getAchievementStats();
+    const top3  = getTopAchievements(3);
+    if (stats.total) {
+      ctx.font = '12px sans-serif';
+      ctx.fillStyle = 'rgba(201,168,76,.55)';
+      ctx.letterSpacing = '2px';
+      ctx.fillText(`${stats.unlocked} / ${stats.total} ACHIEVEMENTS`, footerX, footerY - 36);
+      ctx.letterSpacing = '0px';
+    }
+    const achColors = { legendary:'#d8a8ff', epic:'#fdb07a', rare:'#93c5fd', common:'rgba(201,168,76,.8)' };
+    top3.forEach((d, i) => {
+      ctx.font = '600 16px sans-serif';
+      ctx.fillStyle = achColors[d.rarity] || '#c9a84c';
+      ctx.fillText(`${d.icon} ${d.name}`, footerX, footerY - 10 + i * 24);
+    });
+  }
+
+  // ── ブランド ──
+  ctx.font = '11px "Trebuchet MS", sans-serif';
+  ctx.fillStyle = 'rgba(201,168,76,.22)';
+  ctx.letterSpacing = '3px';
+  ctx.textAlign = 'right';
+  ctx.fillText('LORCANA TRACKER ✦', W - 60, H - 30);
+  ctx.textAlign = 'left';
+  ctx.letterSpacing = '0px';
+
+  // ── 出力 ──
+  canvas.toBlob(blob => {
+    if (navigator.share && /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+      const file = new File([blob], 'lorcana-profile.png', { type:'image/png' });
+      navigator.share({ files:[file], title:'Lorcana Profile' })
+        .catch(() => _downloadCanvas(canvas));
+    } else {
+      _downloadCanvas(canvas);
+    }
+  }, 'image/png');
+}
+
+function _downloadCanvas(canvas) {
+  canvas.toBlob(blob => {
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = 'lorcana-profile.png'; a.click();
+    setTimeout(() => URL.revokeObjectURL(url), 1500);
+  }, 'image/png');
+}
+
+// Canvas ヘルパー
+function _roundRectFill(ctx, x, y, w, h, r) {
+  ctx.beginPath();
+  ctx.moveTo(x+r,y); ctx.lineTo(x+w-r,y); ctx.quadraticCurveTo(x+w,y,x+w,y+r);
+  ctx.lineTo(x+w,y+h-r); ctx.quadraticCurveTo(x+w,y+h,x+w-r,y+h);
+  ctx.lineTo(x+r,y+h); ctx.quadraticCurveTo(x,y+h,x,y+h-r);
+  ctx.lineTo(x,y+r); ctx.quadraticCurveTo(x,y,x+r,y);
+  ctx.closePath(); ctx.fill();
+}
+function _roundRectStroke(ctx, x, y, w, h, r) {
+  ctx.beginPath();
+  ctx.moveTo(x+r,y); ctx.lineTo(x+w-r,y); ctx.quadraticCurveTo(x+w,y,x+w,y+r);
+  ctx.lineTo(x+w,y+h-r); ctx.quadraticCurveTo(x+w,y+h,x+w-r,y+h);
+  ctx.lineTo(x+r,y+h); ctx.quadraticCurveTo(x,y+h,x,y+h-r);
+  ctx.lineTo(x,y+r); ctx.quadraticCurveTo(x,y,x+r,y);
+  ctx.closePath(); ctx.stroke();
+}
+function _wrapText(ctx, text, x, y, maxW, lineH, maxLines) {
+  const chars = text.split('');
+  let line = '';
+  let lines = 0;
+  for (const ch of chars) {
+    const test = line + ch;
+    if (ctx.measureText(test).width > maxW && line) {
+      ctx.fillText(line, x, y);
+      y += lineH; line = ch; lines++;
+      if (lines >= maxLines) { if (ch) ctx.fillText(line + '…', x, y); return; }
+    } else { line = test; }
+  }
+  if (line) ctx.fillText(line, x, y);
+}
+// Legacy alias kept for any existing callers
+function roundRect(ctx,x,y,w,h,r){_roundRectFill(ctx,x,y,w,h,r);}
+function wrapText(ctx,t,x,y,mw,lh){_wrapText(ctx,t,x,y,mw,lh,5);}
+
+// ── 初期化 ────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+  setTimeout(renderProfSection, 200);
+});
+
+
+// ══════════════════════════════════════════════════════════════════
+// ACHIEVEMENT SYSTEM v1
+// ══════════════════════════════════════════════════════════════════
+
+const ACH_KEY = 'lorcanaTracker.achievements.v1';
+
+// ── 実績定義 ──────────────────────────────────────────────────────
+const ACH_DEFS = [
+  // Basic
+  { id:'first_match',         name:'First Ink',           desc:'初めて対戦を記録',           icon:'📝', rarity:'common',    cat:'basic'      },
+  { id:'first_victory',       name:'First Victory',       desc:'初勝利',                     icon:'🥇', rarity:'common',    cat:'basic'      },
+  { id:'ten_matches',         name:'Rookie Player',       desc:'10試合',                     icon:'🌱', rarity:'common',    cat:'basic'      },
+  { id:'fifty_matches',       name:'Regular Player',      desc:'50試合',                     icon:'🎮', rarity:'common',    cat:'basic'      },
+  { id:'hundred_matches',     name:'Veteran Player',      desc:'100試合',                    icon:'⚔️', rarity:'common',    cat:'basic'      },
+  { id:'threehundred_matches',name:'Ink Addict',          desc:'300試合',                    icon:'💀', rarity:'rare',      cat:'basic'      },
+  { id:'three_wins',          name:'Winning Start',       desc:'3勝',                        icon:'✊', rarity:'common',    cat:'basic'      },
+  { id:'ten_wins',            name:'Rising Star',         desc:'10勝',                       icon:'⭐', rarity:'common',    cat:'basic'      },
+  { id:'fifty_wins',          name:'Battle Hardened',     desc:'50勝',                       icon:'🗡️', rarity:'rare',      cat:'basic'      },
+  { id:'hundred_wins',        name:'Legend of the Ink',   desc:'100勝',                      icon:'👑', rarity:'rare',      cat:'basic'      },
+  // Win Streak
+  { id:'win_streak_3',        name:'Hot Streak',          desc:'3連勝',                      icon:'🔥', rarity:'common',    cat:'streak'     },
+  { id:'win_streak_5',        name:'On Fire',             desc:'5連勝',                      icon:'🔥', rarity:'rare',      cat:'streak'     },
+  { id:'win_streak_10',       name:'Unstoppable',         desc:'10連勝',                     icon:'💥', rarity:'rare',      cat:'streak'     },
+  { id:'winrate_60',          name:'Solid Player',        desc:'勝率60%（30試合以上）',       icon:'📈', rarity:'rare',      cat:'streak'     },
+  { id:'winrate_65',          name:'Tournament Threat',   desc:'勝率65%（30試合以上）',       icon:'🎯', rarity:'rare',      cat:'streak'     },
+  { id:'winrate_70',          name:'Meta Breaker',        desc:'勝率70%（30試合以上）',       icon:'💎', rarity:'rare',      cat:'streak'     },
+  // Matchup
+  { id:'ruby_slayer',         name:'Ruby Slayer',         desc:'Rubyに10勝',                 icon:'🔴', rarity:'common',    cat:'matchup'    },
+  { id:'steel_crusher',       name:'Steel Crusher',       desc:'Steelに10勝',                icon:'⚙️', rarity:'common',    cat:'matchup'    },
+  { id:'sapphire_hunter',     name:'Sapphire Hunter',     desc:'Sapphireに10勝',             icon:'🔵', rarity:'common',    cat:'matchup'    },
+  { id:'amethyst_buster',     name:'Amethyst Buster',     desc:'Amethystに10勝',             icon:'🟣', rarity:'common',    cat:'matchup'    },
+  { id:'emerald_assassin',    name:'Emerald Assassin',    desc:'Emeraldに10勝',              icon:'💚', rarity:'common',    cat:'matchup'    },
+  { id:'amber_tamer',         name:'Amber Tamer',         desc:'Amberに10勝',                icon:'🟠', rarity:'common',    cat:'matchup'    },
+  { id:'mirror_master',       name:'Mirror Master',       desc:'ミラーマッチ5勝',             icon:'🪞', rarity:'rare',      cat:'matchup'    },
+  { id:'comeback_king',       name:'Comeback King',       desc:'ロア差10以上から逆転',         icon:'💪', rarity:'rare',      cat:'matchup'    },
+  { id:'lore_storm',          name:'Lore Storm',          desc:'ロア20で勝利',                icon:'⚡', rarity:'rare',      cat:'matchup'    },
+  { id:'iron_mentality',      name:'Iron Mentality',      desc:'3連敗後に勝利',               icon:'🧱', rarity:'rare',      cat:'matchup'    },
+  { id:'grinder',             name:'Grinder',             desc:'1日10試合',                   icon:'⏳', rarity:'rare',      cat:'matchup'    },
+  // Tournament
+  { id:'first_tournament',    name:'First Tournament',    desc:'大会初参加',                  icon:'🏟️', rarity:'common',    cat:'tournament' },
+  { id:'top_cut',             name:'Top Cut',             desc:'大会TOP8入賞',                icon:'🥈', rarity:'epic',      cat:'tournament' },
+  { id:'champion',            name:'Champion',            desc:'大会優勝',                    icon:'🏆', rarity:'epic',      cat:'tournament' },
+  { id:'tournament_monster',  name:'Tournament Monster',  desc:'大会TOP8を5回',               icon:'👹', rarity:'legendary', cat:'tournament' },
+  // Legendary
+  { id:'disney_hero',         name:'Disney Hero',         desc:'5色デッキに勝利',             icon:'✨', rarity:'legendary', cat:'legendary'  },
+  { id:'ink_master',          name:'Ink Master',          desc:'6色すべてで勝利',             icon:'🌈', rarity:'legendary', cat:'legendary'  },
+  { id:'meta_destroyer',      name:'Meta Destroyer',      desc:'同対面10連勝',                icon:'💣', rarity:'legendary', cat:'legendary'  },
+  { id:'mirror_dominator',    name:'Mirror Dominator',    desc:'ミラー勝率80%（10試合以上）',  icon:'🪞', rarity:'legendary', cat:'legendary'  },
+  { id:'steel_nemesis',       name:'Steel Nemesis',       desc:'Steelに20勝',                icon:'🔩', rarity:'legendary', cat:'legendary'  },
+  { id:'lore_machine',        name:'Lore Machine',        desc:'平均ロア15以上（20試合以上）', icon:'⚗️', rarity:'legendary', cat:'legendary'  },
+  { id:'perfect_day',         name:'Perfect Day',         desc:'1日全勝（5試合以上）',         icon:'☀️', rarity:'legendary', cat:'legendary'  },
+  { id:'lore_god',            name:'Lore God',            desc:'100勝',                       icon:'🌟', rarity:'legendary', cat:'legendary'  },
+];
+
+const ACH_RARITY_ORDER = { legendary:0, epic:1, rare:2, common:3 };
+
+// ── localStorage I/O ─────────────────────────────────────────────
+function achLoad() {
+  try {
+    const raw = localStorage.getItem(ACH_KEY);
+    if (!raw) return { schemaVersion:1, achievements:{} };
+    return JSON.parse(raw);
+  } catch(e) { return { schemaVersion:1, achievements:{} }; }
+}
+
+function achSave(data) {
+  try { localStorage.setItem(ACH_KEY, JSON.stringify(data)); } catch(e) {}
+}
+
+// ── 実績判定ロジック ─────────────────────────────────────────────
+function achEvaluate() {
+  const data   = achLoad();
+  const saved  = data.achievements;
+  const ms     = (typeof matches !== 'undefined') ? matches : [];
+  const tourns = (typeof tournaments !== 'undefined') ? tournaments : [];
+
+  const newlyUnlocked = [];
+
+  function unlock(id) {
+    if (saved[id] && saved[id].unlocked) return; // already unlocked
+    const today = new Date().toISOString().slice(0,10);
+    saved[id] = { unlocked:true, date:today };
+    newlyUnlocked.push(id);
+  }
+
+  // ─ 基本 ─
+  if (ms.length >= 1)   unlock('first_match');
+  if (ms.length >= 10)  unlock('ten_matches');
+  if (ms.length >= 50)  unlock('fifty_matches');
+  if (ms.length >= 100) unlock('hundred_matches');
+  if (ms.length >= 300) unlock('threehundred_matches');
+
+  const wins = ms.filter(m => m.result === 'win');
+  if (wins.length >= 1)   unlock('first_victory');
+  if (wins.length >= 3)   unlock('three_wins');
+  if (wins.length >= 10)  unlock('ten_wins');
+  if (wins.length >= 50)  unlock('fifty_wins');
+  if (wins.length >= 100) { unlock('hundred_wins'); unlock('lore_god'); }
+
+  // ─ 連勝 ─
+  let streak = 0, maxStreak = 0;
+  // matches are newest-first, reverse for streak calc
+  const msChron = [...ms].reverse();
+  // current streak from latest
+  for (let i = ms.length-1; i >= 0; i--) {
+    if (ms[i].result === 'win') streak++;
+    else break;
+  }
+  // max streak
+  let cur = 0;
+  for (const m of msChron) {
+    if (m.result === 'win') { cur++; maxStreak = Math.max(maxStreak, cur); }
+    else cur = 0;
+  }
+  if (maxStreak >= 3)  unlock('win_streak_3');
+  if (maxStreak >= 5)  unlock('win_streak_5');
+  if (maxStreak >= 10) unlock('win_streak_10');
+
+  // ─ 勝率（最低30試合）─
+  const wlMs = ms.filter(m => m.result === 'win' || m.result === 'loss');
+  if (wlMs.length >= 30) {
+    const wr = wins.length / wlMs.length * 100;
+    if (wr >= 60) unlock('winrate_60');
+    if (wr >= 65) unlock('winrate_65');
+    if (wr >= 70) unlock('winrate_70');
+  }
+
+  // ─ 対面（oppColorsベース） ─
+  function winsVsColor(color) {
+    return ms.filter(m => m.result === 'win' && Array.isArray(m.oppColors) && m.oppColors.includes(color)).length;
+  }
+  if (winsVsColor('Ruby')     >= 10) unlock('ruby_slayer');
+  if (winsVsColor('Steel')    >= 10) unlock('steel_crusher');
+  if (winsVsColor('Sapphire') >= 10) unlock('sapphire_hunter');
+  if (winsVsColor('Amethyst') >= 10) unlock('amethyst_buster');
+  if (winsVsColor('Emerald')  >= 10) unlock('emerald_assassin');
+  if (winsVsColor('Amber')    >= 10) unlock('amber_tamer');
+
+  // ─ ミラー ─
+  function isMirror(m) {
+    const my  = (m.myColors  || []).slice().sort().join(',');
+    const opp = (m.oppColors || []).slice().sort().join(',');
+    return my && opp && my === opp;
+  }
+  const mirrorWins = ms.filter(m => m.result === 'win' && isMirror(m));
+  if (mirrorWins.length >= 5) unlock('mirror_master');
+
+  // ─ 大会 ─
+  const tournMs = ms.filter(m => m.tournamentId);
+  if (tournMs.length >= 1) unlock('first_tournament');
+  // champion / top_cut: detected by tournament result stored on tournament object
+  // (we track via saved achievements set by tournament module hooks)
+  // Also detect champion by checking if user has won tournament (placeholder: tournamentId wins = all rounds)
+  // For now check if any tournament has a "champion" or "placement" field
+  tourns.forEach(t => {
+    if (t.placement === 1 || t.champion === true) unlock('champion');
+    if (t.placement && t.placement <= 8) unlock('top_cut');
+  });
+
+  // ─ 特殊 ─
+  // Comeback King: myScore much lower than oppScore mid-game → tracked via score
+  // We use: oppScore >= myScore+10 at some point; approximate: oppScore recorded as final lore
+  const comebackMs = ms.filter(m => {
+    const my  = parseInt(m.myScore  || 0);
+    const opp = parseInt(m.oppScore || 0);
+    return m.result === 'win' && opp >= my + 10;
+  });
+  if (comebackMs.length >= 1) unlock('comeback_king');
+
+  // Lore Storm: win with myScore >= 20
+  const loreStormMs = ms.filter(m => m.result === 'win' && parseInt(m.myScore || 0) >= 20);
+  if (loreStormMs.length >= 1) unlock('lore_storm');
+
+  // Iron Mentality: 3連敗後に勝利
+  for (let i = 3; i < msChron.length; i++) {
+    const prev3 = msChron.slice(i-3, i);
+    if (prev3.every(m => m.result === 'loss') && msChron[i].result === 'win') {
+      unlock('iron_mentality'); break;
+    }
+  }
+
+  // Grinder: 1日10試合
+  const byDate = {};
+  ms.forEach(m => { byDate[m.date] = (byDate[m.date] || 0) + 1; });
+  if (Object.values(byDate).some(v => v >= 10)) unlock('grinder');
+
+  // ─ 神実績（Legendary） ─
+
+  // Disney Hero: 5色デッキに勝利
+  const winsVs5Color = ms.filter(m => m.result === 'win' && (m.oppColors || []).length >= 5);
+  if (winsVs5Color.length >= 1) unlock('disney_hero');
+
+  // Ink Master: 6色すべてで勝利
+  const colorWinSet = new Set();
+  ms.filter(m => m.result === 'win').forEach(m => (m.myColors || []).forEach(c => colorWinSet.add(c)));
+  if (['Amber','Ruby','Sapphire','Emerald','Amethyst','Steel'].every(c => colorWinSet.has(c))) unlock('ink_master');
+
+  // Meta Destroyer: 同対面10連勝（同oppColors）
+  let muStreakMap = {};
+  msChron.forEach(m => {
+    const key = (m.oppColors || []).slice().sort().join(',');
+    if (!key) return;
+    if (m.result === 'win') {
+      muStreakMap[key] = (muStreakMap[key] || 0) + 1;
+      if (muStreakMap[key] >= 10) unlock('meta_destroyer');
+    } else {
+      muStreakMap[key] = 0;
+    }
+  });
+
+  // Mirror Dominator: ミラー勝率80%（10試合以上）
+  const mirrorAll = ms.filter(m => isMirror(m) && (m.result === 'win' || m.result === 'loss'));
+  if (mirrorAll.length >= 10) {
+    const mWR = mirrorWins.length / mirrorAll.length * 100;
+    if (mWR >= 80) unlock('mirror_dominator');
+  }
+
+  // Steel Nemesis: Steelに20勝
+  if (winsVsColor('Steel') >= 20) unlock('steel_nemesis');
+
+  // Lore Machine: 平均ロア15以上（20試合以上の記録ありのもの）
+  const scoredMs = ms.filter(m => parseInt(m.myScore || 0) > 0);
+  if (scoredMs.length >= 20) {
+    const avgLore = scoredMs.reduce((s,m) => s + parseInt(m.myScore || 0), 0) / scoredMs.length;
+    if (avgLore >= 15) unlock('lore_machine');
+  }
+
+  // Tournament Monster: TOP8を5回
+  const top8Count = tourns.filter(t => t.placement && t.placement <= 8).length;
+  if (top8Count >= 5) unlock('tournament_monster');
+
+  // Perfect Day: 1日全勝（5試合以上）
+  const dateMsMap = {};
+  ms.forEach(m => {
+    if (!dateMsMap[m.date]) dateMsMap[m.date] = [];
+    dateMsMap[m.date].push(m);
+  });
+  Object.values(dateMsMap).forEach(dayMs => {
+    const wlDay = dayMs.filter(m => m.result === 'win' || m.result === 'loss');
+    if (wlDay.length >= 5 && wlDay.every(m => m.result === 'win')) unlock('perfect_day');
+  });
+
+  // ── 保存 & 解除演出 ─────────────────────────────────────────
+  if (newlyUnlocked.length > 0) {
+    data.achievements = saved;
+    achSave(data);
+    newlyUnlocked.forEach((id, i) => {
+      setTimeout(() => achShowPopup(id), i * 800);
+    });
+  }
+
+  return data;
+}
+
+// ── ポップアップ表示 ───────────────────────────────────────────
+function achShowPopup(id) {
+  const def  = ACH_DEFS.find(d => d.id === id);
+  if (!def) return;
+  const overlay = document.getElementById('ach-popup-overlay');
+  if (!overlay) return;
+
+  const isLeg = def.rarity === 'legendary';
+  const div = document.createElement('div');
+  div.className = 'ach-popup' + (isLeg ? ' legendary' : '');
+  div.innerHTML = `
+    <button class="ach-popup-close" onclick="this.parentElement.remove()">✕</button>
+    <div class="ach-popup-tag">${isLeg ? '⭐ LEGENDARY UNLOCKED' : '🏆 ACHIEVEMENT UNLOCKED'}</div>
+    <div class="ach-popup-icon">${def.icon}</div>
+    <div class="ach-popup-title">${def.name}</div>
+    <div class="ach-popup-sub">${def.desc}</div>
+    <div class="ach-popup-share">
+      <button class="ach-popup-share-btn" onclick="achShareX('${id}')">𝕏 シェア</button>
+    </div>
+  `;
+  overlay.appendChild(div);
+  setTimeout(() => { if (div.parentElement) div.remove(); }, 6000);
+}
+
+// ── SNS共有 ───────────────────────────────────────────────────
+function achShareX(id) {
+  const def = ACH_DEFS.find(d => d.id === id);
+  if (!def) return;
+  const text = encodeURIComponent(
+    `🏆 Achievement Unlocked\n\n${def.icon} ${def.name}\n${def.desc}\n\n#ロルカナ #Lorcana`
+  );
+  window.open(`https://twitter.com/intent/tweet?text=${text}`, '_blank');
+}
+
+// ── フィルター状態 ────────────────────────────────────────────
+let _achCurrentFilter = 'all';
+function achFilter(f) {
+  _achCurrentFilter = f;
+  document.querySelectorAll('.ach-filter-btn').forEach(b => {
+    b.classList.toggle('active', b.textContent.toLowerCase().includes(f) ||
+      (f==='all' && b.textContent === 'All') ||
+      (f==='unlocked' && b.textContent === '解除済み') ||
+      (f==='legendary' && b.textContent.includes('Legendary')) ||
+      (f==='locked' && b.textContent === '未解除'));
+  });
+  renderAchievementsPanel();
+}
+
+// ── パネル描画 ────────────────────────────────────────────────
+function renderAchievementsPanel() {
+  const data  = achLoad();
+  const saved = data.achievements || {};
+  const grid  = document.getElementById('ach-grid');
+  const countLabel = document.getElementById('ach-count-label');
+  if (!grid) return;
+
+  const totalUnlocked = ACH_DEFS.filter(d => saved[d.id] && saved[d.id].unlocked).length;
+  if (countLabel) countLabel.textContent = `${totalUnlocked} / ${ACH_DEFS.length}`;
+
+  let defs = [...ACH_DEFS];
+  if (_achCurrentFilter === 'unlocked') defs = defs.filter(d => saved[d.id]?.unlocked);
+  if (_achCurrentFilter === 'locked')   defs = defs.filter(d => !saved[d.id]?.unlocked);
+  if (_achCurrentFilter === 'legendary')defs = defs.filter(d => d.rarity === 'legendary');
+
+  // Sort: rarity order, then unlocked first, then by date desc
+  defs.sort((a, b) => {
+    const ra = ACH_RARITY_ORDER[a.rarity] ?? 3;
+    const rb = ACH_RARITY_ORDER[b.rarity] ?? 3;
+    if (ra !== rb) return ra - rb;
+    const ua = saved[a.id]?.unlocked ? 1 : 0;
+    const ub = saved[b.id]?.unlocked ? 1 : 0;
+    if (ua !== ub) return ub - ua;
+    const da = saved[a.id]?.date || '';
+    const db = saved[b.id]?.date || '';
+    return db.localeCompare(da);
+  });
+
+  grid.innerHTML = defs.map(d => {
+    const ul  = saved[d.id]?.unlocked;
+    const dt  = saved[d.id]?.date || '';
+    const leg = d.rarity === 'legendary';
+    return `
+      <div class="ach-card ${leg?'legendary':''} ${ul?'unlocked':'locked'}">
+        ${leg ? '<span class="ach-badge ach-badge-legendary">LEGENDARY</span>' : ''}
+        <div class="ach-icon">${d.icon}</div>
+        <div class="ach-name">${d.name}</div>
+        <div class="ach-desc">${d.desc}</div>
+        ${ul ? `<div class="ach-date">✓ ${dt}</div>` : '<div class="ach-locked-icon">🔒</div>'}
+      </div>`;
+  }).join('');
+}
+
+// renderProfAchievements → integrated into renderProfCard via getTopAchievements
+
+// ── 起動時・保存時に評価 ─────────────────────────────────────
+// saveMatch の後にフックする
+// save関数をラップして実績再計算をフック
+(function() {
+  const _origSave = save;
+  save = function(key, val) {
+    _origSave(key, val);
+    if (key === 'matches') {
+      setTimeout(achEvaluate, 100);
+    }
+  };
+})();
+
+// DOMContentLoaded で初回評価
+document.addEventListener('DOMContentLoaded', () => {
+  setTimeout(achEvaluate, 500);
+});
+
+// ══════════════════════════════════════════════════════════════════
+// ACHIEVEMENT STATS PAGE (統計内 Achievements セクション)
+// ══════════════════════════════════════════════════════════════════
+
+const ACH_CAT_META = {
+  basic:      { label:'⚡ Basic',      desc:'基本実績' },
+  streak:     { label:'🔥 Win Streak', desc:'連勝・勝率' },
+  matchup:    { label:'⚔️ Matchup',    desc:'対面・特殊' },
+  tournament: { label:'🏆 Tournament', desc:'大会' },
+  legendary:  { label:'⭐ Legendary',  desc:'神実績' },
+};
+const ACH_CAT_ORDER = ['basic','streak','matchup','tournament','legendary'];
+
+let _achStatRarity = 'all';   // current rarity tab filter
+
+function achStatTab(r) {
+  _achStatRarity = r;
+  // update tab UI
+  document.querySelectorAll('.ach-rarity-tab').forEach(b => {
+    b.classList.toggle('active', b.dataset.r === r);
+  });
+  _renderAchStatsCats();
+}
+
+function renderAchStats() {
+  _renderAchStatsOverview();
+  _renderAchStatsCats();
+}
+
+// ① 概要セクション
+function _renderAchStatsOverview() {
+  const el = document.getElementById('ach-stats-overview');
+  if (!el) return;
+  const data    = achLoad();
+  const saved   = data.achievements || {};
+  const total   = ACH_DEFS.length;
+  const unlocked= ACH_DEFS.filter(d => saved[d.id]?.unlocked).length;
+  const pct     = total ? Math.round(unlocked / total * 100) : 0;
+
+  // per-rarity counts
+  const rarities = ['legendary','epic','rare','common'];
+  const rCounts = {};
+  rarities.forEach(r => {
+    const defs = ACH_DEFS.filter(d => d.rarity === r);
+    rCounts[r] = { total: defs.length, done: defs.filter(d => saved[d.id]?.unlocked).length };
+  });
+
+  const rColors = { legendary:'#c084fc', epic:'#fb923c', rare:'#60a5fa', common:'#9ca3af' };
+  const rLabels = { legendary:'Legendary', epic:'Epic', rare:'Rare', common:'Common' };
+
+  el.innerHTML = `
+    <div class="ach-stats-headline">
+      <span class="ach-stats-num">${unlocked}</span>
+      <span class="ach-stats-total">/ ${total} unlocked</span>
+    </div>
+    <div class="ach-progress-track">
+      <div class="ach-progress-thumb" style="width:${pct}%"></div>
+    </div>
+    <div class="ach-progress-pct">${pct}%</div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;">
+      ${rarities.map(r => `
+        <div style="flex:1;min-width:60px;text-align:center;padding:6px 8px;border-radius:8px;
+          background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);">
+          <div style="font-size:11px;font-weight:700;color:${rColors[r]};letter-spacing:.5px;">${rLabels[r]}</div>
+          <div style="font-family:var(--font-display);font-size:16px;color:${rColors[r]};margin-top:2px;">
+            ${rCounts[r].done}<span style="font-size:10px;color:var(--muted);"> / ${rCounts[r].total}</span>
+          </div>
+        </div>`).join('')}
+    </div>`;
+}
+
+// ③ カテゴリアコーディオン
+function _renderAchStatsCats() {
+  const container = document.getElementById('ach-stats-cats');
+  if (!container) return;
+  const data  = achLoad();
+  const saved = data.achievements || {};
+
+  // Determine which cats to show based on rarity filter
+  let filteredDefs = [...ACH_DEFS];
+  if (_achStatRarity !== 'all') {
+    filteredDefs = filteredDefs.filter(d => d.rarity === _achStatRarity);
+  }
+
+  // Group by category (only cats that have defs after filter)
+  const cats = ACH_CAT_ORDER.filter(c => filteredDefs.some(d => d.cat === c));
+
+  container.innerHTML = cats.map(cat => {
+    const meta = ACH_CAT_META[cat] || { label: cat, desc: '' };
+    let defs = filteredDefs.filter(d => d.cat === cat);
+
+    // Sort within cat: rarity, unlocked first, date desc
+    defs.sort((a,b) => {
+      const ro = (ACH_RARITY_ORDER[a.rarity]??3) - (ACH_RARITY_ORDER[b.rarity]??3);
+      if (ro) return ro;
+      const ua = saved[a.id]?.unlocked ? 1 : 0;
+      const ub = saved[b.id]?.unlocked ? 1 : 0;
+      if (ua !== ub) return ub - ua;
+      return (saved[b.id]?.date||'').localeCompare(saved[a.id]?.date||'');
+    });
+
+    const catTotal    = defs.length;
+    const catUnlocked = defs.filter(d => saved[d.id]?.unlocked).length;
+
+    const cards = defs.map(d => {
+      const ul   = saved[d.id]?.unlocked;
+      const dt   = saved[d.id]?.date || '';
+      const rCls = d.rarity === 'legendary' ? 'legendary-card' : d.rarity === 'epic' ? 'epic' : '';
+      const rBadge = `<span class="ach-scard-rbadge ach-rbadge-${d.rarity}">${d.rarity.toUpperCase()}</span>`;
+      return `
+        <div class="ach-scard ${rCls} ${ul?'unlocked':''}">
+          <div class="ach-scard-icon">${d.icon}</div>
+          <div class="ach-scard-body">
+            <div class="ach-scard-name">${d.name}</div>
+            <div class="ach-scard-desc">${d.desc}</div>
+            ${rBadge}
+          </div>
+          <div class="ach-scard-right">
+            ${ul
+              ? `<div class="ach-scard-check">✓ Unlocked</div><div class="ach-scard-date">${dt}</div>`
+              : `<div class="ach-scard-lock">🔒</div>`}
+          </div>
+        </div>`;
+    }).join('');
+
+    return `
+      <div class="ach-cat-block" id="ach-cat-${cat}">
+        <div class="ach-cat-header" onclick="this.parentElement.classList.toggle('open')">
+          <span class="ach-cat-title">${meta.label}</span>
+          <div class="ach-cat-meta">
+            <span class="ach-cat-prog">${catUnlocked} / ${catTotal}</span>
+            <span class="ach-cat-arrow">›</span>
+          </div>
+        </div>
+        <div class="ach-cat-body">${cards}</div>
+      </div>`;
+  }).join('');
+}
+
+
 </script>
 
 <!-- Bottom Navigation -->
@@ -8545,5 +10056,6 @@ document.addEventListener('DOMContentLoaded', function() {
     <span class="bn-icon">⚙️</span><span>設定</span>
   </button>
 </nav>
+
 </body>
 </html>
