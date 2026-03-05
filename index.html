@@ -1572,158 +1572,251 @@ input:focus{border-color:var(--gold);}
 }
 
 /* ══════════════════════════════════════════════
-   プロフィールカード（神 UI）
+   ILLUMINEER PROFILE — Magic Card Style
 ══════════════════════════════════════════════ */
-#prof-section { margin-bottom: 16px; }
 
-/* ── 未設定ボタン ── */
+/* ═══ 未設定ボタン ═══ */
+#prof-section { margin-bottom: 20px; }
 .prof-create-btn {
-  display: flex; align-items: center; justify-content: center; gap: 10px;
-  width: 100%; padding: 16px 20px;
-  background: linear-gradient(135deg,rgba(201,168,76,.07),rgba(140,80,255,.05));
-  border: 1px dashed rgba(201,168,76,.45); border-radius: 16px;
-  color: var(--gold); font-family: var(--font-display);
-  font-size: 13px; letter-spacing: 1.5px; cursor: pointer; transition: all .2s;
+  display: flex; align-items: center; justify-content: center; gap: 12px;
+  width: 100%; padding: 18px 20px;
+  background: linear-gradient(135deg, rgba(201,168,76,.06) 0%, rgba(120,60,200,.08) 100%);
+  border: 1px dashed rgba(201,168,76,.5); border-radius: 18px;
+  color: var(--gold); font-family: 'Palatino Linotype', 'Book Antiqua', serif;
+  font-size: 14px; letter-spacing: 2px; cursor: pointer; transition: all .25s;
+  text-shadow: 0 0 12px rgba(201,168,76,.4);
 }
-.prof-create-btn:active { background: rgba(201,168,76,.14); }
+.prof-create-btn:active { background: rgba(201,168,76,.12); transform: scale(.99); }
 
-/* ── 閲覧バナー ── */
+/* ═══ 閲覧バナー ═══ */
 .prof-view-banner {
   background: rgba(64,80,232,.12); border: 1px solid rgba(64,80,232,.3);
-  border-radius: 12px; padding: 10px 14px; margin-bottom: 10px;
+  border-radius: 12px; padding: 10px 14px; margin-bottom: 12px;
   font-size: 12px; color: #8090f8; display: none;
 }
 .prof-view-banner.visible { display: flex; align-items: center; gap: 8px; }
 
-/* ── カード本体（横長 1080/566 比率） ── */
+/* ═══ ILLUMINEER CARD ═══ */
 .prof-card-wrap { position: relative; }
-.prof-card {
+
+/* 魔法カード本体 */
+#profile-card {
+  position: relative;
   width: 100%;
   aspect-ratio: 1080 / 566;
-  background: linear-gradient(135deg,#0e0e1e 0%,#141428 50%,#0a0a1a 100%);
-  border: 1px solid rgba(201,168,76,.4); border-radius: 18px;
-  padding: 5% 6%; position: relative; overflow: hidden;
+  border-radius: 20px;
+  overflow: hidden;
+  box-sizing: border-box;
+  /* 二重枠：外枠はラッパーで実現 */
+  background:
+    radial-gradient(ellipse at 20% 20%, rgba(201,168,76,.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 80%, rgba(120,60,200,.08) 0%, transparent 50%),
+    linear-gradient(160deg, #070714 0%, #0d0d22 40%, #070714 100%);
+  padding: 5% 6%;
   display: grid;
   grid-template-rows: auto 1fr auto;
-  box-sizing: border-box;
-}
-/* 背景装飾 */
-.prof-card::before {
-  content: '✦'; position: absolute; right: 5%; top: 8%;
-  font-size: clamp(28px,5vw,60px); color: rgba(201,168,76,.08);
-  pointer-events: none; line-height: 1;
-}
-.prof-card::after {
-  content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 35%;
-  background: linear-gradient(0deg,rgba(201,168,76,.04),transparent);
-  pointer-events: none; border-radius: 0 0 18px 18px;
-}
-/* カードヘッダー */
-.prof-card-header {
-  display: flex; justify-content: space-between; align-items: flex-start;
-}
-.prof-card-label {
-  font-family: var(--font-display); font-size: clamp(7px,1.2vw,12px);
-  letter-spacing: .2em; color: rgba(201,168,76,.55); margin-bottom: 4%;
-}
-/* ハンドル・ニックネーム */
-.prof-card-nickname {
-  font-family: var(--font-display); font-size: clamp(16px,3.8vw,42px);
-  color: #f0e0a0; letter-spacing: .03em; line-height: 1.1;
-  text-shadow: 0 0 30px rgba(201,168,76,.35);
-}
-.prof-card-handle {
-  font-size: clamp(10px,1.8vw,18px); color: rgba(201,168,76,.65);
-  letter-spacing: .05em; margin-top: 2%; font-weight: 600;
-}
-.prof-card-region {
-  font-size: clamp(8px,1.3vw,13px); color: rgba(255,255,255,.4);
-  letter-spacing: .08em; margin-top: 1%;
-}
-/* 色アイコン列 */
-.prof-card-colors {
-  display: flex; gap: clamp(4px,1vw,10px); margin-left: auto; flex-shrink: 0;
-}
-.prof-card-color-dot {
-  width: clamp(18px,3.2vw,34px); height: clamp(18px,3.2vw,34px);
-  border-radius: 50%; border: 2px solid rgba(255,255,255,.25);
-  display: flex; align-items: center; justify-content: center;
-  font-size: clamp(10px,1.8vw,18px);
-}
-/* フッター行（勝率・実績） */
-.prof-card-footer {
-  border-top: 1px solid rgba(201,168,76,.15);
-  padding-top: 3%; margin-top: 2%;
-  display: flex; gap: 4%; align-items: flex-end; flex-wrap: wrap;
-}
-.prof-card-stat {
-  display: flex; flex-direction: column;
-}
-.prof-card-stat-val {
-  font-family: var(--font-display); font-size: clamp(14px,3vw,32px);
-  color: var(--gold); line-height: 1;
-}
-.prof-card-stat-label {
-  font-size: clamp(6px,1vw,10px); color: rgba(255,255,255,.4);
-  letter-spacing: .1em; margin-top: 2px; text-transform: uppercase;
-}
-/* 実績フッター */
-.prof-card-ach {
-  flex: 1; min-width: 0;
-}
-.prof-card-ach-count {
-  font-family: var(--font-display); font-size: clamp(7px,1.1vw,11px);
-  color: rgba(201,168,76,.6); letter-spacing: .1em; margin-bottom: 3px;
-}
-.prof-card-ach-list {
-  display: flex; flex-wrap: wrap; gap: 3px;
-}
-.prof-card-ach-item {
-  font-size: clamp(7px,1.2vw,12px); padding: 2px 7px;
-  border-radius: 6px; border: 1px solid;
-  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px;
-}
-.prof-card-ach-item.legendary {
-  color: #d8a8ff; border-color: rgba(180,130,255,.35); background: rgba(140,80,255,.1);
-}
-.prof-card-ach-item.epic {
-  color: #fdb07a; border-color: rgba(251,146,60,.35); background: rgba(251,146,60,.08);
-}
-.prof-card-ach-item.rare {
-  color: #93c5fd; border-color: rgba(96,165,250,.3); background: rgba(96,165,250,.07);
-}
-.prof-card-ach-item.common {
-  color: rgba(201,168,76,.8); border-color: rgba(201,168,76,.2); background: rgba(201,168,76,.05);
-}
-/* 一言 */
-.prof-card-bio {
-  font-size: clamp(8px,1.4vw,14px); color: rgba(255,255,255,.5);
-  line-height: 1.5; font-style: italic; margin-top: 2%;
-}
-/* BRanding */
-.prof-card-brand {
-  position: absolute; bottom: 4%; right: 6%;
-  font-family: var(--font-display); font-size: clamp(6px,.9vw,9px);
-  color: rgba(201,168,76,.25); letter-spacing: .2em;
+  gap: 2%;
+  /* 金の二重枠 */
+  box-shadow:
+    inset 0 0 0 1px rgba(201,168,76,.6),
+    inset 0 0 0 3px rgba(12,10,26,.9),
+    inset 0 0 0 4px rgba(201,168,76,.25),
+    0 0 40px rgba(0,0,0,.8),
+    0 0 80px rgba(201,168,76,.06);
 }
 
-/* ── ボタン群 ── */
+/* 星粒パーティクル（疑似要素） */
+#profile-card::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image:
+    radial-gradient(circle, rgba(255,255,255,.7) 1px, transparent 1px),
+    radial-gradient(circle, rgba(201,168,76,.5) 1px, transparent 1px),
+    radial-gradient(circle, rgba(255,255,255,.4) 1px, transparent 1px),
+    radial-gradient(circle, rgba(200,180,255,.5) 1px, transparent 1px),
+    radial-gradient(circle, rgba(255,255,255,.3) 1px, transparent 1px),
+    radial-gradient(circle, rgba(201,168,76,.3) 1px, transparent 1px);
+  background-size:
+    180px 120px, 220px 160px, 140px 100px,
+    200px 140px, 160px 110px, 250px 180px;
+  background-position:
+    12% 18%, 68% 32%, 45% 72%,
+    88% 14%, 25% 58%, 55% 85%;
+  pointer-events: none; z-index: 0; opacity: .65;
+}
+/* 下部グロー */
+#profile-card::after {
+  content: '';
+  position: absolute; bottom: 0; left: 0; right: 0; height: 40%;
+  background: linear-gradient(0deg, rgba(201,168,76,.07) 0%, transparent 100%);
+  pointer-events: none; z-index: 0;
+  border-radius: 0 0 20px 20px;
+}
+#profile-card > * { position: relative; z-index: 1; }
+
+/* カード上部バナー */
+.pc-banner-row {
+  display: flex; justify-content: space-between; align-items: flex-start;
+}
+.pc-banner-left { flex: 1; min-width: 0; }
+.pc-banner-label {
+  font-family: 'Palatino Linotype', 'Book Antiqua', serif;
+  font-size: clamp(7px, 1.1vw, 11px);
+  letter-spacing: .25em; color: rgba(201,168,76,.55);
+  margin-bottom: 3%;
+  text-transform: uppercase;
+}
+/* ハンドル（大） */
+.pc-handle-big {
+  font-family: 'Palatino Linotype', 'Book Antiqua', serif;
+  font-size: clamp(15px, 3.6vw, 40px);
+  color: #f5e8b0;
+  letter-spacing: .02em; line-height: 1.1;
+  text-shadow: 0 0 24px rgba(201,168,76,.5), 0 2px 8px rgba(0,0,0,.5);
+}
+/* ニックネーム（サブ） */
+.pc-nickname-sub {
+  font-size: clamp(9px, 1.6vw, 16px);
+  color: rgba(201,168,76,.6);
+  letter-spacing: .06em; margin-top: 1.5%;
+  font-family: 'Palatino Linotype', 'Book Antiqua', serif;
+}
+.pc-region-tag {
+  font-size: clamp(8px, 1.2vw, 12px);
+  color: rgba(255,255,255,.35);
+  letter-spacing: .1em; margin-top: 1%;
+}
+/* カラードット */
+.pc-colors-wrap {
+  display: flex; gap: clamp(4px, 1vw, 10px);
+  margin-left: 3%; flex-shrink: 0; align-items: flex-start;
+  padding-top: 1%;
+}
+.pc-color-orb {
+  width: clamp(20px, 3.4vw, 38px);
+  height: clamp(20px, 3.4vw, 38px);
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,.3);
+  display: flex; align-items: center; justify-content: center;
+  font-size: clamp(10px, 1.8vw, 20px);
+  box-shadow: 0 0 8px rgba(255,255,255,.15);
+}
+/* 中段：コメント */
+.pc-comment {
+  font-size: clamp(8px, 1.4vw, 14px);
+  color: rgba(255,255,255,.45);
+  font-style: italic;
+  font-family: 'Palatino Linotype', 'Book Antiqua', serif;
+  line-height: 1.55;
+  align-self: center;
+}
+/* フッター区切り線 + データ */
+.pc-footer {
+  border-top: 1px solid rgba(201,168,76,.18);
+  padding-top: 3%;
+  display: flex; gap: 5%; align-items: flex-end; flex-wrap: wrap;
+}
+.pc-stat-block { flex-shrink: 0; }
+.pc-stat-val {
+  font-family: 'Palatino Linotype', 'Book Antiqua', serif;
+  font-size: clamp(14px, 3vw, 34px);
+  color: var(--gold); line-height: 1;
+  text-shadow: 0 0 14px rgba(201,168,76,.4);
+}
+.pc-stat-lbl {
+  font-size: clamp(6px, .95vw, 10px);
+  color: rgba(255,255,255,.35);
+  letter-spacing: .12em; margin-top: 2px;
+  text-transform: uppercase;
+}
+.pc-ach-block { flex: 1; min-width: 0; }
+.pc-ach-count {
+  font-family: 'Palatino Linotype', 'Book Antiqua', serif;
+  font-size: clamp(7px, 1vw, 10px);
+  color: rgba(201,168,76,.55); letter-spacing: .12em;
+  margin-bottom: 4px; text-transform: uppercase;
+}
+.pc-ach-chips {
+  display: flex; flex-wrap: wrap; gap: 3px;
+}
+.pc-ach-chip {
+  font-size: clamp(7px, 1.1vw, 11px);
+  padding: 2px 8px; border-radius: 6px; border: 1px solid;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  max-width: 170px;
+}
+.pc-ach-chip.legendary { color: #d8a8ff; border-color: rgba(180,130,255,.4); background: rgba(140,80,255,.12); }
+.pc-ach-chip.epic      { color: #fdb07a; border-color: rgba(251,146,60,.4);  background: rgba(251,146,60,.09); }
+.pc-ach-chip.rare      { color: #93c5fd; border-color: rgba(96,165,250,.35); background: rgba(96,165,250,.08); }
+.pc-ach-chip.common    { color: rgba(201,168,76,.8); border-color: rgba(201,168,76,.25); background: rgba(201,168,76,.06); }
+/* ブランドタグ */
+.pc-brand {
+  position: absolute; bottom: 3.5%; right: 5%;
+  font-family: 'Palatino Linotype', 'Book Antiqua', serif;
+  font-size: clamp(6px, .85vw, 9px);
+  color: rgba(201,168,76,.2); letter-spacing: .25em;
+  text-transform: uppercase; z-index: 2;
+}
+/* 角の装飾紋章 */
+.pc-corner {
+  position: absolute;
+  font-size: clamp(12px, 2.2vw, 24px);
+  color: rgba(201,168,76,.1);
+  line-height: 1; z-index: 2; pointer-events: none;
+}
+.pc-corner.tl { top: 3.5%; left: 4%; }
+.pc-corner.tr { top: 3.5%; right: 4%; }
+
+/* ═══ ボタン群 ═══ */
 .prof-btns {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-top: 10px;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 7px; margin-top: 10px;
 }
 .prof-btn {
-  padding: 10px 10px; border-radius: 10px; border: 1px solid rgba(201,168,76,.25);
-  background: rgba(201,168,76,.06); color: var(--text); font-size: 11px;
-  letter-spacing: .5px; cursor: pointer; transition: all .15s;
+  padding: 10px 12px; border-radius: 12px;
+  border: 1px solid rgba(201,168,76,.25);
+  background: rgba(201,168,76,.06); color: var(--text);
+  font-size: 12px; letter-spacing: .4px; cursor: pointer; transition: all .15s;
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  font-family: 'Palatino Linotype', serif;
 }
-.prof-btn:active { background: rgba(201,168,76,.14); }
+.prof-btn:active { background: rgba(201,168,76,.14); transform: scale(.98); }
 .prof-btn.prof-btn-wide { grid-column: span 2; }
 .prof-btn.prof-btn-gold {
-  background: rgba(201,168,76,.15); border-color: rgba(201,168,76,.5); color: var(--gold);
+  background: rgba(201,168,76,.14); border-color: rgba(201,168,76,.5); color: var(--gold);
 }
 .prof-btn.prof-btn-img {
   background: rgba(64,200,120,.08); border-color: rgba(64,200,120,.3); color: #40c878;
+}
+.prof-btn.prof-btn-x {
+  background: rgba(0,0,0,.3); border-color: rgba(255,255,255,.2); color: #fff;
+}
+
+/* 画像プレビューモーダル */
+.prof-img-preview-overlay {
+  display: none; position: fixed; inset: 0; z-index: 9100;
+  background: rgba(0,0,0,.85); align-items: center; justify-content: center;
+  padding: 20px;
+}
+.prof-img-preview-overlay.open { display: flex; flex-direction: column; gap: 14px; }
+.prof-img-preview-overlay img {
+  max-width: 100%; max-height: 65vh;
+  border-radius: 14px; border: 1px solid rgba(201,168,76,.4);
+  box-shadow: 0 0 40px rgba(201,168,76,.15);
+}
+.prof-img-btns { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+.prof-img-dl-btn {
+  padding: 11px 22px; border-radius: 12px;
+  background: rgba(64,200,120,.12); border: 1px solid rgba(64,200,120,.35);
+  color: #40c878; font-size: 13px; cursor: pointer; transition: all .15s;
+}
+.prof-img-close-btn {
+  padding: 11px 22px; border-radius: 12px;
+  background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.15);
+  color: var(--muted); font-size: 13px; cursor: pointer;
+}
+.prof-img-hint {
+  font-size: 12px; color: rgba(255,255,255,.4); text-align: center;
+  letter-spacing: .5px;
 }
 
 /* URLバー */
@@ -1734,36 +1827,47 @@ input:focus{border-color:var(--gold);}
 }
 .prof-url-bar.visible { display: block; }
 
-/* ── モーダル ── */
+/* ═══ モーダル ═══ */
 .prof-modal-overlay {
   display: none; position: fixed; inset: 0; z-index: 900;
-  background: rgba(0,0,0,.75); align-items: flex-end; justify-content: center;
+  background: rgba(0,0,0,.78); align-items: flex-end; justify-content: center;
 }
 .prof-modal-overlay.open { display: flex; }
 .prof-modal {
   background: var(--surface); border: 1px solid rgba(201,168,76,.3);
-  border-radius: 20px 20px 0 0; padding: 24px 20px 40px;
-  width: 100%; max-width: 520px; max-height: 90vh; overflow-y: auto;
+  border-top: 2px solid rgba(201,168,76,.5);
+  border-radius: 22px 22px 0 0; padding: 24px 20px 44px;
+  width: 100%; max-width: 520px; max-height: 92vh; overflow-y: auto;
 }
 .prof-modal-title {
-  font-family: var(--font-display); font-size: 16px; color: var(--gold);
-  letter-spacing: 2px; margin-bottom: 20px; text-align: center;
+  font-family: 'Palatino Linotype', 'Book Antiqua', serif;
+  font-size: 16px; color: var(--gold);
+  letter-spacing: 3px; margin-bottom: 22px; text-align: center;
+  text-shadow: 0 0 12px rgba(201,168,76,.35);
 }
 .prof-field { margin-bottom: 14px; }
-.prof-field label { display: block; font-size: 11px; color: var(--muted); letter-spacing: 1px; margin-bottom: 5px; }
+.prof-field label {
+  display: block; font-size: 11px; color: var(--muted);
+  letter-spacing: 1.2px; margin-bottom: 5px; text-transform: uppercase;
+}
 .prof-field input, .prof-field textarea {
   width: 100%; background: var(--surface2); border: 1px solid rgba(201,168,76,.2);
-  border-radius: 10px; padding: 10px 14px; color: var(--text); font-size: 14px;
-  outline: none; box-sizing: border-box;
+  border-radius: 10px; padding: 10px 14px; color: var(--text);
+  font-size: 14px; outline: none; box-sizing: border-box;
+  font-family: inherit;
 }
-.prof-field textarea { height: 72px; resize: none; font-family: var(--font-body); }
+.prof-field input:focus, .prof-field textarea:focus {
+  border-color: rgba(201,168,76,.5);
+}
+.prof-field textarea { height: 72px; resize: none; }
 .prof-color-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
 .prof-color-sel {
   width: 44px; height: 44px; border-radius: 50%; border: 2px solid transparent;
-  font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center;
-  transition: border-color .15s, transform .1s; background: var(--surface2);
+  font-size: 20px; cursor: pointer; display: flex; align-items: center;
+  justify-content: center; transition: border-color .15s, transform .12s;
+  background: var(--surface2);
 }
-.prof-color-sel.active { border-color: var(--gold); transform: scale(1.12); }
+.prof-color-sel.active { border-color: var(--gold); transform: scale(1.13); }
 .prof-wr-row { display: flex; align-items: center; gap: 12px; margin-top: 6px; }
 .prof-toggle-wrap { position: relative; width: 44px; height: 24px; flex-shrink: 0; cursor: pointer; }
 .prof-toggle-wrap input { opacity: 0; width: 0; height: 0; position: absolute; }
@@ -1779,21 +1883,26 @@ input:focus{border-color:var(--gold);}
 .prof-toggle-wrap input:checked ~ .prof-toggle-thumb { transform: translateX(20px); }
 .prof-wr-val { font-size: 13px; color: var(--muted); }
 .prof-save-btn {
-  width: 100%; padding: 14px; border-radius: 12px; border: 1px solid rgba(201,168,76,.4);
-  background: rgba(201,168,76,.15); color: var(--gold); font-family: var(--font-display);
-  font-size: 14px; letter-spacing: 2px; cursor: pointer; margin-top: 8px;
+  width: 100%; padding: 14px; border-radius: 13px;
+  border: 1px solid rgba(201,168,76,.45);
+  background: rgba(201,168,76,.12); color: var(--gold);
+  font-family: 'Palatino Linotype', 'Book Antiqua', serif;
+  font-size: 14px; letter-spacing: 2.5px; cursor: pointer; margin-top: 8px;
+  text-shadow: 0 0 10px rgba(201,168,76,.3);
+  transition: all .15s;
 }
 .prof-save-btn:active { opacity: .8; }
 .prof-cancel-btn {
   width: 100%; padding: 10px; border: none; background: none;
-  color: var(--muted); font-size: 13px; cursor: pointer; margin-top: 6px;
+  color: var(--muted); font-size: 13px; cursor: pointer; margin-top: 5px;
 }
-/* prof-ach legacy (keep for inline card) */
+/* legacy ach classes still used by popup */
 .prof-ach-section{margin-top:10px;border-top:1px solid rgba(255,255,255,.07);padding-top:10px;}
 .prof-ach-title{font-size:10px;letter-spacing:2px;color:var(--muted);margin-bottom:6px;}
 .prof-ach-list{display:flex;flex-direction:column;gap:3px;}
 .prof-ach-item{font-size:12px;color:var(--gold);}
 .prof-ach-item.legendary{color:#c084fc;}
+
 
 /* ═══════════════════════════════════════════════
    ACHIEVEMENT SYSTEM
@@ -1920,7 +2029,226 @@ input:focus{border-color:var(--gold);}
 .ach-rbadge-rare{background:rgba(96,165,250,.1);color:#60a5fa;border:1px solid rgba(96,165,250,.18);}
 .ach-rbadge-common{background:rgba(255,255,255,.06);color:#9ca3af;border:1px solid rgba(255,255,255,.1);}
 
+.prof-btn.prof-btn-qr {
+  background: linear-gradient(135deg,rgba(201,168,76,.18),rgba(120,60,200,.12));
+  border-color: rgba(201,168,76,.55); color: var(--gold);
+  font-family: 'Palatino Linotype',serif; letter-spacing: 1px;
+  text-shadow: 0 0 10px rgba(201,168,76,.3);
+}
+.prof-btns { grid-template-columns: 1fr 1fr; }
+.prof-view-banner { flex-wrap: wrap; gap: 6px; }
+
+/* ══════════════════════════════════════════════
+   QR モーダル
+══════════════════════════════════════════════ */
+.qr-modal-overlay {
+  display: none; position: fixed; inset: 0; z-index: 9200;
+  background: rgba(0,0,0,.88); align-items: center; justify-content: center;
+}
+.qr-modal-overlay.open { display: flex; }
+.qr-modal-box {
+  background: linear-gradient(160deg,#0d0d22,#111130);
+  border: 1px solid rgba(201,168,76,.5);
+  border-radius: 24px; padding: 28px 24px 24px;
+  max-width: 320px; width: 90%; text-align: center;
+  box-shadow: 0 0 60px rgba(201,168,76,.1);
+}
+.qr-modal-title {
+  font-family: 'Palatino Linotype','Book Antiqua',serif;
+  font-size: 13px; letter-spacing: 3px; color: var(--gold);
+  margin-bottom: 18px; text-shadow: 0 0 12px rgba(201,168,76,.4);
+}
+.qr-canvas-wrap {
+  background: #fff; border-radius: 14px; padding: 14px;
+  display: inline-block; margin-bottom: 14px;
+  box-shadow: 0 0 30px rgba(201,168,76,.15);
+}
+.qr-canvas-wrap canvas, .qr-canvas-wrap img { display: block; }
+.qr-hint {
+  font-size: 12px; color: rgba(255,255,255,.45);
+  line-height: 1.6; margin-bottom: 16px; letter-spacing: .3px;
+}
+.qr-close-btn {
+  padding: 10px 28px; border-radius: 12px;
+  background: rgba(201,168,76,.12); border: 1px solid rgba(201,168,76,.35);
+  color: var(--gold); font-size: 13px; cursor: pointer; letter-spacing: 1px;
+  font-family: 'Palatino Linotype',serif;
+}
+
+/* ══════════════════════════════════════════════
+   名刺帳パネル
+══════════════════════════════════════════════ */
+#panel-cardbook { padding-bottom: 100px; }
+.cb-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 16px;
+}
+.cb-title {
+  font-family: 'Palatino Linotype','Book Antiqua',serif;
+  font-size: 13px; letter-spacing: 3px; color: var(--gold);
+  text-shadow: 0 0 12px rgba(201,168,76,.3);
+}
+.cb-count { font-size: 11px; color: var(--muted); letter-spacing: 1px; }
+
+/* 検索バー */
+.cb-search-wrap {
+  position: relative; margin-bottom: 14px;
+}
+.cb-search {
+  width: 100%; background: var(--surface2);
+  border: 1px solid rgba(201,168,76,.2); border-radius: 12px;
+  padding: 10px 16px 10px 38px; color: var(--text); font-size: 14px;
+  outline: none; box-sizing: border-box;
+  transition: border-color .2s;
+}
+.cb-search:focus { border-color: rgba(201,168,76,.45); }
+.cb-search-icon {
+  position: absolute; left: 12px; top: 50%; transform: translateY(-50%);
+  font-size: 15px; color: var(--muted); pointer-events: none;
+}
+
+/* 名刺グリッド */
+.cb-grid {
+  display: flex; flex-direction: column; gap: 10px;
+}
+.cb-empty {
+  text-align: center; padding: 60px 20px;
+  font-family: 'Palatino Linotype',serif;
+}
+.cb-empty-icon { font-size: 42px; margin-bottom: 12px; opacity: .4; }
+.cb-empty-text { font-size: 13px; color: var(--muted); line-height: 1.7; letter-spacing: .5px; }
+
+/* 名刺カード（リスト1件） */
+.cb-card {
+  background: linear-gradient(135deg,#0d0d1e,#111128);
+  border: 1px solid rgba(201,168,76,.22);
+  border-radius: 16px; padding: 14px 16px;
+  position: relative; overflow: hidden;
+  transition: border-color .2s, box-shadow .2s;
+  cursor: pointer;
+}
+.cb-card:active { border-color: rgba(201,168,76,.5); }
+.cb-card::before {
+  content: '❖'; position: absolute; right: 12px; top: 10px;
+  font-size: 18px; color: rgba(201,168,76,.07); pointer-events: none;
+}
+.cb-card-row1 { display: flex; align-items: flex-start; gap: 10px; }
+.cb-card-info { flex: 1; min-width: 0; }
+.cb-card-handle {
+  font-family: 'Palatino Linotype','Book Antiqua',serif;
+  font-size: 18px; color: #f5e8b0;
+  letter-spacing: .02em; line-height: 1.2;
+  text-shadow: 0 0 16px rgba(201,168,76,.3);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.cb-card-nickname {
+  font-size: 11px; color: rgba(201,168,76,.6);
+  letter-spacing: .08em; margin-top: 2px;
+}
+.cb-card-meta {
+  display: flex; align-items: center; gap: 8px; margin-top: 6px; flex-wrap: wrap;
+}
+.cb-card-region {
+  font-size: 11px; color: rgba(255,255,255,.38); letter-spacing: .08em;
+}
+.cb-card-colors { display: flex; gap: 4px; }
+.cb-card-orb {
+  width: 18px; height: 18px; border-radius: 50%;
+  border: 1.5px solid rgba(255,255,255,.25);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px;
+}
+.cb-card-comment {
+  font-size: 11px; color: rgba(255,255,255,.38);
+  font-style: italic; margin-top: 5px;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.cb-card-actions {
+  display: flex; gap: 6px; align-items: flex-start; flex-shrink: 0;
+}
+.cb-card-btn {
+  padding: 5px 10px; border-radius: 8px; font-size: 11px; cursor: pointer;
+  border: 1px solid; transition: all .15s; white-space: nowrap;
+}
+.cb-card-btn-view {
+  background: rgba(201,168,76,.08); border-color: rgba(201,168,76,.25);
+  color: var(--gold);
+}
+.cb-card-btn-del {
+  background: rgba(255,80,80,.06); border-color: rgba(255,80,80,.2);
+  color: rgba(255,100,100,.7);
+}
+.cb-card-added {
+  font-size: 10px; color: rgba(255,255,255,.22);
+  letter-spacing: .5px; margin-top: 6px;
+}
+
+/* 名刺詳細モーダル（閲覧） */
+.cb-detail-overlay {
+  display: none; position: fixed; inset: 0; z-index: 9300;
+  background: rgba(0,0,0,.85); align-items: flex-end; justify-content: center;
+}
+.cb-detail-overlay.open { display: flex; }
+.cb-detail-box {
+  background: var(--surface); border: 1px solid rgba(201,168,76,.3);
+  border-top: 2px solid rgba(201,168,76,.5);
+  border-radius: 22px 22px 0 0; padding: 22px 20px 44px;
+  width: 100%; max-width: 520px; max-height: 88vh; overflow-y: auto;
+}
+.cb-detail-mini-card {
+  background: linear-gradient(160deg,#070714,#0d0d22);
+  border: 1px solid rgba(201,168,76,.35); border-radius: 16px;
+  padding: 18px 20px; margin-bottom: 14px; position: relative; overflow: hidden;
+}
+.cb-detail-mini-card::before {
+  content: '❖'; position: absolute; right: 14px; top: 10px;
+  font-size: 22px; color: rgba(201,168,76,.08); pointer-events: none;
+}
+.cb-detail-handle {
+  font-family: 'Palatino Linotype','Book Antiqua',serif;
+  font-size: 26px; color: #f5e8b0;
+  text-shadow: 0 0 20px rgba(201,168,76,.4);
+  margin-bottom: 4px;
+}
+.cb-detail-sub { font-size: 13px; color: rgba(201,168,76,.6); margin-bottom: 8px; }
+.cb-detail-region { font-size: 12px; color: rgba(255,255,255,.4); margin-bottom: 10px; }
+.cb-detail-colors { display: flex; gap: 8px; margin-bottom: 10px; }
+.cb-detail-orb {
+  width: 32px; height: 32px; border-radius: 50%;
+  border: 2px solid rgba(255,255,255,.25);
+  display: flex; align-items: center; justify-content: center; font-size: 16px;
+}
+.cb-detail-comment {
+  font-size: 13px; color: rgba(255,255,255,.45);
+  font-style: italic; font-family: 'Palatino Linotype',serif;
+  border-left: 2px solid rgba(201,168,76,.25); padding-left: 10px;
+  margin-top: 8px; line-height: 1.6;
+}
+.cb-detail-footer {
+  margin-top: 10px; padding-top: 10px;
+  border-top: 1px solid rgba(201,168,76,.1);
+  font-size: 11px; color: rgba(255,255,255,.3); letter-spacing: .5px;
+}
+.cb-detail-btns { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+.cb-detail-btn {
+  flex: 1; padding: 11px; border-radius: 12px; font-size: 12px;
+  cursor: pointer; letter-spacing: .5px; transition: all .15s;
+  text-align: center; white-space: nowrap;
+}
+.cb-detail-btn-x {
+  background: rgba(0,0,0,.3); border: 1px solid rgba(255,255,255,.2); color: #fff;
+}
+.cb-detail-btn-del {
+  background: rgba(255,60,60,.06); border: 1px solid rgba(255,60,60,.2); color: rgba(255,100,100,.8);
+}
+.cb-detail-close {
+  width: 100%; padding: 10px; border: none; background: none;
+  color: var(--muted); font-size: 13px; cursor: pointer; margin-top: 6px;
+}
+
 </style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 </head>
 <body>
 
@@ -1983,6 +2311,7 @@ input:focus{border-color:var(--gold);}
             <option value="report">📋 レポート</option>
       <option value="pro">⚡ プロ分析</option>
       <option value="guide">📖 取説</option>
+      <option value="cardbook">👥 名刺帳</option>
       <option value="settings">⚙️ 設定</option>
       <option value="pxdt" id="nav-opt-pxdt" style="display:none;">⚡ PXDT</option>
     </select>
@@ -2101,58 +2430,84 @@ input:focus{border-color:var(--gold);}
   <!-- ══ Dashboard Panel ══ -->
   <div class="panel" id="panel-dashboard">
 
-    <!-- ══ プロフィールカード セクション ══ -->
+    <!-- ══ ILLUMINEER PROFILE カード セクション ══ -->
     <div id="prof-section">
-      <!-- 閲覧バナー（共有URLで開いたとき） -->
+
+      <!-- 閲覧バナー（共有URL経由） -->
       <div class="prof-view-banner" id="prof-view-banner">
-        <span>👤 シェアされたプロフィール</span>
-        <button onclick="profSaveViewed()" style="margin-left:auto;padding:4px 12px;background:rgba(64,80,232,.25);border:1px solid rgba(64,80,232,.4);border-radius:8px;color:#8090f8;font-size:11px;cursor:pointer;">自分のカードとして保存</button>
+        <span>✦ シェアされたプロフィール</span>
+        <div style="margin-left:auto;display:flex;gap:6px;">
+          <button onclick="bookAddViewed()" style="padding:5px 14px;background:rgba(201,168,76,.18);border:1px solid rgba(201,168,76,.4);border-radius:8px;color:var(--gold);font-size:11px;cursor:pointer;letter-spacing:.5px;">👥 名刺帳に保存</button>
+          <button onclick="profSaveViewed()" style="padding:5px 14px;background:rgba(64,80,232,.2);border:1px solid rgba(64,80,232,.4);border-radius:8px;color:#8090f8;font-size:11px;cursor:pointer;">自分のカードに設定</button>
+        </div>
       </div>
-      <!-- 未設定状態 -->
+
+      <!-- 未設定 -->
       <div id="prof-empty">
         <button class="prof-create-btn" onclick="openProfModal()">
-          <span>✦</span> プロフィールカードを作る
+          ✦ &nbsp; ILLUMINEER PROFILE を作る
         </button>
       </div>
-      <!-- 設定済み状態 -->
+
+      <!-- 設定済み -->
       <div id="prof-card-wrap" style="display:none;">
 
-        <!-- ═══ 横長カードプレビュー ═══ -->
-        <div class="prof-card" id="prof-card">
-          <!-- ヘッダー行 -->
-          <div class="prof-card-header">
-            <div>
-              <div class="prof-card-label">LORCANA PLAYER</div>
-              <div class="prof-card-nickname" id="pc-nickname"></div>
-              <div class="prof-card-handle" id="pc-handle"></div>
-              <div class="prof-card-region" id="pc-region"></div>
+        <!-- ═══ ILLUMINEER CARD ═══ -->
+        <div id="profile-card">
+          <!-- 角紋章 -->
+          <div class="pc-corner tl">❖</div>
+          <div class="pc-corner tr">❖</div>
+
+          <!-- 上部バナー -->
+          <div class="pc-banner-row">
+            <div class="pc-banner-left">
+              <div class="pc-banner-label">✦ &nbsp; ILLUMINEER PROFILE &nbsp; ✦</div>
+              <div class="pc-handle-big"  id="pc-handle"></div>
+              <div class="pc-nickname-sub" id="pc-nickname"></div>
+              <div class="pc-region-tag"   id="pc-region"></div>
             </div>
-            <div class="prof-card-colors" id="pc-colors"></div>
+            <div class="pc-colors-wrap" id="pc-colors"></div>
           </div>
-          <!-- 中段：bio -->
-          <div class="prof-card-bio" id="pc-bio"></div>
-          <!-- フッター：勝率 + 実績 -->
-          <div class="prof-card-footer" id="pc-footer"></div>
+
+          <!-- 中段：コメント -->
+          <div class="pc-comment" id="pc-comment"></div>
+
+          <!-- フッター -->
+          <div class="pc-footer" id="pc-footer"></div>
+
           <!-- ブランド -->
-          <div class="prof-card-brand">LORCANA TRACKER ✦</div>
+          <div class="pc-brand">LORCANA TRACKER ✦</div>
         </div>
 
         <!-- ボタン群 -->
         <div class="prof-btns" style="margin-top:10px;">
           <button class="prof-btn" onclick="openProfModal()">✏️ 編集</button>
-          <button class="prof-btn prof-btn-img" onclick="profSaveImage()">📷 画像保存</button>
-          <button class="prof-btn prof-btn-gold prof-btn-wide" onclick="profPostToX()" style="background:rgba(0,0,0,.4);border-color:rgba(255,255,255,.25);color:#fff;">𝕏 Xに画像を投稿</button>
+          <button class="prof-btn prof-btn-img" onclick="profSavePng()">📷 PNG保存</button>
+          <button class="prof-btn prof-btn-qr prof-btn-wide" onclick="openQRModal()">▣ &nbsp;QRコードを表示して交換する</button>
+          <button class="prof-btn prof-btn-gold" onclick="profCopyShareUrl()">🔗 URL共有</button>
+          <button class="prof-btn prof-btn-x" onclick="profPostToX()">𝕏 Xに投稿</button>
         </div>
+        <div class="prof-url-bar" id="prof-url-bar"></div>
       </div>
+    </div>
+
+    <!-- 画像プレビューモーダル -->
+    <div class="prof-img-preview-overlay" id="prof-img-preview" onclick="if(event.target===this)profCloseImgPreview()">
+      <img id="prof-img-preview-img" src="" alt="Profile Card">
+      <div class="prof-img-btns">
+        <button class="prof-img-dl-btn" onclick="profDownloadImg()">⬇ ダウンロード</button>
+        <button class="prof-img-close-btn" onclick="profCloseImgPreview()">✕ 閉じる</button>
+      </div>
+      <div class="prof-img-hint">iOS: 画像を長押しで保存 / PCは自動ダウンロード</div>
     </div>
 
     <!-- ══ プロフィール編集モーダル ══ -->
     <div class="prof-modal-overlay" id="prof-modal-overlay" onclick="if(event.target===this)closeProfModal()">
       <div class="prof-modal">
-        <div class="prof-modal-title">✦ プロフィールカード</div>
+        <div class="prof-modal-title">✦ ILLUMINEER PROFILE ✦</div>
 
         <div class="prof-field">
-          <label>X ハンドル（必須・例: @ot324086）</label>
+          <label>X ハンドル（必須）</label>
           <input type="text" id="prof-input-handle" placeholder="@username" maxlength="50">
         </div>
         <div class="prof-field">
@@ -2160,11 +2515,11 @@ input:focus{border-color:var(--gold);}
           <input type="text" id="prof-input-nickname" placeholder="例: バハムート" maxlength="30">
         </div>
         <div class="prof-field">
-          <label>地域（任意・例: Sendai）</label>
-          <input type="text" id="prof-input-region" placeholder="例: Tokyo" maxlength="30">
+          <label>地域（任意）</label>
+          <input type="text" id="prof-input-region" placeholder="例: Sendai" maxlength="30">
         </div>
         <div class="prof-field">
-          <label>使用カラー（任意・最大2色）</label>
+          <label>デッキカラー（最大2色）</label>
           <div class="prof-color-row" id="prof-color-row"></div>
         </div>
         <div class="prof-field">
@@ -2175,11 +2530,11 @@ input:focus{border-color:var(--gold);}
               <div class="prof-toggle-track"></div>
               <div class="prof-toggle-thumb"></div>
             </label>
-            <span class="prof-wr-val" id="prof-wr-preview">直近30戦: 計算中...</span>
+            <span class="prof-wr-val" id="prof-wr-preview">計算中…</span>
           </div>
         </div>
         <div class="prof-field">
-          <label>実績をカードに表示（Top3自動選出）</label>
+          <label>実績をカードに表示（Top3自動）</label>
           <div class="prof-wr-row">
             <label class="prof-toggle-wrap">
               <input type="checkbox" id="prof-ach-toggle">
@@ -2190,10 +2545,10 @@ input:focus{border-color:var(--gold);}
           </div>
         </div>
         <div class="prof-field">
-          <label>一言コメント（任意・80文字）</label>
+          <label>一言コメント（80文字）</label>
           <textarea id="prof-input-bio" placeholder="例: 調整相手募集中！" maxlength="80"></textarea>
         </div>
-        <button class="prof-save-btn" onclick="saveProfModal()">✦ 保存</button>
+        <button class="prof-save-btn" onclick="saveProfModal()">✦ 保存する</button>
         <button class="prof-cancel-btn" onclick="closeProfModal()">キャンセル</button>
       </div>
     </div>
@@ -2708,8 +3063,8 @@ input:focus{border-color:var(--gold);}
 
     <!-- 大会/調整トグル -->
     <div class="analytics-toggle" style="margin-bottom:16px;">
-      <button class="analytics-toggle-btn active" id="analytics-tab-tourn" onclick="switchAnalyticsTab('tourn')">🏆 大会</button>
-      <button class="analytics-toggle-btn" id="analytics-tab-adj" onclick="switchAnalyticsTab('adj')">🔧 調整</button>
+      <button class="analytics-toggle-btn active" id="analytics-tab-tourn" onclick="switchAnalyticsTab('tourn')">🏆 大会・非公認</button>
+      <button class="analytics-toggle-btn" id="analytics-tab-adj" onclick="switchAnalyticsTab('adj')">🔧 調整のみ</button>
     </div>
 
     <!-- カード1: 総合勝率 -->
@@ -3810,6 +4165,57 @@ input:focus{border-color:var(--gold);}
 </div>
 
 
+  <!-- ══ QR モーダル ══ -->
+  <div class="qr-modal-overlay" id="qr-modal-overlay" onclick="if(event.target===this)closeQRModal()">
+    <div class="qr-modal-box">
+      <div class="qr-modal-title">✦ &nbsp; SCAN TO CONNECT &nbsp; ✦</div>
+      <div class="qr-canvas-wrap">
+        <div id="qr-canvas-container"></div>
+      </div>
+      <div class="qr-hint" id="qr-hint-text">
+        相手のカメラで読み取ると<br>プロフィールカードが開きます
+      </div>
+      <button class="qr-close-btn" onclick="closeQRModal()">閉じる</button>
+    </div>
+  </div>
+
+  <!-- ══ 名刺帳パネル ══ -->
+  <div class="panel" id="panel-cardbook">
+    <div class="cb-header">
+      <div>
+        <div class="cb-title">✦ &nbsp; 名刺帳</div>
+        <div class="cb-count" id="cb-count"></div>
+      </div>
+      <button onclick="cbOpenFromUrl()" style="padding:7px 14px;border-radius:10px;background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.25);color:var(--gold);font-size:11px;cursor:pointer;letter-spacing:.5px;">＋ URLから追加</button>
+    </div>
+    <!-- 検索 -->
+    <div class="cb-search-wrap">
+      <span class="cb-search-icon">🔍</span>
+      <input class="cb-search" id="cb-search" type="text" placeholder="ハンドル・地域で検索…" oninput="renderCardbook()">
+    </div>
+    <!-- カード一覧 -->
+    <div class="cb-grid" id="cb-grid"></div>
+  </div>
+
+  <!-- 名刺帳 詳細モーダル -->
+  <div class="cb-detail-overlay" id="cb-detail-overlay" onclick="if(event.target===this)cbCloseDetail()">
+    <div class="cb-detail-box">
+      <div class="cb-detail-mini-card">
+        <div class="cb-detail-handle" id="cbd-handle"></div>
+        <div class="cb-detail-sub"    id="cbd-nickname"></div>
+        <div class="cb-detail-region" id="cbd-region"></div>
+        <div class="cb-detail-colors" id="cbd-colors"></div>
+        <div class="cb-detail-comment" id="cbd-comment"></div>
+        <div class="cb-detail-footer"  id="cbd-footer"></div>
+      </div>
+      <div class="cb-detail-btns">
+        <button class="cb-detail-btn cb-detail-btn-x" onclick="cbDetailPostX()">𝕏 Xでフォロー</button>
+        <button class="cb-detail-btn cb-detail-btn-del" onclick="cbDetailDelete()">🗑 削除</button>
+      </div>
+      <button class="cb-detail-close" onclick="cbCloseDetail()">閉じる</button>
+    </div>
+  </div>
+
   <!-- Achievement unlock popup container -->
   <div class="ach-popup-overlay" id="ach-popup-overlay"></div>
 
@@ -3919,6 +4325,7 @@ function updateFilterBanner() {
 
 // ── Stats bar ──────────────────────────────────
 function updateStats() {
+  // 調整(adj)以外をすべて集計 — 非公認(non)も含む
   const base = pxdtCfg.adjStats ? getBaseMatches() : getTournMatches(getBaseMatches());
   const w = base.filter(m => m.result==='win').length;
   const l = base.filter(m => m.result==='loss').length;
@@ -3973,6 +4380,7 @@ function switchTab(tab) {
   if (tab==='analytics')      { document.getElementById('turn-stats').innerHTML=''; renderAnalytics(); renderNewStats(); if(document.getElementById('acc-achievements')?.classList.contains('open')) renderAchStats(); }
   if (tab==='events')         renderEventsTab();
   if (tab==='tweet')          renderTweetPanel();
+  if (tab==='cardbook')       renderCardbook();
   if (tab==='dashboard')      { renderDashboard(); renderDashboardNew(); renderProfSection(); }
   if (tab==='report')         renderReport();
   if (tab==='matchup')        { muSwitchTab('bar'); }
@@ -7132,7 +7540,7 @@ function setDeckTag(deckKey, tag) {
 }
 
 // ── ボトムナビ ────────────────────────────────
-const BN_TABS=['dashboard','record','counter','events','analytics','settings'];
+const BN_TABS=['dashboard','record','counter','events','analytics','cardbook','settings'];
 function updateBottomNav(tab) {
   BN_TABS.forEach(t=>{
     const el=document.getElementById('bn-'+t);
@@ -8548,10 +8956,12 @@ function renderNewStats() {
     filtered = filtered.filter(m=>m.date&&m.date.slice(0,7)===ym);
   }
 
-  // 調整タブ判定
+  // 調整タブ判定（adj以外=公式戦+非公認すべて, adjのみ=調整のみ）
   const isAdj = document.getElementById('analytics-tab-adj')?.classList.contains('active');
-  if(!isAdj) {
-    filtered = filtered.filter(m=>m.event!=='adj');
+  if(isAdj) {
+    filtered = filtered.filter(m=>m.eventType==='adj');
+  } else {
+    filtered = filtered.filter(m=>m.eventType!=='adj');  // 非公認(non)も含む
   }
 
   const wins = filtered.filter(m=>m.result==='win').length;
@@ -8997,14 +9407,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-// ══════════════════════════════════════════════════════
 // ══════════════════════════════════════════════════════════════
-// プロフィールカード（神 UI）
+// ILLUMINEER PROFILE — 完全実装
 // ══════════════════════════════════════════════════════════════
-const PROF_KEY     = 'lorcanaTracker.profile.v1';
-const COLOR_LIST   = ['Amber','Ruby','Sapphire','Emerald','Amethyst','Steel'];
+const PROF_KEY   = 'lorcanaTracker.profile.v1';
+const COLOR_LIST = ['Amber','Ruby','Sapphire','Emerald','Amethyst','Steel'];
 
-// ── localStorage I/O ──────────────────────────────────────────
+// ─────────────────────────────────────────
+// localStorage I/O
+// ─────────────────────────────────────────
 function profLoad() {
   try { const r = localStorage.getItem(PROF_KEY); return r ? JSON.parse(r) : null; }
   catch(e) { return null; }
@@ -9014,89 +9425,102 @@ function profSave(p) {
   localStorage.setItem(PROF_KEY, JSON.stringify(p));
 }
 
-// ── XSS エスケープ ────────────────────────────────────────────
-function esc(s) {
-  if (!s) return '';
-  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;')
-    .replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+// ─────────────────────────────────────────
+// XSS: textContent 用サニタイズ（念のため）
+// ─────────────────────────────────────────
+function _sanitize(s) {
+  return (s == null) ? '' : String(s)
+    .replace(/[<>"'&]/g, c => ({'<':'＜','>':'＞','"':'＂',"'":'＇','&':'＆'}[c]));
 }
 
-// ── 勝率計算 ──────────────────────────────────────────────────
+// ─────────────────────────────────────────
+// 勝率計算（戦績データから）
+// ─────────────────────────────────────────
 function calcWinRate(n) {
-  if (!matches || !matches.length) return null;
-  const recent = matches.slice(0, n).filter(m => m.result==='win'||m.result==='loss');
+  if (typeof matches === 'undefined' || !matches || !matches.length) return null;
+  const recent = matches.slice(0, n).filter(m => m.result === 'win' || m.result === 'loss');
   if (!recent.length) return null;
-  const wins = recent.filter(m => m.result==='win').length;
-  return { wr: Math.round(wins/recent.length*100), games: recent.length, wins };
+  const wins = recent.filter(m => m.result === 'win').length;
+  return { wr: Math.round(wins / recent.length * 100), games: recent.length, wins };
+}
+// 全期間勝率も取得
+function calcWinRateAll() {
+  if (typeof matches === 'undefined' || !matches || !matches.length) return null;
+  const all = matches.filter(m => m.result === 'win' || m.result === 'loss');
+  if (!all.length) return null;
+  const wins = all.filter(m => m.result === 'win').length;
+  return { wr: Math.round(wins / all.length * 100), games: all.length, wins };
 }
 
-// ── Top3実績取得 ──────────────────────────────────────────────
+// ─────────────────────────────────────────
+// 実績取得
+// ─────────────────────────────────────────
 function getTopAchievements(n) {
   n = n || 3;
   try {
     const data  = JSON.parse(localStorage.getItem('lorcanaTracker.achievements.v1') || '{}');
     const saved = data.achievements || {};
-    const order = { legendary:0, epic:1, rare:2, common:3 };
-    const defs  = typeof ACH_DEFS !== 'undefined' ? ACH_DEFS : [];
+    const order = { legendary: 0, epic: 1, rare: 2, common: 3 };
+    const defs  = (typeof ACH_DEFS !== 'undefined') ? ACH_DEFS : [];
     return defs
       .filter(d => saved[d.id]?.unlocked)
-      .sort((a,b) => {
-        const ro = (order[a.rarity]??3) - (order[b.rarity]??3);
+      .sort((a, b) => {
+        const ro = (order[a.rarity] ?? 3) - (order[b.rarity] ?? 3);
         if (ro) return ro;
-        return (saved[b.id]?.date||'').localeCompare(saved[a.id]?.date||'');
+        return (saved[b.id]?.date || '').localeCompare(saved[a.id]?.date || '');
       })
       .slice(0, n);
   } catch(e) { return []; }
 }
-
 function getAchievementStats() {
   try {
     const data  = JSON.parse(localStorage.getItem('lorcanaTracker.achievements.v1') || '{}');
     const saved = data.achievements || {};
-    const defs  = typeof ACH_DEFS !== 'undefined' ? ACH_DEFS : [];
-    const total    = defs.length;
-    const unlocked = defs.filter(d => saved[d.id]?.unlocked).length;
-    return { total, unlocked };
+    const defs  = (typeof ACH_DEFS !== 'undefined') ? ACH_DEFS : [];
+    return { total: defs.length, unlocked: defs.filter(d => saved[d.id]?.unlocked).length };
   } catch(e) { return { total: 0, unlocked: 0 }; }
 }
 
-// ── encode / decode (Base64URL) ───────────────────────────────
+// ─────────────────────────────────────────
+// Base64URL encode / decode
+// ─────────────────────────────────────────
 function profEncode(p) {
   const mini = {
     v: 1,
-    h: p.handle    || '',
-    n: p.nickname  || '',
-    r: p.region    || '',
-    c: p.colors    || [],
-    b: p.bio       || '',
-    w: p.showWR    ? 1 : 0,
-    a: p.showAch   ? 1 : 0,
+    h: p.handle   || '',
+    n: p.nickname || '',
+    r: p.region   || '',
+    c: p.colors   || [],
+    b: p.comment  || p.bio || '',
+    w: p.showWinrate || p.showWR ? 1 : 0,
+    a: p.showAchievements || p.showAch ? 1 : 0,
   };
   try {
     const b64 = btoa(unescape(encodeURIComponent(JSON.stringify(mini))));
-    return b64.replace(/\+/g,'-').replace(/\//g,'_').replace(/=/g,'');
+    return b64.replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g, '');
   } catch(e) { return ''; }
 }
-
 function profDecode(str) {
   try {
-    let b64 = str.replace(/-/g,'+').replace(/_/g,'/');
+    let b64 = str.replace(/-/g, '+').replace(/_/g, '/');
     while (b64.length % 4) b64 += '=';
     const mini = JSON.parse(decodeURIComponent(escape(atob(b64))));
     return {
-      handle:   mini.h || '',
-      nickname: mini.n || '',
-      region:   mini.r || '',
-      colors:   mini.c || [],
-      bio:      mini.b || '',
-      showWR:   !!mini.w,
-      showAch:  !!mini.a,
-      schemaVersion: mini.v || 1,
+      handle:           mini.h || '',
+      nickname:         mini.n || '',
+      region:           mini.r || '',
+      colors:           mini.c || [],
+      comment:          mini.b || '',
+      showWinrate:      !!mini.w,
+      showAchievements: !!mini.a,
+      schemaVersion:    mini.v || 1,
     };
   } catch(e) { return null; }
 }
 
-// ── 共有URL ───────────────────────────────────────────────────
+// ─────────────────────────────────────────
+// 共有URL
+// ─────────────────────────────────────────
 let profViewMode = null;
 
 function profCheckUrl() {
@@ -9112,7 +9536,12 @@ function profCheckUrl() {
 function profSaveViewed() {
   if (!profViewMode) return;
   if (!confirm('このプロフィールを自分のカードとして保存しますか？')) return;
-  profSave(profViewMode);
+  // 旧フォーマット互換性のため両方のキー名で保存
+  const p = Object.assign({}, profViewMode);
+  p.bio    = p.comment || '';
+  p.showWR = p.showWinrate || false;
+  p.showAch = p.showAchievements || false;
+  profSave(p);
   profViewMode = null;
   const banner = document.getElementById('prof-view-banner');
   if (banner) banner.classList.remove('visible');
@@ -9122,34 +9551,27 @@ function profSaveViewed() {
   renderProfSection();
 }
 
-// 画像保存してXに投稿
-function profPostToX() {
+function profCopyShareUrl() {
   const p = profViewMode || profLoad();
   if (!p) { alert('プロフィールを作成してください'); return; }
-
-  // まず画像を保存
-  profSaveImage();
-
-  // 少し遅らせてX投稿画面を開く
-  setTimeout(() => {
-    const name = p.nickname || p.handle || 'Lorcana Player';
-    const colors = (p.colors || []).map(c => {
-      const info = COLORS[c] || {};
-      return info.emoji || c;
-    }).join('');
-    const lines = [
-      `${colors} ${name}`,
-      p.region ? `📍 ${p.region}` : '',
-      p.bio    ? `"${p.bio}"` : '',
-      '#ロルカナ #Lorcana'
-    ].filter(Boolean).join('\n');
-
-    const tweetUrl = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(lines);
-    window.open(tweetUrl, '_blank', 'noopener');
-  }, 400);
+  const url = new URL(window.location.href);
+  url.searchParams.set('profile', profEncode(p));
+  const urlStr = url.toString();
+  const bar = document.getElementById('prof-url-bar');
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(urlStr).then(() => {
+      if (bar) { bar.textContent = '✅ URLをコピーしました: ' + urlStr; bar.classList.add('visible'); }
+    }).catch(() => {
+      if (bar) { bar.textContent = urlStr; bar.classList.add('visible'); }
+    });
+  } else {
+    if (bar) { bar.textContent = urlStr; bar.classList.add('visible'); }
+  }
 }
 
-// ── カード描画 ────────────────────────────────────────────────
+// ─────────────────────────────────────────
+// セクション描画（未設定 / 設定済み切り替え）
+// ─────────────────────────────────────────
 function renderProfSection() {
   profCheckUrl();
   const p       = profViewMode || profLoad();
@@ -9166,98 +9588,140 @@ function renderProfSection() {
   renderProfCard(p);
 }
 
+// ─────────────────────────────────────────
+// カード描画（XSS: すべて textContent）
+// ─────────────────────────────────────────
 function renderProfCard(p) {
-  // Nickname (大・メイン表示)
-  const nEl = document.getElementById('pc-nickname');
-  if (nEl) nEl.textContent = esc(p.nickname || p.handle || '');
-
-  // Handle (サブ: nicknameがあるときだけ表示)
+  // ハンドル（大・必須）
   const hEl = document.getElementById('pc-handle');
-  if (hEl) hEl.textContent = (p.nickname && p.handle) ? esc(p.handle) : '';
+  if (hEl) hEl.textContent = _sanitize(p.handle || '');
 
-  // Region
+  // ニックネーム（サブ）
+  const nEl = document.getElementById('pc-nickname');
+  if (nEl) nEl.textContent = p.nickname ? _sanitize(p.nickname) : '';
+
+  // 地域
   const rEl = document.getElementById('pc-region');
-  if (rEl) rEl.textContent = p.region ? '📍 ' + esc(p.region) : '';
+  if (rEl) {
+    if (p.region) {
+      rEl.textContent = '📍 ' + _sanitize(p.region);
+    } else {
+      rEl.textContent = '';
+    }
+  }
 
-  // Colors
+  // Deck Colors（色付きアイコン orb）— DOM構築なのでXSSリスクなし
   const cEl = document.getElementById('pc-colors');
   if (cEl) {
-    cEl.innerHTML = (p.colors || []).map(c => {
-      const info = COLORS[c] || {};
-      return `<div class="prof-card-color-dot" style="background:${esc(info.color||'#555')}">${esc(info.emoji||c)}</div>`;
-    }).join('');
+    while (cEl.firstChild) cEl.removeChild(cEl.firstChild);
+    (p.colors || []).forEach(c => {
+      const info = (typeof COLORS !== 'undefined' && COLORS[c]) ? COLORS[c] : {};
+      const orb  = document.createElement('div');
+      orb.className = 'pc-color-orb';
+      orb.style.background = info.color || '#555';
+      orb.textContent = info.emoji || c.charAt(0);
+      cEl.appendChild(orb);
+    });
   }
 
-  // Bio
-  const bEl = document.getElementById('pc-bio');
-  if (bEl) {
-    bEl.textContent = p.bio ? esc(p.bio) : '';
-    bEl.style.display = p.bio ? '' : 'none';
+  // コメント（一言）
+  const commentEl = document.getElementById('pc-comment');
+  if (commentEl) {
+    const text = p.comment || p.bio || '';
+    commentEl.textContent = text ? '"' + _sanitize(text) + '"' : '';
   }
 
-  // Footer: WR + Achievements
+  // フッター：勝率 + 実績（DOM構築）
   const fEl = document.getElementById('pc-footer');
   if (fEl) {
-    let footerHTML = '';
+    while (fEl.firstChild) fEl.removeChild(fEl.firstChild);
+    const showWR  = p.showWinrate  || p.showWR  || false;
+    const showAch = p.showAchievements || p.showAch || false;
 
-    if (p.showWR) {
-      const wr = calcWinRate(30);
+    if (showWR) {
+      const wr = calcWinRate(30) || calcWinRateAll();
       if (wr) {
-        footerHTML += `
-          <div class="prof-card-stat">
-            <div class="prof-card-stat-val">${wr.wr}%</div>
-            <div class="prof-card-stat-label">WIN RATE · ${wr.games} MATCHES</div>
-          </div>`;
+        const block = document.createElement('div');
+        block.className = 'pc-stat-block';
+        const val = document.createElement('div');
+        val.className = 'pc-stat-val';
+        val.textContent = wr.wr + '%';
+        const lbl = document.createElement('div');
+        lbl.className = 'pc-stat-lbl';
+        lbl.textContent = 'WIN RATE · ' + wr.games + ' MATCHES';
+        block.appendChild(val);
+        block.appendChild(lbl);
+        fEl.appendChild(block);
       }
     }
 
-    if (p.showAch) {
+    if (showAch) {
       const stats = getAchievementStats();
       const top3  = getTopAchievements(3);
-      footerHTML += `<div class="prof-card-ach">`;
-      if (stats.total) {
-        footerHTML += `<div class="prof-card-ach-count">${stats.unlocked} / ${stats.total} ACHIEVEMENTS</div>`;
+      if (stats.total > 0 || top3.length > 0) {
+        const achBlock = document.createElement('div');
+        achBlock.className = 'pc-ach-block';
+
+        if (stats.total > 0) {
+          const cnt = document.createElement('div');
+          cnt.className = 'pc-ach-count';
+          cnt.textContent = stats.unlocked + ' / ' + stats.total + ' ACHIEVEMENTS';
+          achBlock.appendChild(cnt);
+        }
+
+        if (top3.length > 0) {
+          const chips = document.createElement('div');
+          chips.className = 'pc-ach-chips';
+          top3.forEach(d => {
+            const chip = document.createElement('span');
+            chip.className = 'pc-ach-chip ' + (d.rarity || 'common');
+            chip.textContent = (d.icon || '✦') + ' ' + _sanitize(d.name);
+            chips.appendChild(chip);
+          });
+          achBlock.appendChild(chips);
+        }
+        fEl.appendChild(achBlock);
       }
-      if (top3.length) {
-        footerHTML += `<div class="prof-card-ach-list">` +
-          top3.map(d => `<span class="prof-card-ach-item ${esc(d.rarity)}">${esc(d.icon)} ${esc(d.name)}</span>`).join('') +
-          `</div>`;
-      }
-      footerHTML += `</div>`;
     }
 
-    fEl.innerHTML = footerHTML;
-    fEl.style.display = (p.showWR || p.showAch) ? '' : 'none';
+    fEl.style.display = (showWR || showAch) ? '' : 'none';
   }
 }
 
-// ── モーダル ──────────────────────────────────────────────────
+// ─────────────────────────────────────────
+// モーダル
+// ─────────────────────────────────────────
 function openProfModal() {
-  // カラーボタン生成
+  // カラーボタン生成（DOM構築）
   const colorRow = document.getElementById('prof-color-row');
   if (colorRow) {
+    while (colorRow.firstChild) colorRow.removeChild(colorRow.firstChild);
     const p   = profLoad();
-    const sel = p?.colors || [];
-    colorRow.innerHTML = COLOR_LIST.map(c => {
-      const info = COLORS[c] || {};
-      const active = sel.includes(c) ? ' active' : '';
-      return `<button class="prof-color-sel${active}" data-color="${c}"
-        onclick="profToggleColor('${c}')" title="${c}">${info.emoji||c}</button>`;
-    }).join('');
+    const sel = (p && p.colors) ? p.colors : [];
+    COLOR_LIST.forEach(c => {
+      const info   = (typeof COLORS !== 'undefined' && COLORS[c]) ? COLORS[c] : {};
+      const btn    = document.createElement('button');
+      btn.className = 'prof-color-sel' + (sel.includes(c) ? ' active' : '');
+      btn.dataset.color = c;
+      btn.title     = c;
+      btn.textContent = info.emoji || c;
+      btn.onclick   = () => profToggleColor(c);
+      colorRow.appendChild(btn);
+    });
   }
 
-  // 既存値を反映
+  // 既存値をフォームに反映
   const p = profLoad();
   if (p) {
-    const set = (id, v) => { const el = document.getElementById(id); if (el) el.value = v || ''; };
-    set('prof-input-handle',   p.handle   || '');
-    set('prof-input-nickname', p.nickname || '');
-    set('prof-input-region',   p.region   || '');
-    set('prof-input-bio',      p.bio      || '');
+    const _set = (id, v) => { const el = document.getElementById(id); if (el) el.value = v || ''; };
+    _set('prof-input-handle',   p.handle   || '');
+    _set('prof-input-nickname', p.nickname || '');
+    _set('prof-input-region',   p.region   || '');
+    _set('prof-input-bio',      p.comment  || p.bio || '');
     const wt = document.getElementById('prof-wr-toggle');
-    if (wt) wt.checked = !!p.showWR;
+    if (wt) wt.checked = !!(p.showWinrate || p.showWR);
     const at = document.getElementById('prof-ach-toggle');
-    if (at) at.checked = !!p.showAch;
+    if (at) at.checked = !!(p.showAchievements || p.showAch);
   }
 
   _updateProfWRPreview();
@@ -9273,9 +9737,10 @@ function closeProfModal() {
 }
 
 function profToggleColor(c) {
-  const btn     = document.querySelector(`#prof-color-row [data-color="${c}"]`);
-  const allBtns = [...document.querySelectorAll('#prof-color-row .prof-color-sel')];
+  const btn     = document.querySelector('#prof-color-row [data-color="' + c + '"]');
+  const allBtns = Array.from(document.querySelectorAll('#prof-color-row .prof-color-sel'));
   const active  = allBtns.filter(b => b.classList.contains('active'));
+  if (!btn) return;
   if (btn.classList.contains('active')) {
     btn.classList.remove('active');
   } else {
@@ -9287,8 +9752,8 @@ function profToggleColor(c) {
 function _updateProfWRPreview() {
   const el = document.getElementById('prof-wr-preview');
   if (!el) return;
-  const wr = calcWinRate(30);
-  el.textContent = wr ? `直近${wr.games}戦: ${wr.wr}% (${wr.wins}勝)` : '戦績なし';
+  const wr = calcWinRate(30) || calcWinRateAll();
+  el.textContent = wr ? '直近' + wr.games + '戦: ' + wr.wr + '% (' + wr.wins + '勝)' : '戦績なし';
 }
 
 function _updateProfAchPreview() {
@@ -9297,235 +9762,445 @@ function _updateProfAchPreview() {
   const stats = getAchievementStats();
   const top3  = getTopAchievements(3);
   el.textContent = stats.total
-    ? `${stats.unlocked}/${stats.total} 解除 · Top: ${top3.map(d=>d.name).join(' / ') || 'なし'}`
+    ? stats.unlocked + '/' + stats.total + ' 解除 · Top: ' + (top3.map(d => d.name).join(' / ') || 'なし')
     : '実績なし';
 }
 
 function saveProfModal() {
-  const handle = (document.getElementById('prof-input-handle')||{value:''}).value.trim();
-  if (!handle) { alert('X ハンドルを入力してください'); return; }
-  const nickname = (document.getElementById('prof-input-nickname')||{value:''}).value.trim();
-  const region   = (document.getElementById('prof-input-region')||{value:''}).value.trim();
-  const bio      = (document.getElementById('prof-input-bio')||{value:''}).value.trim();
-  const showWR   = !!(document.getElementById('prof-wr-toggle')||{}).checked;
-  const showAch  = !!(document.getElementById('prof-ach-toggle')||{}).checked;
-  const colors   = [...document.querySelectorAll('#prof-color-row .prof-color-sel.active')]
-                     .map(b => b.dataset.color);
-  profSave({ handle, nickname, region, colors, bio, showWR, showAch });
+  const _v = id => (document.getElementById(id) || {value: ''}).value.trim();
+  const handle = _v('prof-input-handle');
+  if (!handle) { alert('X ハンドルを入力してください（例: @username）'); return; }
+  const nickname   = _v('prof-input-nickname');
+  const region     = _v('prof-input-region');
+  const comment    = _v('prof-input-bio');
+  const showWinrate     = !!(document.getElementById('prof-wr-toggle')  || {}).checked;
+  const showAchievements= !!(document.getElementById('prof-ach-toggle') || {}).checked;
+  const colors = Array.from(document.querySelectorAll('#prof-color-row .prof-color-sel.active'))
+                      .map(b => b.dataset.color);
+  profSave({ handle, nickname, region, colors, comment, showWinrate, showAchievements,
+             // 旧キー互換
+             bio: comment, showWR: showWinrate, showAch: showAchievements });
   closeProfModal();
   renderProfSection();
 }
 
-// ── Canvas 画像保存 ───────────────────────────────────────────
-function profSaveImage() {
-  const p = profViewMode || profLoad();
-  if (!p) return;
-
-  const W = 1080, H = 566;
-  const canvas = document.createElement('canvas');
-  canvas.width  = W;
-  canvas.height = H;
-  const ctx = canvas.getContext('2d');
-
-  // ── 背景 ──
-  const bg = ctx.createLinearGradient(0,0,W,H);
-  bg.addColorStop(0,   '#0e0e1e');
-  bg.addColorStop(0.5, '#141428');
-  bg.addColorStop(1,   '#0a0a1a');
-  ctx.fillStyle = bg;
-  _roundRectFill(ctx, 0, 0, W, H, 28);
-
-  // ── 外枠 ──
-  ctx.strokeStyle = 'rgba(201,168,76,.45)';
-  ctx.lineWidth = 2;
-  _roundRectStroke(ctx, 1, 1, W-2, H-2, 27);
-
-  // ── 底面グロー ──
-  const glow = ctx.createLinearGradient(0, H*0.65, 0, H);
-  glow.addColorStop(0, 'transparent');
-  glow.addColorStop(1, 'rgba(201,168,76,.05)');
-  ctx.fillStyle = glow;
-  ctx.fillRect(0, H*0.65, W, H*0.35);
-
-  // ── 装飾 ✦ ──
-  ctx.font = '72px serif';
-  ctx.fillStyle = 'rgba(201,168,76,.07)';
-  ctx.fillText('✦', W-130, 110);
-
-  // ── ラベル: LORCANA PLAYER ──
-  ctx.font = '500 13px "Trebuchet MS", sans-serif';
-  ctx.fillStyle = 'rgba(201,168,76,.5)';
-  ctx.letterSpacing = '4px';
-  ctx.fillText('LORCANA PLAYER', 60, 72);
-  ctx.letterSpacing = '0px';
-
-  // ── ニックネーム（大・メイン） ──
-  ctx.font = 'bold 62px "Palatino Linotype", "Georgia", serif';
-  ctx.fillStyle = '#f0e0a0';
-  ctx.shadowColor = 'rgba(201,168,76,.4)';
-  ctx.shadowBlur  = 24;
-  ctx.fillText(p.nickname || p.handle || '', 60, 160);
-  ctx.shadowBlur = 0;
-
-  // ── ハンドル（サブ） ──
-  if (p.nickname && p.handle) {
-    ctx.font = '600 22px sans-serif';
-    ctx.fillStyle = 'rgba(201,168,76,.65)';
-    ctx.fillText(p.handle, 62, 198);
+// ─────────────────────────────────────────
+// PNG保存（html2canvas）
+// ─────────────────────────────────────────
+function profSavePng() {
+  const cardEl = document.getElementById('profile-card');
+  if (!cardEl) { alert('カードが見つかりません'); return; }
+  if (typeof html2canvas === 'undefined') {
+    alert('html2canvas を読み込み中です。少し待ってからお試しください。');
+    return;
   }
 
-  // ── 地域 ──
-  let regionY = (p.nickname && p.handle) ? 228 : (p.nickname || p.handle) ? 198 : 160;
-  if (p.region) {
-    ctx.font = '18px sans-serif';
-    ctx.fillStyle = 'rgba(255,255,255,.4)';
-    ctx.fillText('📍 ' + p.region, 62, regionY);
-  }
+  // ボタン類を一時非表示
+  const btnsEl = cardEl.closest('#prof-card-wrap')?.querySelector('.prof-btns');
+  if (btnsEl) btnsEl.style.visibility = 'hidden';
 
-  // ── カラードット ──
-  (p.colors || []).forEach((c, i) => {
-    const info = COLORS[c] || {};
-    const x = W - 80 - i * 56;
-    const y = 90;
-    const r = 22;
-    ctx.beginPath();
-    ctx.arc(x, y, r, 0, Math.PI*2);
-    ctx.fillStyle = info.color || '#555';
-    ctx.fill();
-    ctx.strokeStyle = 'rgba(255,255,255,.3)';
-    ctx.lineWidth = 2;
-    ctx.stroke();
-    ctx.font = '20px sans-serif';
-    ctx.fillStyle = '#fff';
-    ctx.textAlign = 'center';
-    ctx.fillText(info.emoji || c[0], x, y+7);
-    ctx.textAlign = 'left';
-  });
+  html2canvas(cardEl, {
+    scale: 2,
+    useCORS: true,
+    allowTaint: false,
+    backgroundColor: null,
+    logging: false,
+  }).then(canvas => {
+    if (btnsEl) btnsEl.style.visibility = '';
 
-  // ── 区切り線 ──
-  const lineY = 290;
-  ctx.strokeStyle = 'rgba(201,168,76,.2)';
-  ctx.lineWidth = 1;
-  ctx.beginPath();
-  ctx.moveTo(60, lineY);
-  ctx.lineTo(W-60, lineY);
-  ctx.stroke();
+    const dataUrl = canvas.toDataURL('image/png');
 
-  // ── Bio ──
-  if (p.bio) {
-    ctx.font = 'italic 18px sans-serif';
-    ctx.fillStyle = 'rgba(255,255,255,.45)';
-    _wrapText(ctx, p.bio, 60, 330, W-120, 28, 2);
-  }
-
-  // ── 勝率 ──
-  let footerX = 60;
-  const footerY = 440;
-  if (p.showWR) {
-    const wr = calcWinRate(30);
-    if (wr) {
-      ctx.font = 'bold 52px "Palatino Linotype", serif';
-      ctx.fillStyle = '#c9a84c';
-      ctx.shadowColor = 'rgba(201,168,76,.3)';
-      ctx.shadowBlur  = 12;
-      ctx.fillText(wr.wr + '%', footerX, footerY);
-      ctx.shadowBlur = 0;
-      ctx.font = '13px sans-serif';
-      ctx.fillStyle = 'rgba(255,255,255,.4)';
-      ctx.fillText('WIN RATE · ' + wr.games + ' MATCHES', footerX, footerY + 22);
-      footerX += 200;
-    }
-  }
-
-  // ── 実績 ──
-  if (p.showAch) {
-    const stats = getAchievementStats();
-    const top3  = getTopAchievements(3);
-    if (stats.total) {
-      ctx.font = '12px sans-serif';
-      ctx.fillStyle = 'rgba(201,168,76,.55)';
-      ctx.letterSpacing = '2px';
-      ctx.fillText(`${stats.unlocked} / ${stats.total} ACHIEVEMENTS`, footerX, footerY - 36);
-      ctx.letterSpacing = '0px';
-    }
-    const achColors = { legendary:'#d8a8ff', epic:'#fdb07a', rare:'#93c5fd', common:'rgba(201,168,76,.8)' };
-    top3.forEach((d, i) => {
-      ctx.font = '600 16px sans-serif';
-      ctx.fillStyle = achColors[d.rarity] || '#c9a84c';
-      ctx.fillText(`${d.icon} ${d.name}`, footerX, footerY - 10 + i * 24);
-    });
-  }
-
-  // ── ブランド ──
-  ctx.font = '11px "Trebuchet MS", sans-serif';
-  ctx.fillStyle = 'rgba(201,168,76,.22)';
-  ctx.letterSpacing = '3px';
-  ctx.textAlign = 'right';
-  ctx.fillText('LORCANA TRACKER ✦', W - 60, H - 30);
-  ctx.textAlign = 'left';
-  ctx.letterSpacing = '0px';
-
-  // ── 出力 ──
-  canvas.toBlob(blob => {
-    if (navigator.share && /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
-      const file = new File([blob], 'lorcana-profile.png', { type:'image/png' });
-      navigator.share({ files:[file], title:'Lorcana Profile' })
-        .catch(() => _downloadCanvas(canvas));
+    // プレビューモーダルに表示
+    const overlay  = document.getElementById('prof-img-preview');
+    const imgEl    = document.getElementById('prof-img-preview-img');
+    if (overlay && imgEl) {
+      imgEl.src = dataUrl;
+      overlay.classList.add('open');
+      overlay.dataset.pngUrl = dataUrl;
     } else {
-      _downloadCanvas(canvas);
+      // フォールバック：直接ダウンロード
+      _profDownloadDataUrl(dataUrl);
     }
-  }, 'image/png');
+  }).catch(err => {
+    if (btnsEl) btnsEl.style.visibility = '';
+    console.error('html2canvas error:', err);
+    alert('PNG生成中にエラーが発生しました。');
+  });
 }
 
-function _downloadCanvas(canvas) {
-  canvas.toBlob(blob => {
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url; a.download = 'lorcana-profile.png'; a.click();
-    setTimeout(() => URL.revokeObjectURL(url), 1500);
-  }, 'image/png');
+function profDownloadImg() {
+  const overlay = document.getElementById('prof-img-preview');
+  if (!overlay) return;
+  const dataUrl = overlay.dataset.pngUrl;
+  if (!dataUrl) return;
+  _profDownloadDataUrl(dataUrl);
 }
 
-// Canvas ヘルパー
-function _roundRectFill(ctx, x, y, w, h, r) {
-  ctx.beginPath();
-  ctx.moveTo(x+r,y); ctx.lineTo(x+w-r,y); ctx.quadraticCurveTo(x+w,y,x+w,y+r);
-  ctx.lineTo(x+w,y+h-r); ctx.quadraticCurveTo(x+w,y+h,x+w-r,y+h);
-  ctx.lineTo(x+r,y+h); ctx.quadraticCurveTo(x,y+h,x,y+h-r);
-  ctx.lineTo(x,y+r); ctx.quadraticCurveTo(x,y,x+r,y);
-  ctx.closePath(); ctx.fill();
+function _profDownloadDataUrl(dataUrl) {
+  const a = document.createElement('a');
+  a.href     = dataUrl;
+  a.download = 'illumineer-profile.png';
+  document.body.appendChild(a);
+  a.click();
+  setTimeout(() => document.body.removeChild(a), 500);
 }
-function _roundRectStroke(ctx, x, y, w, h, r) {
-  ctx.beginPath();
-  ctx.moveTo(x+r,y); ctx.lineTo(x+w-r,y); ctx.quadraticCurveTo(x+w,y,x+w,y+r);
-  ctx.lineTo(x+w,y+h-r); ctx.quadraticCurveTo(x+w,y+h,x+w-r,y+h);
-  ctx.lineTo(x+r,y+h); ctx.quadraticCurveTo(x,y+h,x,y+h-r);
-  ctx.lineTo(x,y+r); ctx.quadraticCurveTo(x,y,x+r,y);
-  ctx.closePath(); ctx.stroke();
-}
-function _wrapText(ctx, text, x, y, maxW, lineH, maxLines) {
-  const chars = text.split('');
-  let line = '';
-  let lines = 0;
-  for (const ch of chars) {
-    const test = line + ch;
-    if (ctx.measureText(test).width > maxW && line) {
-      ctx.fillText(line, x, y);
-      y += lineH; line = ch; lines++;
-      if (lines >= maxLines) { if (ch) ctx.fillText(line + '…', x, y); return; }
-    } else { line = test; }
-  }
-  if (line) ctx.fillText(line, x, y);
-}
-// Legacy alias kept for any existing callers
-function roundRect(ctx,x,y,w,h,r){_roundRectFill(ctx,x,y,w,h,r);}
-function wrapText(ctx,t,x,y,mw,lh){_wrapText(ctx,t,x,y,mw,lh,5);}
 
-// ── 初期化 ────────────────────────────────────────────────────
+function profCloseImgPreview() {
+  const overlay = document.getElementById('prof-img-preview');
+  if (overlay) overlay.classList.remove('open');
+}
+
+// ─────────────────────────────────────────
+// X（Twitter）投稿
+// ─────────────────────────────────────────
+function profPostToX() {
+  const p = profViewMode || profLoad();
+  if (!p) { alert('プロフィールを作成してください'); return; }
+
+  // 先に PNG を保存
+  profSavePng();
+
+  setTimeout(() => {
+    const name   = _sanitize(p.nickname || p.handle || 'Lorcana Player');
+    const region = p.region ? '📍 ' + _sanitize(p.region) : '';
+    const colorEmojis = (p.colors || []).map(c => {
+      const info = (typeof COLORS !== 'undefined' && COLORS[c]) ? COLORS[c] : {};
+      return info.emoji || c;
+    }).join('');
+    const comment = (p.comment || p.bio) ? '"' + _sanitize(p.comment || p.bio) + '"' : '';
+    const lines = [colorEmojis + ' ' + name, region, comment, '#ロルカナ #Lorcana #ILLUMINEER']
+                    .filter(Boolean).join('\n');
+    window.open('https://twitter.com/intent/tweet?text=' + encodeURIComponent(lines),
+                '_blank', 'noopener');
+  }, 600);
+}
+
+// ─────────────────────────────────────────
+// 初期化
+// ─────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
   setTimeout(renderProfSection, 200);
 });
 
+
+// ══════════════════════════════════════════════════════════════════
+// QR モーダル
+// ══════════════════════════════════════════════════════════════════
+let _qrInstance = null;
+
+function openQRModal() {
+  const p = profViewMode || profLoad();
+  if (!p || !p.handle) { alert('プロフィールを作成してください'); return; }
+
+  // 共有URL生成
+  const url = new URL(window.location.href);
+  url.searchParams.set('profile', profEncode(p));
+  const shareUrl = url.toString();
+
+  // QRコード生成
+  const container = document.getElementById('qr-canvas-container');
+  if (!container) return;
+  container.innerHTML = '';          // 毎回リセット
+  if (typeof QRCode !== 'undefined') {
+    new QRCode(container, {
+      text:         shareUrl,
+      width:        220,
+      height:       220,
+      colorDark:    '#0a0a18',
+      colorLight:   '#ffffff',
+      correctLevel: QRCode.CorrectLevel.M,
+    });
+  } else {
+    // フォールバック：URL文字列をそのまま表示
+    container.style.cssText = 'width:220px;height:220px;display:flex;align-items:center;justify-content:center;font-size:9px;color:#333;word-break:break-all;padding:8px;box-sizing:border-box;';
+    container.textContent = shareUrl;
+  }
+
+  // ヒントにハンドルを表示
+  const hint = document.getElementById('qr-hint-text');
+  if (hint) {
+    hint.innerHTML = '<strong style="color:var(--gold)">' + _sanitize(p.handle) + '</strong> のプロフィール<br>相手のカメラで読み取ると<br>カードが開き、名刺帳に保存できます';
+  }
+
+  document.getElementById('qr-modal-overlay').classList.add('open');
+}
+
+function closeQRModal() {
+  document.getElementById('qr-modal-overlay').classList.remove('open');
+}
+
+// ══════════════════════════════════════════════════════════════════
+// 名刺帳（Card Book）
+// ══════════════════════════════════════════════════════════════════
+const BOOK_KEY = 'lorcanaTracker.cardbook.v1';
+
+function bookLoad() {
+  try { const r = localStorage.getItem(BOOK_KEY); return r ? JSON.parse(r) : []; }
+  catch(e) { return []; }
+}
+function bookSave(list) {
+  localStorage.setItem(BOOK_KEY, JSON.stringify(list));
+}
+
+/** URL経由で閲覧中のカードを名刺帳に保存 */
+function bookAddViewed() {
+  if (!profViewMode || !profViewMode.handle) return;
+  const list = bookLoad();
+  const existsIdx = list.findIndex(c => c.handle === profViewMode.handle);
+  if (existsIdx >= 0) {
+    if (!confirm(profViewMode.handle + ' はすでに名刺帳にあります。更新しますか？')) return;
+    list[existsIdx] = Object.assign({}, profViewMode, { savedAt: new Date().toISOString() });
+  } else {
+    list.unshift(Object.assign({}, profViewMode, { savedAt: new Date().toISOString() }));
+  }
+  bookSave(list);
+  const banner = document.getElementById('prof-view-banner');
+  if (banner) banner.classList.remove('visible');
+  _cbToast('👥 名刺帳に保存しました！');
+}
+
+/** URLを入力して名刺帳に追加 */
+function cbOpenFromUrl() {
+  const raw = prompt('プロフィール共有URLを貼り付けてください：');
+  if (!raw) return;
+  try {
+    const params = new URL(raw.trim()).searchParams;
+    const enc = params.get('profile');
+    if (!enc) { alert('プロフィールURLが見つかりません'); return; }
+    const p = profDecode(enc);
+    if (!p || !p.handle) { alert('URLが無効です'); return; }
+    const list = bookLoad();
+    const existsIdx = list.findIndex(c => c.handle === p.handle);
+    if (existsIdx >= 0) {
+      if (!confirm(p.handle + ' は既に保存済みです。更新しますか？')) return;
+      list[existsIdx] = Object.assign({}, p, { savedAt: new Date().toISOString() });
+    } else {
+      list.unshift(Object.assign({}, p, { savedAt: new Date().toISOString() }));
+    }
+    bookSave(list);
+    renderCardbook();
+    _cbToast('👥 ' + p.handle + ' を名刺帳に追加しました');
+  } catch(e) { alert('URLの解析に失敗しました\n' + e.message); }
+}
+
+// ─── 名刺帳パネル描画 ────────────────────────────────────────
+let _cbDetailIdx = -1;
+
+function renderCardbook() {
+  const list    = bookLoad();
+  const query   = ((document.getElementById('cb-search') || {}).value || '').toLowerCase();
+  const countEl = document.getElementById('cb-count');
+  const gridEl  = document.getElementById('cb-grid');
+  if (!gridEl) return;
+
+  const filtered = list.filter(c =>
+    !query ||
+    (c.handle   || '').toLowerCase().includes(query) ||
+    (c.nickname || '').toLowerCase().includes(query) ||
+    (c.region   || '').toLowerCase().includes(query)
+  );
+
+  if (countEl) countEl.textContent =
+    list.length + '人保存済み' + (query ? '（' + filtered.length + '件ヒット）' : '');
+
+  // 空状態
+  if (list.length === 0) {
+    gridEl.innerHTML = '';
+    const empty = document.createElement('div');
+    empty.className = 'cb-empty';
+    const icon = document.createElement('div');
+    icon.className = 'cb-empty-icon'; icon.textContent = '✦';
+    const txt = document.createElement('div');
+    txt.className = 'cb-empty-text';
+    txt.textContent = 'まだ名刺帳は空です\n相手のQRを読み取るか\nURLを貼り付けて追加しましょう';
+    txt.style.whiteSpace = 'pre-line';
+    empty.appendChild(icon); empty.appendChild(txt);
+    gridEl.appendChild(empty);
+    return;
+  }
+
+  if (filtered.length === 0) {
+    gridEl.innerHTML = '';
+    const msg = document.createElement('div');
+    msg.className = 'cb-empty'; msg.style.padding = '30px 20px';
+    const t = document.createElement('div');
+    t.className = 'cb-empty-text';
+    t.textContent = '「' + query + '」に一致する人が見つかりません';
+    msg.appendChild(t); gridEl.appendChild(msg);
+    return;
+  }
+
+  gridEl.innerHTML = '';
+  filtered.forEach(c => {
+    const realIdx = list.findIndex(x => x.handle === c.handle && x.savedAt === c.savedAt);
+
+    const card = document.createElement('div');
+    card.className = 'cb-card';
+    card.onclick   = () => cbOpenDetail(realIdx);
+
+    const row1 = document.createElement('div');
+    row1.className = 'cb-card-row1';
+
+    const info = document.createElement('div');
+    info.className = 'cb-card-info';
+
+    // ハンドル
+    const handleEl = document.createElement('div');
+    handleEl.className = 'cb-card-handle';
+    handleEl.textContent = c.handle || '';
+    info.appendChild(handleEl);
+
+    // ニックネーム
+    if (c.nickname) {
+      const nick = document.createElement('div');
+      nick.className = 'cb-card-nickname';
+      nick.textContent = c.nickname;
+      info.appendChild(nick);
+    }
+
+    // メタ（地域・色）
+    const meta = document.createElement('div');
+    meta.className = 'cb-card-meta';
+    if (c.region) {
+      const reg = document.createElement('span');
+      reg.className = 'cb-card-region';
+      reg.textContent = '📍 ' + c.region;
+      meta.appendChild(reg);
+    }
+    if ((c.colors || []).length) {
+      const cw = document.createElement('div');
+      cw.className = 'cb-card-colors';
+      (c.colors || []).forEach(col => {
+        const ci  = (typeof COLORS !== 'undefined' && COLORS[col]) ? COLORS[col] : {};
+        const orb = document.createElement('div');
+        orb.className = 'cb-card-orb';
+        orb.style.background = ci.color || '#555';
+        orb.textContent = ci.emoji || col.charAt(0);
+        cw.appendChild(orb);
+      });
+      meta.appendChild(cw);
+    }
+    info.appendChild(meta);
+
+    // コメント
+    const comment = c.comment || c.bio || '';
+    if (comment) {
+      const cmt = document.createElement('div');
+      cmt.className = 'cb-card-comment';
+      cmt.textContent = '"' + comment + '"';
+      info.appendChild(cmt);
+    }
+
+    // 保存日
+    if (c.savedAt) {
+      const d = new Date(c.savedAt);
+      const dt = document.createElement('div');
+      dt.className = 'cb-card-added';
+      dt.textContent = '保存: ' + d.getFullYear() + '/' + (d.getMonth()+1) + '/' + d.getDate();
+      info.appendChild(dt);
+    }
+
+    // 削除ボタン
+    const acts = document.createElement('div');
+    acts.className = 'cb-card-actions';
+    const delBtn = document.createElement('button');
+    delBtn.className = 'cb-card-btn cb-card-btn-del';
+    delBtn.textContent = '🗑';
+    delBtn.title = '削除';
+    delBtn.onclick = e => { e.stopPropagation(); cbDelete(realIdx); };
+    acts.appendChild(delBtn);
+
+    row1.appendChild(info);
+    row1.appendChild(acts);
+    card.appendChild(row1);
+    gridEl.appendChild(card);
+  });
+}
+
+// ─── 詳細モーダル ─────────────────────────────────────────────
+function cbOpenDetail(idx) {
+  const list = bookLoad();
+  const c = list[idx];
+  if (!c) return;
+  _cbDetailIdx = idx;
+
+  const _t = (id, txt) => { const el = document.getElementById(id); if (el) el.textContent = txt || ''; };
+  _t('cbd-handle',   c.handle || '');
+  _t('cbd-nickname', c.nickname || '');
+  _t('cbd-region',   c.region ? '📍 ' + c.region : '');
+  _t('cbd-comment',  (c.comment || c.bio) ? '"' + (c.comment || c.bio) + '"' : '');
+  if (c.savedAt) _t('cbd-footer', '保存日: ' + new Date(c.savedAt).toLocaleDateString('ja-JP'));
+
+  // 色
+  const colorsEl = document.getElementById('cbd-colors');
+  if (colorsEl) {
+    colorsEl.innerHTML = '';
+    (c.colors || []).forEach(col => {
+      const ci  = (typeof COLORS !== 'undefined' && COLORS[col]) ? COLORS[col] : {};
+      const orb = document.createElement('div');
+      orb.className = 'cb-detail-orb';
+      orb.style.background = ci.color || '#555';
+      orb.textContent = ci.emoji || col.charAt(0);
+      colorsEl.appendChild(orb);
+    });
+  }
+
+  document.getElementById('cb-detail-overlay').classList.add('open');
+}
+
+function cbCloseDetail() {
+  _cbDetailIdx = -1;
+  document.getElementById('cb-detail-overlay').classList.remove('open');
+}
+
+function cbDetailPostX() {
+  const list = bookLoad();
+  const c = list[_cbDetailIdx];
+  if (!c) return;
+  const handle = (c.handle || '').replace(/^@/, '');
+  if (!handle) { alert('ハンドルが不明です'); return; }
+  window.open('https://twitter.com/' + encodeURIComponent(handle), '_blank', 'noopener');
+}
+
+function cbDetailDelete() {
+  const list = bookLoad();
+  const c = list[_cbDetailIdx];
+  if (!c) return;
+  if (!confirm(c.handle + ' を名刺帳から削除しますか？')) return;
+  cbCloseDetail();
+  cbDelete(_cbDetailIdx);
+}
+
+function cbDelete(idx) {
+  const list = bookLoad();
+  list.splice(idx, 1);
+  bookSave(list);
+  renderCardbook();
+  _cbToast('削除しました');
+}
+
+// ─── トースト ──────────────────────────────────────────────────
+function _cbToast(msg) {
+  let t = document.getElementById('_cb-toast');
+  if (!t) {
+    t = document.createElement('div');
+    t.id = '_cb-toast';
+    t.style.cssText = [
+      'position:fixed', 'bottom:calc(80px + env(safe-area-inset-bottom))',
+      'left:50%', 'transform:translateX(-50%)', 'z-index:9999',
+      'background:var(--surface3)', 'border:1px solid rgba(201,168,76,.4)',
+      'border-radius:12px', 'padding:10px 20px', 'font-size:13px',
+      'color:var(--text)', 'box-shadow:0 4px 20px rgba(0,0,0,.5)',
+      'pointer-events:none', 'white-space:nowrap',
+      'transition:opacity .4s',
+    ].join(';');
+    document.body.appendChild(t);
+  }
+  t.textContent = msg;
+  t.style.opacity = '1';
+  clearTimeout(t._timer);
+  t._timer = setTimeout(() => { t.style.opacity = '0'; }, 2500);
+}
 
 // ══════════════════════════════════════════════════════════════════
 // ACHIEVEMENT SYSTEM v1
@@ -10051,6 +10726,9 @@ function _renderAchStatsCats() {
   </button>
   <button class="bottom-nav-btn" id="bn-analytics" onclick="switchTab('analytics')">
     <span class="bn-icon">📊</span><span>統計</span>
+  </button>
+  <button class="bottom-nav-btn" id="bn-cardbook" onclick="switchTab('cardbook')">
+    <span class="bn-icon">👥</span><span>名刺帳</span>
   </button>
   <button class="bottom-nav-btn" id="bn-settings" onclick="switchTab('settings')">
     <span class="bn-icon">⚙️</span><span>設定</span>
