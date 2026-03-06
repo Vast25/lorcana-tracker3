@@ -1675,6 +1675,50 @@ input:focus{border-color:var(--gold);}
   letter-spacing: .02em; line-height: 1.1;
   text-shadow: 0 0 24px rgba(201,168,76,.5), 0 2px 8px rgba(0,0,0,.5);
 }
+.pc-level-badge {
+  display: inline-flex; align-items: center; gap: 5px;
+  margin-top: 2%; font-size: clamp(8px, 1.3vw, 13px);
+  letter-spacing: .08em;
+}
+.pc-level-num {
+  font-family: 'Palatino Linotype','Book Antiqua',serif;
+  color: var(--gold); font-weight: 700;
+}
+.pc-level-title {
+  color: rgba(255,255,255,.55);
+}
+/* ── 実績レベルブロック（実績ページ） ── */
+.ach-level-block {
+  background: linear-gradient(135deg,rgba(201,168,76,.08),rgba(140,80,255,.06));
+  border: 1px solid rgba(201,168,76,.25); border-radius: 14px;
+  padding: 14px 16px; margin-bottom: 14px;
+}
+.ach-level-row1 {
+  display: flex; align-items: baseline; gap: 8px; margin-bottom: 4px;
+}
+.ach-level-lv {
+  font-family: 'Palatino Linotype','Book Antiqua',serif;
+  font-size: 22px; color: var(--gold);
+  text-shadow: 0 0 12px rgba(201,168,76,.35);
+}
+.ach-level-title-txt {
+  font-size: 13px; color: rgba(255,255,255,.6); letter-spacing: .05em;
+}
+.ach-level-pts {
+  font-size: 11px; color: var(--muted); margin-bottom: 8px; letter-spacing: .5px;
+}
+.ach-level-bar-track {
+  height: 6px; background: rgba(255,255,255,.07);
+  border-radius: 3px; overflow: hidden; margin-bottom: 5px;
+}
+.ach-level-bar-fill {
+  height: 100%; border-radius: 3px;
+  background: linear-gradient(90deg, rgba(201,168,76,.7), rgba(201,168,76,1));
+  transition: width .4s ease;
+}
+.ach-level-next {
+  font-size: 11px; color: var(--muted); text-align: right; letter-spacing: .3px;
+}
 .pc-region-tag {
   font-size: clamp(8px, 1.2vw, 12px);
   color: rgba(255,255,255,.35);
@@ -2440,6 +2484,7 @@ input:focus{border-color:var(--gold);}
               <div class="pc-banner-label">✦ &nbsp; ILLUMINEER PROFILE &nbsp; ✦</div>
               <div class="pc-nickname-sub" id="pc-nickname"></div>
               <div class="pc-handle-big"  id="pc-handle"></div>
+              <div class="pc-level-badge" id="pc-level"></div>
               <div class="pc-region-tag"   id="pc-region"></div>
             </div>
             <div class="pc-colors-wrap" id="pc-colors"></div>
@@ -9539,6 +9584,9 @@ function renderProfCard(p) {
     }
   }
 
+  // レベルバッジ
+  renderProfileLevel();
+
   // Deck Colors（色付きアイコン orb）— DOM構築なのでXSSリスクなし
   const cEl = document.getElementById('pc-colors');
   if (cEl) {
@@ -10093,6 +10141,132 @@ function _cbToast(msg) {
 // ACHIEVEMENT SYSTEM v1
 // ══════════════════════════════════════════════════════════════════
 
+// ══════════════════════════════════════════════════════════════════
+// LEVEL SYSTEM
+// ══════════════════════════════════════════════════════════════════
+const LEVEL_POINTS = { common: 1, rare: 3, epic: 5, legendary: 10 };
+const LEVEL_TABLE = [
+  { level: 1, title: 'Story Seeker',      min:  0 },
+  { level: 2, title: 'Ink Adventurer',    min:  5 },
+  { level: 3, title: 'Lore Hunter',       min: 10 },
+  { level: 4, title: 'Illumineer',        min: 20 },
+  { level: 5, title: 'Master Illumineer', min: 30 },
+  { level: 6, title: 'Lore Legend',       min: 50 },
+];
+
+/** 解除済み実績の合計ポイントを返す */
+function getAchievementPoints() {
+  try {
+    const data  = JSON.parse(localStorage.getItem('lorcanaTracker.achievements.v1') || '{}');
+    const saved = data.achievements || {};
+    return ACH_DEFS.reduce((sum, d) => {
+      if (!saved[d.id]?.unlocked) return sum;
+      return sum + (LEVEL_POINTS[d.rarity] || 1);
+    }, 0);
+  } catch(e) { return 0; }
+}
+
+/** ポイントからレベル情報を返す
+ *  @returns { level, title, totalPoints, currentMin, nextMin, progress }
+ *  progress: 0〜1 (現レベル帯内の進捗率)
+ */
+function getLevelInfo(totalPoints) {
+  totalPoints = totalPoints || 0;
+  let current = LEVEL_TABLE[0];
+  for (let i = LEVEL_TABLE.length - 1; i >= 0; i--) {
+    if (totalPoints >= LEVEL_TABLE[i].min) { current = LEVEL_TABLE[i]; break; }
+  }
+  const idx     = LEVEL_TABLE.indexOf(current);
+  const isMax   = idx === LEVEL_TABLE.length - 1;
+  const nextMin = isMax ? current.min : LEVEL_TABLE[idx + 1].min;
+  const span    = nextMin - current.min;
+  const progress= isMax ? 1 : (span > 0 ? Math.min(1, (totalPoints - current.min) / span) : 1);
+  const remaining = isMax ? 0 : Math.max(0, nextMin - totalPoints);
+  return {
+    level:       current.level,
+    title:       current.title,
+    totalPoints,
+    currentMin:  current.min,
+    nextMin,
+    progress,
+    remaining,
+    isMax,
+  };
+}
+
+/** プロフィールカードのレベルバッジを更新 */
+function renderProfileLevel() {
+  const el = document.getElementById('pc-level');
+  if (!el) return;
+  const pts  = getAchievementPoints();
+  const info = getLevelInfo(pts);
+  // DOM構築（textContent のみ使用）
+  el.innerHTML = '';
+  const numEl = document.createElement('span');
+  numEl.className = 'pc-level-num';
+  numEl.textContent = 'Lv.' + info.level;
+  const sep = document.createElement('span');
+  sep.className = 'pc-level-title';
+  sep.textContent = info.title;
+  el.appendChild(numEl);
+  el.appendChild(sep);
+}
+
+/** 実績ページのレベルブロックを描画（ach-stats-overview の上部に挿入） */
+function renderLevelSection() {
+  const overview = document.getElementById('ach-stats-overview');
+  if (!overview) return;
+  // 既存ブロックを削除してから再描画
+  const existing = overview.parentNode.querySelector('.ach-level-block');
+  if (existing) existing.remove();
+
+  const pts  = getAchievementPoints();
+  const info = getLevelInfo(pts);
+  const pct  = Math.round(info.progress * 100);
+
+  const block = document.createElement('div');
+  block.className = 'ach-level-block';
+
+  // 行1: Level X / Title
+  const row1 = document.createElement('div');
+  row1.className = 'ach-level-row1';
+  const lvEl = document.createElement('span');
+  lvEl.className = 'ach-level-lv';
+  lvEl.textContent = 'Level ' + info.level;
+  const titleEl = document.createElement('span');
+  titleEl.className = 'ach-level-title-txt';
+  titleEl.textContent = info.title;
+  row1.appendChild(lvEl);
+  row1.appendChild(titleEl);
+  block.appendChild(row1);
+
+  // 行2: ポイント
+  const ptsEl = document.createElement('div');
+  ptsEl.className = 'ach-level-pts';
+  ptsEl.textContent = info.totalPoints + ' pt' + (info.isMax ? '  ──  MAX LEVEL' : '');
+  block.appendChild(ptsEl);
+
+  // 行3: 進捗バー
+  const track = document.createElement('div');
+  track.className = 'ach-level-bar-track';
+  const fill = document.createElement('div');
+  fill.className = 'ach-level-bar-fill';
+  fill.style.width = pct + '%';
+  track.appendChild(fill);
+  block.appendChild(track);
+
+  // 行4: 次レベルまで
+  const nextEl = document.createElement('div');
+  nextEl.className = 'ach-level-next';
+  nextEl.textContent = info.isMax
+    ? '✦ Lore Legend ✦'
+    : 'あと ' + info.remaining + ' pt で Level ' + (info.level + 1);
+  block.appendChild(nextEl);
+
+  // overview の直前に挿入
+  overview.parentNode.insertBefore(block, overview);
+}
+
 const ACH_KEY = 'lorcanaTracker.achievements.v1';
 
 // ── 実績定義 ──────────────────────────────────────────────────────
@@ -10480,6 +10654,7 @@ function achStatTab(r) {
 }
 
 function renderAchStats() {
+  renderLevelSection();
   _renderAchStatsOverview();
   _renderAchStatsCats();
 }
