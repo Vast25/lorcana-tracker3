@@ -1589,12 +1589,6 @@ input:focus{border-color:var(--gold);}
 .prof-create-btn:active { background: rgba(201,168,76,.12); transform: scale(.99); }
 
 /* ═══ 閲覧バナー ═══ */
-.prof-view-banner {
-  background: rgba(64,80,232,.12); border: 1px solid rgba(64,80,232,.3);
-  border-radius: 12px; padding: 10px 14px; margin-bottom: 12px;
-  font-size: 12px; color: #8090f8; display: none;
-}
-.prof-view-banner.visible { display: flex; align-items: center; gap: 8px; }
 
 /* ═══ ILLUMINEER CARD ═══ */
 .prof-card-wrap { position: relative; }
@@ -1669,17 +1663,17 @@ input:focus{border-color:var(--gold);}
 /* ハンドル（大） */
 .pc-handle-big {
   font-family: 'Palatino Linotype', 'Book Antiqua', serif;
+  font-size: clamp(9px, 1.6vw, 16px);
+  color: rgba(201,168,76,.6);
+  letter-spacing: .08em; margin-top: 1.5%;
+}
+/* ニックネーム（メイン・上段） */
+.pc-nickname-sub {
+  font-family: 'Palatino Linotype', 'Book Antiqua', serif;
   font-size: clamp(15px, 3.6vw, 40px);
   color: #f5e8b0;
   letter-spacing: .02em; line-height: 1.1;
   text-shadow: 0 0 24px rgba(201,168,76,.5), 0 2px 8px rgba(0,0,0,.5);
-}
-/* ニックネーム（サブ） */
-.pc-nickname-sub {
-  font-size: clamp(9px, 1.6vw, 16px);
-  color: rgba(201,168,76,.6);
-  letter-spacing: .06em; margin-top: 1.5%;
-  font-family: 'Palatino Linotype', 'Book Antiqua', serif;
 }
 .pc-region-tag {
   font-size: clamp(8px, 1.2vw, 12px);
@@ -1787,10 +1781,7 @@ input:focus{border-color:var(--gold);}
 .prof-btn.prof-btn-img {
   background: rgba(64,200,120,.08); border-color: rgba(64,200,120,.3); color: #40c878;
 }
-.prof-btn.prof-btn-x {
-  background: rgba(0,0,0,.3); border-color: rgba(255,255,255,.2); color: #fff;
-}
-
+.prof-btn
 /* 画像プレビューモーダル */
 .prof-img-preview-overlay {
   display: none; position: fixed; inset: 0; z-index: 9100;
@@ -1820,12 +1811,6 @@ input:focus{border-color:var(--gold);}
 }
 
 /* URLバー */
-.prof-url-bar {
-  margin-top: 8px; background: var(--surface2); border: 1px solid rgba(201,168,76,.2);
-  border-radius: 10px; padding: 8px 12px; font-size: 11px; color: var(--muted);
-  word-break: break-all; display: none;
-}
-.prof-url-bar.visible { display: block; }
 
 /* ═══ モーダル ═══ */
 .prof-modal-overlay {
@@ -2036,7 +2021,6 @@ input:focus{border-color:var(--gold);}
   text-shadow: 0 0 10px rgba(201,168,76,.3);
 }
 .prof-btns { grid-template-columns: 1fr 1fr; }
-.prof-view-banner { flex-wrap: wrap; gap: 6px; }
 
 /* ══════════════════════════════════════════════
    QR モーダル
@@ -2078,7 +2062,7 @@ input:focus{border-color:var(--gold);}
 /* ══════════════════════════════════════════════
    名刺帳パネル
 ══════════════════════════════════════════════ */
-#panel-cardbook { padding-bottom: 100px; }
+
 .cb-header {
   display: flex; align-items: center; justify-content: space-between;
   margin-bottom: 16px;
@@ -2311,7 +2295,6 @@ input:focus{border-color:var(--gold);}
             <option value="report">📋 レポート</option>
       <option value="pro">⚡ プロ分析</option>
       <option value="guide">📖 取説</option>
-      <option value="cardbook">👥 名刺帳</option>
       <option value="settings">⚙️ 設定</option>
       <option value="pxdt" id="nav-opt-pxdt" style="display:none;">⚡ PXDT</option>
     </select>
@@ -2433,14 +2416,7 @@ input:focus{border-color:var(--gold);}
     <!-- ══ ILLUMINEER PROFILE カード セクション ══ -->
     <div id="prof-section">
 
-      <!-- 閲覧バナー（共有URL経由） -->
-      <div class="prof-view-banner" id="prof-view-banner">
-        <span>✦ シェアされたプロフィール</span>
-        <div style="margin-left:auto;display:flex;gap:6px;">
-          <button onclick="bookAddViewed()" style="padding:5px 14px;background:rgba(201,168,76,.18);border:1px solid rgba(201,168,76,.4);border-radius:8px;color:var(--gold);font-size:11px;cursor:pointer;letter-spacing:.5px;">👥 名刺帳に保存</button>
-          <button onclick="profSaveViewed()" style="padding:5px 14px;background:rgba(64,80,232,.2);border:1px solid rgba(64,80,232,.4);border-radius:8px;color:#8090f8;font-size:11px;cursor:pointer;">自分のカードに設定</button>
-        </div>
-      </div>
+
 
       <!-- 未設定 -->
       <div id="prof-empty">
@@ -2462,8 +2438,8 @@ input:focus{border-color:var(--gold);}
           <div class="pc-banner-row">
             <div class="pc-banner-left">
               <div class="pc-banner-label">✦ &nbsp; ILLUMINEER PROFILE &nbsp; ✦</div>
-              <div class="pc-handle-big"  id="pc-handle"></div>
               <div class="pc-nickname-sub" id="pc-nickname"></div>
+              <div class="pc-handle-big"  id="pc-handle"></div>
               <div class="pc-region-tag"   id="pc-region"></div>
             </div>
             <div class="pc-colors-wrap" id="pc-colors"></div>
@@ -2484,10 +2460,7 @@ input:focus{border-color:var(--gold);}
           <button class="prof-btn" onclick="openProfModal()">✏️ 編集</button>
           <button class="prof-btn prof-btn-img" onclick="profSavePng()">📷 PNG保存</button>
           <button class="prof-btn prof-btn-qr prof-btn-wide" onclick="openQRModal()">▣ &nbsp;QRコードを表示して交換する</button>
-          <button class="prof-btn prof-btn-gold" onclick="profCopyShareUrl()">🔗 URL共有</button>
-          <button class="prof-btn prof-btn-x" onclick="profPostToX()">𝕏 Xに投稿</button>
         </div>
-        <div class="prof-url-bar" id="prof-url-bar"></div>
       </div>
     </div>
 
@@ -2574,10 +2547,10 @@ input:focus{border-color:var(--gold);}
       <div id="dash-streak-opp-alert" style="margin-bottom:8px;"></div>
       <div id="dash-fatigue" style="margin-bottom:8px;"></div>
 
-      <!-- 今日の戦績 (横長) -->
+      <!-- 今月の成績 (横長) -->
       <div class="home-card-row1">
         <div>
-          <div class="hc-label">今日の戦績</div>
+          <div class="hc-label">今月の成績</div>
           <div class="hc-val" id="dash-today-wl-new">0-0</div>
         </div>
         <div style="text-align:right;">
@@ -2585,7 +2558,7 @@ input:focus{border-color:var(--gold);}
         </div>
       </div>
 
-      <!-- 今月勝率 + 直近5戦 -->
+      <!-- 今月勝率 + 直近10戦 -->
       <div class="home-card-2col">
         <div class="home-card-sm">
           <div class="hc-label">今月勝率</div>
@@ -2593,8 +2566,8 @@ input:focus{border-color:var(--gold);}
           <div style="font-size:11px;color:var(--muted);margin-top:2px;" id="dash-month-count"></div>
         </div>
         <div class="home-card-sm">
-          <div class="hc-label">直近5戦</div>
-          <div class="home-recent5" id="dash-recent5" style="margin-top:6px;"></div>
+          <div class="hc-label">直近10戦</div>
+          <div class="home-recent5" id="dash-recent5" style="margin-top:6px;flex-wrap:wrap;"></div>
         </div>
       </div>
 
@@ -3700,6 +3673,28 @@ input:focus{border-color:var(--gold);}
         </div>
       </div>
 
+
+      <!-- 名刺帳 -->
+      <div class="settings-section-title">名刺帳</div>
+      <div class="settings-tool-group" style="padding:0;">
+        <div style="padding:14px 16px;">
+      <div class="cb-header">
+        <div>
+          <div class="cb-title">✦ &nbsp; 名刺帳</div>
+          <div class="cb-count" id="cb-count"></div>
+        </div>
+        <button onclick="cbOpenFromUrl()" style="padding:7px 14px;border-radius:10px;background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.25);color:var(--gold);font-size:11px;cursor:pointer;letter-spacing:.5px;">＋ URLから追加</button>
+      </div>
+      <!-- 検索 -->
+      <div class="cb-search-wrap">
+        <span class="cb-search-icon">🔍</span>
+        <input class="cb-search" id="cb-search" type="text" placeholder="ハンドル・地域で検索…" oninput="renderCardbook()">
+      </div>
+      <!-- カード一覧 -->
+      <div class="cb-grid" id="cb-grid"></div>
+        </div>
+      </div>
+
     </div>
   </div>
 
@@ -4156,46 +4151,13 @@ input:focus{border-color:var(--gold);}
 <!-- Win Overlay -->
 <div class="win-overlay" id="win-overlay">
   <div class="win-overlay-title" id="win-overlay-title">🏆 WIN</div>
-  <div class="win-overlay-sub" id="win-overlay-sub">20 ロア達成</div>
-  <div class="win-overlay-btns">
-    <button class="win-overlay-btn primary" onclick="winOverlayRecord()">✦ 記録フォームに反映して記録する</button>
-    <button class="win-overlay-btn secondary" onclick="winOverlayToForm()">記録フォームに反映だけする</button>
-    <button class="win-overlay-btn tertiary" onclick="winOverlayClose()">閉じる（カウンターを続ける）</button>
-  </div>
-</div>
-
-
-  <!-- ══ QR モーダル ══ -->
-  <div class="qr-modal-overlay" id="qr-modal-overlay" onclick="if(event.target===this)closeQRModal()">
-    <div class="qr-modal-box">
-      <div class="qr-modal-title">✦ &nbsp; SCAN TO CONNECT &nbsp; ✦</div>
-      <div class="qr-canvas-wrap">
-        <div id="qr-canvas-container"></div>
-      </div>
-      <div class="qr-hint" id="qr-hint-text">
+  <div class="win-overlay-sub" id="win-otext">
         相手のカメラで読み取ると<br>プロフィールカードが開きます
       </div>
       <button class="qr-close-btn" onclick="closeQRModal()">閉じる</button>
     </div>
   </div>
 
-  <!-- ══ 名刺帳パネル ══ -->
-  <div class="panel" id="panel-cardbook">
-    <div class="cb-header">
-      <div>
-        <div class="cb-title">✦ &nbsp; 名刺帳</div>
-        <div class="cb-count" id="cb-count"></div>
-      </div>
-      <button onclick="cbOpenFromUrl()" style="padding:7px 14px;border-radius:10px;background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.25);color:var(--gold);font-size:11px;cursor:pointer;letter-spacing:.5px;">＋ URLから追加</button>
-    </div>
-    <!-- 検索 -->
-    <div class="cb-search-wrap">
-      <span class="cb-search-icon">🔍</span>
-      <input class="cb-search" id="cb-search" type="text" placeholder="ハンドル・地域で検索…" oninput="renderCardbook()">
-    </div>
-    <!-- カード一覧 -->
-    <div class="cb-grid" id="cb-grid"></div>
-  </div>
 
   <!-- 名刺帳 詳細モーダル -->
   <div class="cb-detail-overlay" id="cb-detail-overlay" onclick="if(event.target===this)cbCloseDetail()">
@@ -4374,13 +4336,12 @@ function switchTab(tab) {
   if (!panel) return;
   panel.classList.add('active');
   if (tab==='counter') { requestWakeLock(); updateCounterAdjUI(); } else releaseWakeLock();
-  if (tab==='settings')       renderSettingsPanel();
+  if (tab==='settings')       { renderSettingsPanel(); renderCardbook(); }
   if (tab==='record')         { renderRecordTournPicker(); syncMyColorNew(); }
   if (tab==='history')        renderHistory();
   if (tab==='analytics')      { document.getElementById('turn-stats').innerHTML=''; renderAnalytics(); renderNewStats(); if(document.getElementById('acc-achievements')?.classList.contains('open')) renderAchStats(); }
   if (tab==='events')         renderEventsTab();
   if (tab==='tweet')          renderTweetPanel();
-  if (tab==='cardbook')       renderCardbook();
   if (tab==='dashboard')      { renderDashboard(); renderDashboardNew(); renderProfSection(); }
   if (tab==='report')         renderReport();
   if (tab==='matchup')        { muSwitchTab('bar'); }
@@ -7540,7 +7501,7 @@ function setDeckTag(deckKey, tag) {
 }
 
 // ── ボトムナビ ────────────────────────────────
-const BN_TABS=['dashboard','record','counter','events','analytics','cardbook','settings'];
+const BN_TABS=['dashboard','record','counter','events','analytics','settings'];
 function updateBottomNav(tab) {
   BN_TABS.forEach(t=>{
     const el=document.getElementById('bn-'+t);
@@ -8228,7 +8189,17 @@ function cardUpdateSelect() {
   const sel = document.getElementById('card-select'); if(!sel) return;
   const names = [...new Set(cardRecords.map(r=>r.name))];
   const current = sel.value;
-  sel.innerHTML = '<option value="">カードを選択...</option>' + names.map(n=>`<option value="${n}"${n===current?' selected':''}>${n}</option>`).join('');
+  // XSS対策: innerHTML不使用、DOM構築
+  sel.innerHTML = '';
+  const placeholder = document.createElement('option');
+  placeholder.value = ''; placeholder.textContent = 'カードを選択...';
+  sel.appendChild(placeholder);
+  names.forEach(n => {
+    const opt = document.createElement('option');
+    opt.value = n; opt.textContent = n;
+    if (n === current) opt.selected = true;
+    sel.appendChild(opt);
+  });
 }
 
 function cardRenderStats(name) {
@@ -8247,7 +8218,7 @@ function cardRenderStats(name) {
 
   el.innerHTML=`
     <div class="card-stat-row">
-      <span style="font-size:12px;color:var(--muted);">「${name}」絡み 勝率</span>
+      <span style="font-size:12px;color:var(--muted);">「${esc(name)}」絡み 勝率</span>
       <span class="card-stat-val" style="color:${wr>=50?'var(--win)':'var(--loss)'};">${wr}%</span>
     </div>
     <div class="card-stat-row">
@@ -8949,11 +8920,15 @@ function renderNewStats() {
   const now = new Date();
   let filtered = matches || [];
   if(currentPeriod === 'today') {
-    const today = now.toISOString().slice(0,10);
-    filtered = filtered.filter(m=>m.date&&m.date.slice(0,10)===today);
+    // 保存形式 "2026/3/6"（toLocaleDateString ja-JP）に合わせる
+    const todayStr = `${now.getFullYear()}/${now.getMonth()+1}/${now.getDate()}`;
+    filtered = filtered.filter(m=>m.date===todayStr);
   } else if(currentPeriod === 'month') {
-    const ym = now.toISOString().slice(0,7);
-    filtered = filtered.filter(m=>m.date&&m.date.slice(0,7)===ym);
+    filtered = filtered.filter(m=>{
+      if(!m.date) return false;
+      const d = new Date(m.date.replace(/\//g,'-'));
+      return d.getFullYear()===now.getFullYear() && d.getMonth()===now.getMonth();
+    });
   }
 
   // 調整タブ判定（adj以外=公式戦+非公認すべて, adjのみ=調整のみ）
@@ -9098,8 +9073,9 @@ document.addEventListener('DOMContentLoaded', function() {
 function updateHeaderToday() {
   const el = document.getElementById('header-today-wl');
   if(!el || !matches) return;
-  const today = new Date().toISOString().slice(0,10);
-  const todayM = matches.filter(m=>m.date&&m.date.slice(0,10)===today);
+  const _now = new Date();
+  const today = `${_now.getFullYear()}/${_now.getMonth()+1}/${_now.getDate()}`;
+  const todayM = matches.filter(m=>m.date===today);
   const w=todayM.filter(m=>m.result==='win').length;
   const l=todayM.filter(m=>m.result==='loss').length;
   el.textContent = todayM.length>0 ? '今日 '+w+'-'+l : '';
@@ -9143,14 +9119,18 @@ function renderDashboardNew() {
   const badge = document.getElementById('dash-date-badge');
   if (badge) badge.textContent = `${now.getMonth()+1}/${now.getDate()}（${weekDay}）`;
 
-  // 今日の戦績
-  const todayM = allM.filter(m=>m.date===todayStr);
-  const todayW = todayM.filter(m=>m.result==='win').length;
-  const todayL = todayM.filter(m=>m.result==='loss').length;
+  // 今月の成績
+  const monthMAll = allM.filter(m=>{
+    if (!m.date) return false;
+    const d = new Date(m.date.replace(/\//g,'-'));
+    return d.getFullYear()===now.getFullYear() && d.getMonth()===now.getMonth();
+  });
+  const monthWAll = monthMAll.filter(m=>m.result==='win').length;
+  const monthLAll = monthMAll.filter(m=>m.result==='loss').length;
   const todayWLEl = document.getElementById('dash-today-wl-new');
   const todayCountEl = document.getElementById('dash-today-count-new');
-  if (todayWLEl) todayWLEl.textContent = `${todayW}-${todayL}`;
-  if (todayCountEl) todayCountEl.textContent = `${todayM.length}試合`;
+  if (todayWLEl) todayWLEl.textContent = `${monthWAll}-${monthLAll}`;
+  if (todayCountEl) todayCountEl.textContent = `${monthMAll.length}試合`;
 
   // 今月勝率
   const monthM = allM.filter(m=>{
@@ -9166,11 +9146,11 @@ function renderDashboardNew() {
   if (monthWREl) monthWREl.textContent = monthWR !== null ? monthWR+'%' : '—';
   if (monthCountEl) monthCountEl.textContent = monthM.length > 0 ? `${monthM.length}試合` : '';
 
-  // 直近5戦
+  // 直近10戦
   const recent5El = document.getElementById('dash-recent5');
   if (recent5El) {
-    const r5 = allM.slice(0,5);
-    recent5El.innerHTML = r5.map(m=>{
+    const r10 = allM.slice(0,10);
+    recent5El.innerHTML = r10.map(m=>{
       if (m.result==='win')  return '<span style="color:var(--win);font-size:16px;">●</span>';
       if (m.result==='loss') return '<span style="color:var(--loss);font-size:16px;">○</span>';
       return '<span style="color:var(--muted);font-size:16px;">△</span>';
@@ -9432,6 +9412,7 @@ function _sanitize(s) {
   return (s == null) ? '' : String(s)
     .replace(/[<>"'&]/g, c => ({'<':'＜','>':'＞','"':'＂',"'":'＇','&':'＆'}[c]));
 }
+const esc = _sanitize; // alias for HTML-safe escaping
 
 // ─────────────────────────────────────────
 // 勝率計算（戦績データから）
@@ -9519,62 +9500,10 @@ function profDecode(str) {
 }
 
 // ─────────────────────────────────────────
-// 共有URL
-// ─────────────────────────────────────────
-let profViewMode = null;
-
-function profCheckUrl() {
-  const enc = new URLSearchParams(window.location.search).get('profile');
-  if (!enc) return;
-  const p = profDecode(enc);
-  if (!p || !p.handle) return;
-  profViewMode = p;
-  const banner = document.getElementById('prof-view-banner');
-  if (banner) banner.classList.add('visible');
-}
-
-function profSaveViewed() {
-  if (!profViewMode) return;
-  if (!confirm('このプロフィールを自分のカードとして保存しますか？')) return;
-  // 旧フォーマット互換性のため両方のキー名で保存
-  const p = Object.assign({}, profViewMode);
-  p.bio    = p.comment || '';
-  p.showWR = p.showWinrate || false;
-  p.showAch = p.showAchievements || false;
-  profSave(p);
-  profViewMode = null;
-  const banner = document.getElementById('prof-view-banner');
-  if (banner) banner.classList.remove('visible');
-  const url = new URL(window.location.href);
-  url.searchParams.delete('profile');
-  history.replaceState(null, '', url.toString());
-  renderProfSection();
-}
-
-function profCopyShareUrl() {
-  const p = profViewMode || profLoad();
-  if (!p) { alert('プロフィールを作成してください'); return; }
-  const url = new URL(window.location.href);
-  url.searchParams.set('profile', profEncode(p));
-  const urlStr = url.toString();
-  const bar = document.getElementById('prof-url-bar');
-  if (navigator.clipboard && navigator.clipboard.writeText) {
-    navigator.clipboard.writeText(urlStr).then(() => {
-      if (bar) { bar.textContent = '✅ URLをコピーしました: ' + urlStr; bar.classList.add('visible'); }
-    }).catch(() => {
-      if (bar) { bar.textContent = urlStr; bar.classList.add('visible'); }
-    });
-  } else {
-    if (bar) { bar.textContent = urlStr; bar.classList.add('visible'); }
-  }
-}
-
-// ─────────────────────────────────────────
 // セクション描画（未設定 / 設定済み切り替え）
 // ─────────────────────────────────────────
 function renderProfSection() {
-  profCheckUrl();
-  const p       = profViewMode || profLoad();
+  const p       = profLoad();
   const emptyEl = document.getElementById('prof-empty');
   const wrapEl  = document.getElementById('prof-card-wrap');
   if (!emptyEl || !wrapEl) return;
@@ -9851,31 +9780,6 @@ function profCloseImgPreview() {
 }
 
 // ─────────────────────────────────────────
-// X（Twitter）投稿
-// ─────────────────────────────────────────
-function profPostToX() {
-  const p = profViewMode || profLoad();
-  if (!p) { alert('プロフィールを作成してください'); return; }
-
-  // 先に PNG を保存
-  profSavePng();
-
-  setTimeout(() => {
-    const name   = _sanitize(p.nickname || p.handle || 'Lorcana Player');
-    const region = p.region ? '📍 ' + _sanitize(p.region) : '';
-    const colorEmojis = (p.colors || []).map(c => {
-      const info = (typeof COLORS !== 'undefined' && COLORS[c]) ? COLORS[c] : {};
-      return info.emoji || c;
-    }).join('');
-    const comment = (p.comment || p.bio) ? '"' + _sanitize(p.comment || p.bio) + '"' : '';
-    const lines = [colorEmojis + ' ' + name, region, comment, '#ロルカナ #Lorcana #ILLUMINEER']
-                    .filter(Boolean).join('\n');
-    window.open('https://twitter.com/intent/tweet?text=' + encodeURIComponent(lines),
-                '_blank', 'noopener');
-  }, 600);
-}
-
-// ─────────────────────────────────────────
 // 初期化
 // ─────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
@@ -9889,10 +9793,10 @@ document.addEventListener('DOMContentLoaded', () => {
 let _qrInstance = null;
 
 function openQRModal() {
-  const p = profViewMode || profLoad();
+  const p = profLoad();
   if (!p || !p.handle) { alert('プロフィールを作成してください'); return; }
 
-  // 共有URL生成
+  // QR用URL生成
   const url = new URL(window.location.href);
   url.searchParams.set('profile', profEncode(p));
   const shareUrl = url.toString();
@@ -9940,23 +9844,6 @@ function bookLoad() {
 }
 function bookSave(list) {
   localStorage.setItem(BOOK_KEY, JSON.stringify(list));
-}
-
-/** URL経由で閲覧中のカードを名刺帳に保存 */
-function bookAddViewed() {
-  if (!profViewMode || !profViewMode.handle) return;
-  const list = bookLoad();
-  const existsIdx = list.findIndex(c => c.handle === profViewMode.handle);
-  if (existsIdx >= 0) {
-    if (!confirm(profViewMode.handle + ' はすでに名刺帳にあります。更新しますか？')) return;
-    list[existsIdx] = Object.assign({}, profViewMode, { savedAt: new Date().toISOString() });
-  } else {
-    list.unshift(Object.assign({}, profViewMode, { savedAt: new Date().toISOString() }));
-  }
-  bookSave(list);
-  const banner = document.getElementById('prof-view-banner');
-  if (banner) banner.classList.remove('visible');
-  _cbToast('👥 名刺帳に保存しました！');
 }
 
 /** URLを入力して名刺帳に追加 */
@@ -10726,9 +10613,6 @@ function _renderAchStatsCats() {
   </button>
   <button class="bottom-nav-btn" id="bn-analytics" onclick="switchTab('analytics')">
     <span class="bn-icon">📊</span><span>統計</span>
-  </button>
-  <button class="bottom-nav-btn" id="bn-cardbook" onclick="switchTab('cardbook')">
-    <span class="bn-icon">👥</span><span>名刺帳</span>
   </button>
   <button class="bottom-nav-btn" id="bn-settings" onclick="switchTab('settings')">
     <span class="bn-icon">⚙️</span><span>設定</span>
